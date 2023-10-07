@@ -8,7 +8,7 @@ namespace MovieTicketingSystem.ViewModel
     public class AdminLoginViewModel : BaseViewModel
     {
         public Admin Admin { get; set; } = new Admin();
-        public ICommand LoginCommand => new Command(Login);
+       // public ICommand LoginCommand => new Command(Login);
 
         private string _username;
         private string _password;
