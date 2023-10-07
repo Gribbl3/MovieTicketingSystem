@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MovieTicketingSystem.View.HomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icons="clr-namespace:MovieTicketingSystem.Icon"
+    Title="HomePage">
+    <Grid ColumnDefinitions="*,*" RowDefinitions="*,*,*,*,*">
+
+        <!--  1st row  -->
+        <HorizontalStackLayout Grid.ColumnSpan="2" Background="aqua">
+            <Label Text="WIN-WIN CINEMA | Wednesday July 12" />
+            <Label Text="{Static icons:Icons.TicketIcon}" Style="{StaticResource MaterialIcon}" />
+            <Label Text="{Static icons:Icons.UserIcon}" Style="{StaticResource MaterialIcon}"/>
+        </HorizontalStackLayout>
+      
+
+
+        <VerticalStackLayout Grid.Row="1" />
+
+        <VerticalStackLayout Grid.Row="2">
+            <Label Text="Now Showing" />
+            <CarouselView />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Row="3">
+            <Label Text="Coming Soon" />
+            <CarouselView />
+        </VerticalStackLayout>
+
+        <Label Grid.Row="4" Text="{Static icons:Icons.PhoneCallIcon}" Style="{StaticResource MaterialIcon}"/>
+    </Grid>
+</ContentPage>

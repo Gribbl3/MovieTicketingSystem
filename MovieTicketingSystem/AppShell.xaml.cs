@@ -6,7 +6,7 @@ namespace MovieTicketingSystem
     {
         public AppShell()
         {
-            Routing.RegisterRoute(nameof(CustomerLogin), typeof(CustomerLogin));
+            Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
 
             InitializeComponent();
         }
