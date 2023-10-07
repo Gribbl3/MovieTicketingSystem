@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MovieTicketingSystem.View.AdminLogin"
              Shell.NavBarIsVisible="False"
-             BackgroundColor="Black" >
+             BackgroundColor="Black" 
+             xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
+             x:DataType="vm:AdminLoginViewModel">
 
     <Grid ColumnSpacing="20" RowSpacing="20">
         <Grid.RowDefinitions>
@@ -13,12 +15,7 @@
             <RowDefinition Height=".1*"/>
         </Grid.RowDefinitions>
 
-        <VerticalStackLayout  HorizontalOptions="Center" BackgroundColor="Red" Grid.Row="1" Grid.Column="2" >
-            <HorizontalStackLayout VerticalOptions="Center"  BackgroundColor="Red">
-                <Label Text=" HELLO" TextColor="White"/>
 
-            </HorizontalStackLayout>
-        </VerticalStackLayout>
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -30,49 +27,59 @@
 
         </Grid.ColumnDefinitions>
 
-        <Label  Text="Test" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="0"/>
-        <Label  Text="Test" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="1"/>
-        <Label Text="Test"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="2"/>
-        <Label  Text="Test" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="3"/>
-        <Label  Text="Test" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="4"/>
-        <Label  Text="Test" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="5"/>
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2" />
 
-        
+        <VerticalStackLayout BackgroundColor="Black"  HorizontalOptions="Center"  VerticalOptions="Center" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2">
+            <HorizontalStackLayout BackgroundColor="Black">
+                <VerticalStackLayout Spacing="10" BackgroundColor="Black">
 
-        <Label Text="Test" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="0"/>
-        <Label Text="Test" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="1"/>
-        <Image Source="jurassicpark.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="1"/>
-        <Label Text="Test" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="2"/>
-        <Image Source="jurassicpark.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="2"/>
-        <Label Text="Test" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="3"/>
-        <Image Source="jurassicpark.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="3"/>
-        <Label Text="Test" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="4"/>
+                    <Label Text="Sign In" TextColor="white" FontSize="30" Margin="0,0,0,50"/>
+                    <Entry Text="{Binding Username}" Placeholder="Username" BackgroundColor="Gray" WidthRequest="200" />
+                    <Entry Text="{Binding Password}" Placeholder="Password" BackgroundColor="Gray" WidthRequest="200" IsPassword="True"/>
+                    <Button BackgroundColor="Red" Text="Sign In" TextColor="White" WidthRequest="90" CornerRadius="20" Command="{Binding LoginCommand}"/>
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+
+
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="0"/>
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="1"/>
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="2"/>
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="3"/>
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="4"/>
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="5"/>
+
+
+
+        <Label  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="0"/>
+        <Label  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="1"/>
+        <Image Source="jurassicpark.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="1" />
+        <Label  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="2"/>
+        <Image Source="jurassicpark.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="2" Opacity=".09"/>
+        <Label  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="3"/>
+        <Image Source="jurassicpark.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="3"   Opacity=".09"/>
+        <Label  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="4"/>
         <Image Source="jurassicpark.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="4"/>
-        <Label Text="Test" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="5"/>
-        
-        
-        <Label Text="Test"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="0"/>
-        <Label Text="Test"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="1"/>
+        <Label  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="5"/>
+
+
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="0"/>
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="1"/>
         <Image Source="jurassicpark.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="1"/>
-        <Label Text="Test"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="2"/>
-        <Image Source="jurassicpark.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="2"/>
-        <Label Text="Test"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="3"/>
-        <Image Source="jurassicpark.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="3"/>
-        <Label Text="Test"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="4"/>
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="2"/>
+        <Image Source="jurassicpark.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="2"  Opacity=".09"/>
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="3"/>
+        <Image Source="jurassicpark.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="3"  Opacity=".09"/>
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="4"/>
         <Image Source="jurassicpark.png" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="4"/>
-        <Label Text="Test"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="5"/>
-        
-        <Label Text="Test"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="3" Grid.Column="0"/>
-        <Label Text="Test"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="3" Grid.Column="1"/>
-        <Label Text="Test"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="3" Grid.Column="2"/>
-        <Label Text="Test"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="3" Grid.Column="3"/>
-        <Label Text="Test" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="3" Grid.Column="4"/>
-        <Label Text="Test"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="3" Grid.Column="5"/>
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="2" Grid.Column="5"/>
 
-
-
-
-
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="3" Grid.Column="0"/>
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="3" Grid.Column="1"/>
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="3" Grid.Column="2"/>
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="3" Grid.Column="3"/>
+        <Label  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="3" Grid.Column="4"/>
+        <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="3" Grid.Column="5"/>
 
 
     </Grid>
