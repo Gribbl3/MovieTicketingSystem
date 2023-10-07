@@ -24,8 +24,6 @@
         </Grid.ColumnDefinitions>
 
         <Label Text="Test" BackgroundColor="pink" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-
-
         <Label Text="Test" BackgroundColor="white" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="0"/>
         <Label Text="Test" BackgroundColor="white" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="1"/>
         <Label Text="Test" BackgroundColor="white" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="2"/>
