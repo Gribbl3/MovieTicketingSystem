@@ -27,6 +27,7 @@
 
         </Grid.ColumnDefinitions>
 
+
         <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2" />
 
         <VerticalStackLayout BackgroundColor="Black"  HorizontalOptions="Center"  VerticalOptions="Center" Grid.Row="1" Grid.Column="2" Grid.RowSpan="2" Grid.ColumnSpan="2">
@@ -48,6 +49,15 @@
         <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="3"/>
         <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="4"/>
         <Label   VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="5"/>
+=======
+        <Label Text="Test" BackgroundColor="pink" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
+        <Label Text="Test" BackgroundColor="white" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="0"/>
+        <Label Text="Test" BackgroundColor="white" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="1"/>
+        <Label Text="Test" BackgroundColor="white" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="2"/>
+        <Label Text="Test" BackgroundColor="white" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="3"/>
+        <Label Text="Test" BackgroundColor="white" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="4"/>
+        <Label Text="Test" BackgroundColor="white" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" Grid.Row="0" Grid.Column="5"/>
+>>>>>>> 58569d41b0439a474b104d5da144760b2da1489b
 
 
 
