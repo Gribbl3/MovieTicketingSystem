@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MovieTicketingSystem.View.Admin"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:MovieTicketingSystem.Model"
+    xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
+    Title="Admin"
+    x:DataType="vm:AdminViewModel">
+
+    <StackLayout
+        Padding="10"
+        Orientation="Vertical"
+        VerticalOptions="Center">
+        <Label Text="{Binding FirstName, StringFormat='Welcome, Admin {0}'}"/>
+        <Label>
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span
+                        FontAttributes="Bold"
+                        FontSize="15"
+                        Text="Current Selected Movie: " />
+                    <Span
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        Text="{Binding CurrentItem.OriginalTitle}"
+                        TextColor="red" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+        <CollectionView
+            Margin="0,20,0,0"
+            ItemsSource="{Binding Movies}"
+            SelectedItem="{Binding CurrentItem, TargetNullValue='No movie selected'}"
+            SelectionMode="Single">
+            <CollectionView.ItemsLayout>
+                <LinearItemsLayout ItemSpacing="10" Orientation="Horizontal" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:MovieResult">
+                    <StackLayout>
+                        <Frame
+                            BorderColor="DarkGray"
+                            CornerRadius="5"
+                            HasShadow="true"
+                            HeightRequest="400"
+                            HorizontalOptions="Center"
+                            VerticalOptions="CenterAndExpand">
+                            <StackLayout>
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    HorizontalOptions="Center"
+                                    Text="{Binding OriginalTitle}"
+                                    VerticalOptions="Center" />
+                                <Image
+                                    Aspect="AspectFill"
+                                    HeightRequest="250"
+                                    HorizontalOptions="Center"
+                                    Source="{Binding PosterPath}"
+                                    WidthRequest="150" />
+                                <Label HorizontalOptions="Center" Text="{Binding ReleaseDate, StringFormat='Release Date: {0}'}" />
+                                <Label
+                                    FontAttributes="Italic"
+                                    HorizontalOptions="Center"
+                                    LineBreakMode="TailTruncation"
+                                    MaxLines="5"
+                                    Text="{Binding Overview}"
+                                    WidthRequest="500" />
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+        <Button
+            Margin="0,20,0,0"
+            BackgroundColor="red"
+            Command="{Binding SaveToFileCommand}"
+            CommandParameter="{Binding CurrentItem}"
+            FontAttributes="Bold"
+            Text="Save to File"
+            TextColor="White"
+            WidthRequest="200" />
+    </StackLayout>
+</ContentPage>

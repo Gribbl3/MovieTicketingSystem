@@ -6,7 +6,7 @@ namespace MovieTicketingSystem.Model
 
     public class BaseModel : INotifyPropertyChanged
     {
-        #region Impleentation of INotifyPropertyChanged
+        #region Implementation of INotifyPropertyChanged
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = "")
         {

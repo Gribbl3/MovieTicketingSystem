@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MovieTicketingSystem.Service;
 using MovieTicketingSystem.View;
 using MovieTicketingSystem.ViewModel;
 
@@ -17,9 +18,27 @@ public static class MauiProgram
                 fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 fonts.AddFont("MaterialIcons_Regular.ttf", "MaterialIcon");
             });
-
-        builder.Services.AddTransient<HomePage>();
+        // Registering ViewModels
+        builder.Services.AddTransient<RegisterViewModel>();
+        builder.Services.AddTransient<LoginViewModel>();
         builder.Services.AddTransient<HomePageViewModel>();
+        //viewmodel for customer and admin  
+        builder.Services.AddTransient<CustomerViewModel>();
+        builder.Services.AddTransient<AdminViewModel>();
+
+        // Registering View
+        builder.Services.AddTransient<HomePage>();
+        builder.Services.AddTransient<Register>();
+        builder.Services.AddTransient<Login>();
+        builder.Services.AddTransient<Admin>();
+        builder.Services.AddTransient<Customer>();
+
+        // Registering Services
+        builder.Services.AddSingleton<IUserService, UserService>();
+        builder.Services.AddSingleton<IMovieService, MovieService>();
+
+
+
 #if DEBUG
         builder.Logging.AddDebug();
 #endif

@@ -2,9 +2,9 @@ using MovieTicketingSystem.ViewModel;
 
 namespace MovieTicketingSystem.View;
 
-public partial class HomePage : ContentPage
+public partial class Admin : ContentPage
 {
-    public HomePage(HomePageViewModel viewModel)
+    public Admin(AdminViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;
@@ -13,6 +13,6 @@ public partial class HomePage : ContentPage
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        Shell.Current.Title = "Home";
+        Shell.Current.Title = "Admin Homepage";
     }
 }
