@@ -6,6 +6,7 @@ namespace MovieTicketingSystem
     {
         public AppShell()
         {
+            Application.Current.UserAppTheme = AppTheme.Dark;
             Routing.RegisterRoute(nameof(HomePage), typeof(HomePage));
             Routing.RegisterRoute(nameof(Login), typeof(Login));
             Routing.RegisterRoute(nameof(Register), typeof(Register));

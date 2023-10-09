@@ -128,8 +128,8 @@
             Padding="20"
             HorizontalOptions="Center"
             Spacing="10">
-            <Button Command="{Binding RegisterCommand}" Text="Register" />
-            <Button Command="{Binding ClearCommand}" Text="Clear" />
+            <Button Command="{Binding RegisterCommand}" Text="Register" Background="RED" TextColor="white" FontAttributes="Bold"/>
+            <Button Command="{Binding ClearCommand}" Text="Clear" TextColor="Black" FontAttributes="Bold"/>
         </HorizontalStackLayout>
     </Grid>
 
