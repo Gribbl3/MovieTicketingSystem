@@ -26,7 +26,7 @@ public class LoginViewModel : BaseViewModel
 
     private void SignIn(string userType)
     {
-        User.IsAdmin = userType == "Admin" ? true : false;
+        User.IsAdmin = userType == "Admin";
         switch (userType)
         {
             case "Admin":
@@ -42,7 +42,7 @@ public class LoginViewModel : BaseViewModel
         {
             if (User.IsAdmin)
             {
-                Shell.Current.GoToAsync($"{nameof(Admin)}?name={_firstName}");
+                Shell.Current.GoToAsync($"//{nameof(Admin)}?name={_firstName}");
             }
             else
             {

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MovieTicketingSystem.View.AddMovie"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MovieTicketingSystem.View"
+    xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
+    x:DataType="vm:AddMovieViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="WidthRequest" Value="200" />
+            </Style>
+
+            <Style TargetType="Entry">
+                <Setter Property="WidthRequest" Value="300" />
+            </Style>
+
+            <Style TargetType="Button">
+                
+                <Setter Property="WidthRequest" Value="200" />
+                <Setter Property="Background" Value="#cc4f46" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+    <StackLayout Margin="20" Spacing="10" HorizontalOptions="Center">
+        <HorizontalStackLayout>
+            <Label Text="Movie Details" />
+            <Border>
+                <Entry Text="{Binding Movie.Name}"/>
+            </Border>
+        </HorizontalStackLayout>
+        
+        <HorizontalStackLayout>
+            <Label Text="Movie Description" />
+            <Border>
+                <Entry Text="{Binding Movie.Description}"/>
+            </Border>
+        </HorizontalStackLayout>
+        
+        <HorizontalStackLayout>
+            <Label Text="Movie Duration" />
+            <Border>
+                <Entry Text="{Binding Movie.Duration}"/>
+            </Border>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout Spacing="20">
+            <RadioButton Content="Upcoming"/>
+            <RadioButton Content="Now Showing"/>
+        </HorizontalStackLayout>
+
+        <Button Text="Upload Image" Command="{Binding UploadImageCommand}"/>
+        <Image Source="{Binding Movie.Image}"/>
+
+    </StackLayout>
+</ContentPage>

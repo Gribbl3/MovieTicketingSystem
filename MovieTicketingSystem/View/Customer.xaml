@@ -7,51 +7,8 @@
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
     Title="Customer"
     x:DataType="vm:CustomerViewModel">
-    <StackLayout Orientation="Vertical" VerticalOptions="Center">
-        <Label Text="{Binding FirstName, StringFormat='Hello, {0}'}" />
-        <Label Text="Movies | Popular" />
 
-        <CollectionView
-            ItemsSource="{Binding MoviesFromFile}"
-            SelectedItem="{Binding CurrentItem}"
-            SelectionMode="Single">
-            <CollectionView.ItemsLayout>
-                <LinearItemsLayout ItemSpacing="10" Orientation="Horizontal" />
-            </CollectionView.ItemsLayout>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:MovieResult">
-                    <Frame
-                        BorderColor="DarkGray"
-                        CornerRadius="5"
-                        HasShadow="true"
-                        HeightRequest="400"
-                        HorizontalOptions="Center"
-                        VerticalOptions="CenterAndExpand">
-                        <StackLayout>
-                            <Label
-                                FontAttributes="Bold"
-                                FontSize="18"
-                                HorizontalOptions="Center"
-                                Text="{Binding OriginalTitle}"
-                                VerticalOptions="Center" />
-                            <Image
-                                Aspect="AspectFill"
-                                HeightRequest="250"
-                                HorizontalOptions="Center"
-                                Source="{Binding PosterPath}"
-                                WidthRequest="150" />
-                            <Label HorizontalOptions="Center" Text="{Binding ReleaseDate, StringFormat='Release Date: {0}'}" />
-                            <Label
-                                FontAttributes="Italic"
-                                HorizontalOptions="Center"
-                                LineBreakMode="TailTruncation"
-                                MaxLines="5"
-                                Text="{Binding Overview}"
-                                WidthRequest="500" />
-                        </StackLayout>
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
-    </StackLayout>
+    <VerticalStackLayout>
+        <Label Text="Customer"/>
+    </VerticalStackLayout>
 </ContentPage>
