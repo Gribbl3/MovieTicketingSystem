@@ -10,8 +10,10 @@ public class Movie : BaseModel
     private string _description;
     private bool _isUpcoming;
     private bool _isNowShowing;
-    private ImageSource _image;
-    private DateTime _duration;
+    private Byte[] _image;
+    private DateTime _date;
+    private DateTime _startTime;
+    private DateTime _endTime;
 
     public string Name
     {
@@ -53,22 +55,43 @@ public class Movie : BaseModel
         }
     }
 
-    public DateTime Duration
+    public DateTime Date
     {
-        get => _duration;
+        get => _date;
         set
         {
-            _duration = value;
+            _date = value;
             OnPropertyChanged();
         }
     }
 
-    public ImageSource Image
+    //image is byte array because there is no imagesource datatype in json
+    public Byte[] Image
     {
         get => _image;
         set
         {
             _image = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public DateTime StartTime
+    {
+        get => _startTime;
+        set
+        {
+            _startTime = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public DateTime EndTime
+    {
+        get => _endTime;
+        set
+        {
+            _endTime = value;
             OnPropertyChanged();
         }
     }

@@ -7,7 +7,7 @@ namespace MovieTicketingSystem;
 
 public static class MauiProgram
 {
-    public static MauiApp CreateMauiApp()
+    public static object CreateMauiApp()
     {
         var builder = MauiApp.CreateBuilder();
         builder
@@ -38,7 +38,8 @@ public static class MauiProgram
 
         // Registering Services
         builder.Services.AddSingleton<IUserService, UserService>();
-        builder.Services.AddSingleton<IMovieService, MovieService>();
+        //different GUID's cannot be possible if service is singleton
+        builder.Services.AddTransient<MovieService>();
 
 
 

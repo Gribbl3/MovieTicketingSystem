@@ -69,11 +69,11 @@ public class RegisterViewModel : BaseViewModel
         _userService.AddUser(User);
         if (User.IsAdmin)
         {
-            Shell.Current.GoToAsync("Admin");
+            Shell.Current.GoToAsync("//Admin");
         }
         else
         {
-            Shell.Current.GoToAsync("Customer");
+            Shell.Current.GoToAsync("//Customer");
         }
 
 

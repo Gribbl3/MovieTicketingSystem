@@ -18,46 +18,66 @@
                 <Setter Property="WidthRequest" Value="300" />
             </Style>
 
+            <Style TargetType="Image">
+                <Setter Property="WidthRequest" Value="300" />
+            </Style>
+
             <Style TargetType="Button">
-                
                 <Setter Property="WidthRequest" Value="200" />
                 <Setter Property="Background" Value="#cc4f46" />
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="FontAttributes" Value="Bold" />
-                
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
-    <StackLayout Margin="20" Spacing="10" HorizontalOptions="Center">
+
+    <StackLayout
+        Margin="20"
+        HorizontalOptions="Center"
+        Spacing="10">
         <HorizontalStackLayout>
-            <Label Text="Movie Details" />
+            <Label Text="Movie Name" />
             <Border>
-                <Entry Text="{Binding Movie.Name}"/>
+                <Entry Text="{Binding Movie.Name}" />
             </Border>
         </HorizontalStackLayout>
-        
+
         <HorizontalStackLayout>
             <Label Text="Movie Description" />
             <Border>
-                <Entry Text="{Binding Movie.Description}"/>
+                <Entry Text="{Binding Movie.Description}" />
+            </Border>
+        </HorizontalStackLayout>
+
+        <HorizontalStackLayout>
+            <Label Text="Movie Date" />
+            <Border>
+                <DatePicker Date="{Binding Date}" />
             </Border>
         </HorizontalStackLayout>
         
         <HorizontalStackLayout>
-            <Label Text="Movie Duration" />
+            <Label Text="Movie Start Time" />
             <Border>
-                <Entry Text="{Binding Movie.Duration}"/>
+                <TimePicker Format="HH:mm" Time="{Binding StartTime}" />
             </Border>
         </HorizontalStackLayout>
 
+        <HorizontalStackLayout>
+            <Label Text="Movie End Time" />
+            <Border>
+                <TimePicker Format="HH:mm" Time="{Binding EndTime}" />
+            </Border>
+        </HorizontalStackLayout>
+        
         <HorizontalStackLayout Spacing="20">
-            <RadioButton Content="Upcoming"/>
-            <RadioButton Content="Now Showing"/>
+            <RadioButton Content="Upcoming" IsChecked="{Binding Movie.IsUpcoming}" />
+            <RadioButton Content="Now Showing" IsChecked="{Binding Movie.IsNowShowing}" />
         </HorizontalStackLayout>
 
-        <Button Text="Upload Image" Command="{Binding UploadImageCommand}"/>
-        <Image Source="{Binding Movie.Image}"/>
+        <Button Command="{Binding UploadImageCommand}" Text="Upload Image" />
+        <Image Source="{Binding MovieImageSource, TargetNullValue='no selected image'}" />
 
+        <Button Text="Save Movie Details" Command="{Binding SaveCommand}"/>
     </StackLayout>
 </ContentPage>
