@@ -23,10 +23,7 @@ public class MovieService
             return false;
         }
 
-        _movies = await GetMoviesAsync();
-        _movies.Add(movie);
-
-        var json = JsonSerializer.Serialize<ObservableCollection<Movie>>(_movies);
+        var json = JsonSerializer.Serialize<Movie>(movie);
         await File.WriteAllTextAsync(filePath, json);
 
         return true;
@@ -47,12 +44,14 @@ public class MovieService
         foreach (var file in files)
         {
             var json = await File.ReadAllTextAsync(file);
-            var movie = JsonSerializer.Deserialize<Movie>(json);
-            _movies.Add(movie);
+            var _movie = JsonSerializer.Deserialize<Movie>(json);
+            _movies.Add(_movie);
         }
 
         return _movies;
     }
+
+
 
 
 }

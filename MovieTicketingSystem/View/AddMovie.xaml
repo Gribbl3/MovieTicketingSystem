@@ -31,7 +31,8 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout
+    <ScrollView>
+        <StackLayout
         Margin="20"
         HorizontalOptions="Center"
         Spacing="10">
@@ -80,4 +81,5 @@
 
         <Button Text="Save Movie Details" Command="{Binding SaveCommand}"/>
     </StackLayout>
+    </ScrollView>
 </ContentPage>

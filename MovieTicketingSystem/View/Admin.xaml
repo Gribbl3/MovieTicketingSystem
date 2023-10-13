@@ -11,7 +11,7 @@
     <CollectionView ItemsSource="{Binding MovieCollection}" EmptyView="No Movie Added">
         <CollectionView.ItemTemplate>
             <DataTemplate x:DataType="model:Movie">
-                <StackLayout>
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
                     <Label Text="{Binding Name}"/>
                     <Label Text="{Binding Description}"/>
                     <Label Text="{Binding StartTime}"/>
