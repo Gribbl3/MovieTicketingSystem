@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using MovieTicketingSystem.Converters;
 using MovieTicketingSystem.Service;
 using MovieTicketingSystem.View;
 using MovieTicketingSystem.ViewModel;
@@ -40,6 +41,9 @@ public static class MauiProgram
         builder.Services.AddSingleton<IUserService, UserService>();
         //different GUID's cannot be possible if service is singleton
         builder.Services.AddTransient<MovieService>();
+
+        //converter
+        builder.Services.AddSingleton<ByteArrayToImageSourceConverter>();
 
 
 
