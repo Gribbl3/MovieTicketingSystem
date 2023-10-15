@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MovieTicketingSystem.View.Login"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
+    Title="Login"
+    x:DataType="vm:LoginViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="WidthRequest" Value="190" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid HorizontalOptions="Fill" VerticalOptions="Fill">
+        <Image Aspect="AspectFill" Source="background.jpg" />
+        <StackLayout
+            Padding="50"
+            Background="black"
+            HeightRequest="500"
+            Spacing="10"
+            VerticalOptions="Center"
+            WidthRequest="500">
+            <Label
+                FontAttributes="Bold"
+                FontSize="Large"
+                Text="Sign In" />
+            <Entry
+                Margin="0,20,0,0"
+                Background="#323230"
+                Placeholder="Username"
+                Text="{Binding User.Username}" />
+            <Entry
+                Background="#323230"
+                IsPassword="True"
+                Placeholder="Password"
+                Text="{Binding User.Password}" />
+
+            <!--  margin left, top, right, bottom  -->
+            <HorizontalStackLayout
+                Margin="0,30,0,5"
+                HorizontalOptions="Center"
+                Spacing="10">
+
+                <Button
+                    BackgroundColor="red"
+                    Command="{Binding SignInCommand}"
+                    CommandParameter="Admin"
+                    CornerRadius="5"
+                    FontAttributes="Bold"
+                    FontSize="Body"
+                    Text="Sign in as Admin"
+                    TextColor="white" />
+
+                <Button
+                    BackgroundColor="red"
+                    Command="{Binding SignInCommand}"
+                    CommandParameter="Customer"
+                    CornerRadius="5"
+                    FontAttributes="Bold"
+                    FontSize="Body"
+                    Text="Sign in as Customer"
+                    TextColor="white" />
+            </HorizontalStackLayout>
+
+
+            <HorizontalStackLayout>
+                <Label Text="New to WinWin Movie System?" />
+                <Label
+                    FontAttributes="Bold"
+                    Text=" Sign up now"
+                    TextColor="red">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RegisterCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </HorizontalStackLayout>
+        </StackLayout>
+    </Grid>
+</ContentPage>

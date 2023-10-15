@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MovieTicketingSystem.View.HomePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:icons="clr-namespace:MovieTicketingSystem.Icon"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
+    Title="HomePage"
+    x:DataType="vm:HomePageViewModel">
+    <ScrollView>
+        <Grid
+        Margin="20"
+        ColumnDefinitions="*,*"
+        RowDefinitions="*,300,*,*,*">
+
+        <!--  1st row  -->
+        <Label>
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span
+                        FontAttributes="Bold"
+                        FontSize="24"
+                        Text="WIN-WIN" />
+                    <Span
+                        FontAttributes="Bold"
+                        FontSize="24"
+                        Text=" CINEMA"
+                        TextColor="red" />
+                    <Span Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat='{0: | dddd MMMM dd, yyyy}'}" TextColor="{StaticResource Gray200}" />
+                </FormattedString>
+            </Label.FormattedText>
+        </Label>
+
+        <HorizontalStackLayout
+            Grid.Column="1"
+            HorizontalOptions="End"
+            Spacing="10">
+            <Label Style="{StaticResource MaterialIcon}" Text="{Static icons:Icons.TicketIcon}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BuyTicketCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Style="{StaticResource MaterialIcon}" Text="{Static icons:Icons.UserIcon}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding SignInCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+        </HorizontalStackLayout>
+
+
+
+        <VerticalStackLayout
+            Grid.Row="1"
+            HorizontalOptions="Start"
+            Background="aqua">
+            <Label
+                HorizontalTextAlignment="Center"
+                Text="ACTION | SCIENCE-FICTION | ANIMATED"
+                TextColor="{StaticResource Gray200}" 
+                Margin="0,0,0,40"
+                />
+            <Label
+                FontAttributes="Bold"
+                FontSize="50"
+                HorizontalTextAlignment="Center"
+                Text="SPIDERMAN" />
+            <Label
+                FontAttributes="Bold"
+                FontSize="24"
+                HorizontalTextAlignment="Center"
+                Text="ACROSS THE SPIDERVERSE" 
+                Margin="0,0,0,40"/>
+            <Label
+                FontSize="14"
+                HorizontalTextAlignment="Center"
+                Margin="0,0,0,10"
+                Text="2023 | SEQUEL | SONY PICTURES ENTERTAINMENT"
+                TextColor="{StaticResource Gray200}"/>
+            <Button
+                Background="red"
+                BorderColor="AliceBlue"
+                FontAttributes="Bold"
+                HeightRequest="40"
+                Text="BUY TICKET"
+                TextColor="white"
+                WidthRequest="150" />
+        </VerticalStackLayout>
+        <Image
+            Grid.Row="1"
+            Grid.Column="1"
+            Aspect="Fill"
+            Source="spiderman.jpg"
+            HeightRequest="300"
+            WidthRequest="500" />
+
+
+        <VerticalStackLayout Grid.Row="2">
+            <Label Text="Now Showing" />
+            <CarouselView />
+        </VerticalStackLayout>
+
+        <VerticalStackLayout Grid.Row="3">
+            <Label Text="Coming Soon" />
+            <CarouselView />
+        </VerticalStackLayout>
+
+        <Label
+            Grid.Row="4"
+            Style="{StaticResource MaterialIcon}"
+            Text="{Static icons:Icons.PhoneCallIcon}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ContactCustomerServiceCommand}" />
+            </Label.GestureRecognizers>
+        </Label>
+    </Grid>
+    </ScrollView>
+</ContentPage>

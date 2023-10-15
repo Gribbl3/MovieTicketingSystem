@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MovieTicketingSystem.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MovieTicketingSystem.View"
+    Shell.FlyoutBehavior="Disabled"
+    Shell.TabBarBackgroundColor="#cc4f46"
+    Shell.NavBarIsVisible="False">
+
+    <ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:Login}"
+        Route="Login" />
+    
+    <TabBar>
+        <Tab Title="Home">
+            <ShellContent ContentTemplate="{DataTemplate local:Admin}" Route="Admin"/>
+        </Tab>
+        <Tab Title="Add Movie">
+            <ShellContent ContentTemplate="{DataTemplate local:AddMovie}" Route="AddMovie" />
+        </Tab>
+        <Tab Title="Add Cinema">
+            <ShellContent ContentTemplate="{DataTemplate local:AddCinema}" Route="AddCinema"/>
+        </Tab>
+    </TabBar>
+
+</Shell>

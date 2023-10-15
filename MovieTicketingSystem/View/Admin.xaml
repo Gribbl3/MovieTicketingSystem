@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MovieTicketingSystem.View.Admin"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:MovieTicketingSystem.Model"
+    xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
+    xmlns:converter="clr-namespace:MovieTicketingSystem.Converters"
+    Title="Admin"
+    x:DataType="vm:AdminViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    
+
+    
+    <CollectionView ItemsSource="{Binding MovieCollection}" EmptyView="No Movie Added">
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="model:Movie">
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <Label Text="{Binding Name}"/>
+                    <Image Source="{Binding Image,Converter={StaticResource ByteArrayToImageSourceConverter}}"/>
+                    <Label Text="{Binding Description}"/>
+                    <Label Text="{Binding StartTime}"/>
+                    <Label Text="{Binding EndTime}"/>
+                </StackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
+</ContentPage>

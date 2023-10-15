@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MovieTicketingSystem.View.Register"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
+    Title="Register"
+    x:DataType="vm:RegisterViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Border">
+                <Setter Property="Stroke" Value="white" />
+            </Style>
+
+            <Style TargetType="Entry">
+                <Setter Property="WidthRequest" Value="200" />
+            </Style>
+
+            <Style TargetType="DatePicker">
+                <Setter Property="WidthRequest" Value="200" />
+            </Style>
+
+            <Style TargetType="Label">
+                <Setter Property="TextColor" Value="white" />
+                <Setter Property="WidthRequest" Value="150" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="WidthRequest" Value="150" />
+                <Setter Property="HeightRequest" Value="50" />
+            </Style>
+
+            <Style TargetType="StackLayout">
+                <Setter Property="Spacing" Value="20" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid
+        Margin="20"
+        ColumnDefinitions="*,*"
+        ColumnSpacing="20"
+        HorizontalOptions="Center"
+        RowDefinitions="*,*"
+        RowSpacing="25"
+        VerticalOptions="Center">
+        <StackLayout>
+            <!--  firstname  -->
+            <HorizontalStackLayout>
+                <Label Text="First Name" />
+                <Border>
+                    <Entry Text="{Binding User.FirstName}" />
+                </Border>
+            </HorizontalStackLayout>
+            <!--  middlename  -->
+            <HorizontalStackLayout>
+                <Label Text="Middle Name" />
+                <Border>
+                    <Entry Text="{Binding User.MiddleName}" />
+                </Border>
+            </HorizontalStackLayout>
+            <!--  lastname  -->
+            <HorizontalStackLayout>
+                <Label Text="Last Name" />
+                <Border>
+                    <Entry Text="{Binding User.LastName}" />
+                </Border>
+            </HorizontalStackLayout>
+            <!--  email  -->
+            <HorizontalStackLayout>
+                <Label Text="Email Address" />
+                <Border>
+                    <Entry Text="{Binding User.EmailAddress}" />
+                </Border>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout>
+                <Label Text="Birth Date" />
+                <Border>
+                    <DatePicker Date="{Binding User.BirthDate}" />
+                </Border>
+            </HorizontalStackLayout>
+        </StackLayout>
+
+
+        <StackLayout Grid.Column="1">
+            <!--  firstname  -->
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Gender" />
+                <RadioButton Content="Male" IsChecked="{Binding IsMale}" />
+                <RadioButton Content="Female" IsChecked="{Binding IsFemale}"/>
+            </HorizontalStackLayout>
+            <!--  middlename  -->
+            <HorizontalStackLayout>
+                <Label Text="Home Address" />
+                <Border>
+                    <Entry Text="{Binding User.HomeAddress}" />
+                </Border>
+            </HorizontalStackLayout>
+            <!--  lastname  -->
+            <HorizontalStackLayout>
+                <Label Text="Username" />
+                <Border>
+                    <Entry Text="{Binding User.Username}" />
+                </Border>
+            </HorizontalStackLayout>
+            <!--  email  -->
+            <HorizontalStackLayout>
+                <Label Text="Password" />
+                <Border>
+                    <Entry Text="{Binding User.Password}" />
+                </Border>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10">
+                <Label Text="Role" />
+                <RadioButton Content="Admin" IsChecked="{Binding IsAdmin}" />
+                <RadioButton Content="Customer" IsChecked="{Binding IsCustomer}"/>
+            </HorizontalStackLayout>
+        </StackLayout>
+
+        <HorizontalStackLayout
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Padding="20"
+            HorizontalOptions="Center"
+            Spacing="10">
+            <Button Command="{Binding RegisterCommand}" Text="Register" Background="RED" TextColor="white" FontAttributes="Bold"/>
+            <Button Command="{Binding ClearCommand}" Text="Clear" TextColor="Black" FontAttributes="Bold"/>
+        </HorizontalStackLayout>
+    </Grid>
+
+</ContentPage>
