@@ -16,70 +16,58 @@
 
             <Style TargetType="Entry">
                 <Setter Property="WidthRequest" Value="300" />
+                <Setter Property="BackgroundColor" Value="#262a2b" />
             </Style>
 
             <Style TargetType="Image">
                 <Setter Property="WidthRequest" Value="300" />
             </Style>
-
+            <Style TargetType="Border">
+                <Setter Property="Stroke" Value="White" />
+            </Style>
             <Style TargetType="Button">
                 <Setter Property="WidthRequest" Value="200" />
                 <Setter Property="Background" Value="#cc4f46" />
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="FontAttributes" Value="Bold" />
             </Style>
+
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ScrollView>
-        <StackLayout
-        Margin="20"
-        HorizontalOptions="Center"
-        Spacing="10">
-        <HorizontalStackLayout>
-            <Label Text="Movie Name" />
-            <Border>
-                <Entry Text="{Binding Movie.Name}" />
-            </Border>
-        </HorizontalStackLayout>
+    <VerticalStackLayout>
+        <Label Text="Add Movies" />
+        <ImageButton Source="{Binding Movie.Image}" />
+        <Label Text="Upload Image" />
+        <Label Text="MOVIE NAME" />
+        <Border>
+            <Entry Text="{Binding Movie.Name}" />
+        </Border>
+        <Label Text="MOVIE NAME" />
+        <Border>
+            <Entry Text="{Binding Movie.Name}" />
+        </Border>
+        <Label Text="TICKET PRICE" />
+        <Border>
+            <Entry Text="{Binding Movie.Name}" />
+        </Border>
+        <Label Text="SHOWTIME" />
+        <Border>
+            <Entry Text="{Binding Movie.Name}" />
+        </Border>
+        <Label Text="SCREENING TYPE" />
+        <Border>
+            <Entry Text="{Binding Movie.Name}" />
+        </Border>
+        <Label Text="TIME SCHEDULES" />
+        <Border>
+            <Entry Text="{Binding Movie.Name}" />
+        </Border>
+        <Label Text="MALL LOCATION" />
+        <Border>
+            <Entry Text="{Binding Movie.Name}" />
+        </Border>
+    </VerticalStackLayout>
 
-        <HorizontalStackLayout>
-            <Label Text="Movie Description" />
-            <Border>
-                <Entry Text="{Binding Movie.Description}" />
-            </Border>
-        </HorizontalStackLayout>
 
-        <HorizontalStackLayout>
-            <Label Text="Movie Date" />
-            <Border>
-                <DatePicker Date="{Binding Date}" />
-            </Border>
-        </HorizontalStackLayout>
-        
-        <HorizontalStackLayout>
-            <Label Text="Movie Start Time" />
-            <Border>
-                <TimePicker Format="HH:mm" Time="{Binding StartTime}" />
-            </Border>
-        </HorizontalStackLayout>
-
-        <HorizontalStackLayout>
-            <Label Text="Movie End Time" />
-            <Border>
-                <TimePicker Format="HH:mm" Time="{Binding EndTime}" />
-            </Border>
-        </HorizontalStackLayout>
-        
-        <HorizontalStackLayout Spacing="20">
-            <RadioButton Content="Upcoming" IsChecked="{Binding Movie.IsUpcoming}" />
-            <RadioButton Content="Now Showing" IsChecked="{Binding Movie.IsNowShowing}" />
-        </HorizontalStackLayout>
-
-        <Button Command="{Binding UploadImageCommand}" Text="Upload Image" />
-        <Image Source="{Binding MovieImageSource, TargetNullValue='no selected image'}" />
-
-        <Button Text="Save Movie Details" Command="{Binding SaveCommand}"/>
-    </StackLayout>
-    </ScrollView>
 </ContentPage>
