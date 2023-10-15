@@ -34,16 +34,6 @@ public class AddMovieViewModel : BaseViewModel
         }
     }
 
-    public ImageSource MovieImageSource
-    {
-        get => _movieImageSource;
-        set
-        {
-            _movieImageSource = value;
-            OnPropertyChanged();
-        }
-    }
-
     public DateTime Date
     {
         get => _date;
@@ -95,7 +85,6 @@ public class AddMovieViewModel : BaseViewModel
         var imageByteArray = await ConvertFileResultToByteArray(fileResult);
 
         Movie.Image = imageByteArray;
-        MovieImageSource = ImageSource.FromStream(() => stream);
     }
 
 

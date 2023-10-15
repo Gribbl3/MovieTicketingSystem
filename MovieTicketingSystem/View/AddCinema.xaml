@@ -3,8 +3,66 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MovieTicketingSystem.View.AddCinema"
              Title="AddCinema">
-    <VerticalStackLayout>
-        <Label 
-            Text="Add Cinema and Capacity"/>
-    </VerticalStackLayout>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="VerticalTextAlignment" Value="Center"/>
+                <Setter Property="WidthRequest" Value="200"/>
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="WidthRequest" Value="300"/>
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="WidthRequest" Value="200" />
+                <Setter Property="Background" Value="#cc4f46" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <StackLayout Margin="20" HorizontalOptions="Start" >
+            <HorizontalStackLayout>
+                <VerticalStackLayout Spacing="25">
+                    <HorizontalStackLayout  Margin="0,0,0,0">
+                        <Label Text="WIN-WIN" FontSize="Large"/>
+                        <Label Text="CINEMA" TextColor="Red" FontSize="Large" Margin="-60,0,0,0"/>
+
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Margin="0,30,0,0">
+                        <Label Text="Cinema Branch"/>
+                        <Border>
+                            <Entry Text="{Binding}"/>
+                        </Border>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout >
+                        <Label Text="Location / Address"/>
+                        <Border>
+                            <Entry Text="{Binding}"/>
+                        </Border>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout >
+                        <Label Text="Capacity"/>
+                        <Border>
+                            <Entry Text="{Binding}"/>
+                        </Border>
+                    </HorizontalStackLayout>
+
+                    <HorizontalStackLayout Spacing="20" Margin="50,0,0,0">
+                        <Button Command="{Binding}" Text="Save Details" />
+                        <Button Text="Reset" Command="{Binding}"/>
+                    </HorizontalStackLayout>
+
+                </VerticalStackLayout>
+            </HorizontalStackLayout>
+
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

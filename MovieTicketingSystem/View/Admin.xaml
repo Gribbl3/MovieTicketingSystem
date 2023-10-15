@@ -23,39 +23,20 @@
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
-    <Grid RowDefinitions="Auto,Auto,*">
-        <Label
-            FontSize="Large"
-            HorizontalTextAlignment="Center"
-            Text="HOMEPAGE" />
+    
 
-        <VerticalStackLayout Grid.Row="1">
-            <Label FontSize="Medium" Text="Upcoming Movies" />
-            <CollectionView
-                HorizontalOptions="StartAndExpand"
-                Margin="20"
-                EmptyView="No Movie Added"
-                ItemsSource="{Binding MovieCollection}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Movie">
-
-                        <Frame Background="firebrick" HasShadow="False">
-                            <StackLayout>
-                                <Label Text="{Binding Name, StringFormat='Movie Title: {0} '}" />
-                                <Label Text="{Binding StartTime}" />
-                                <Label Text="{Binding EndTime}" />
-                                <Image Source="{Binding Image, Converter={StaticResource ByteArrayToImageSourceConverter}}" />
-                            </StackLayout>
-                        </Frame>
-
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
-        <VerticalStackLayout Grid.Row="2">
-            <Label FontSize="Medium" Text="Now Showing Movies" />
-            <CollectionView EmptyView="No movies yet" />
-
-        </VerticalStackLayout>
-    </Grid>
+    
+    <CollectionView ItemsSource="{Binding MovieCollection}" EmptyView="No Movie Added">
+        <CollectionView.ItemTemplate>
+            <DataTemplate x:DataType="model:Movie">
+                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                    <Label Text="{Binding Name}"/>
+                    <Image Source="{Binding Image,Converter={StaticResource ByteArrayToImageSourceConverter}}"/>
+                    <Label Text="{Binding Description}"/>
+                    <Label Text="{Binding StartTime}"/>
+                    <Label Text="{Binding EndTime}"/>
+                </StackLayout>
+            </DataTemplate>
+        </CollectionView.ItemTemplate>
+    </CollectionView>
 </ContentPage>
