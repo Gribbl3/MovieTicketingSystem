@@ -46,7 +46,7 @@ public class LoginViewModel : BaseViewModel
             }
             else
             {
-                Shell.Current.GoToAsync($"{nameof(Customer)}?name={_firstName}");
+                Shell.Current.GoToAsync($"??//{nameof(Customer)}?name={_firstName}");
             }
         }
     }

@@ -21,6 +21,7 @@
             Padding="50"
             Background="black"
             HeightRequest="500"
+            Opacity="0.95"
             Spacing="10"
             VerticalOptions="Center"
             WidthRequest="500">

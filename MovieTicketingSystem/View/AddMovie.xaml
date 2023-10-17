@@ -35,39 +35,6 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <VerticalStackLayout>
-        <Label Text="Add Movies" />
-        <ImageButton Source="{Binding Movie.Image}" />
-        <Label Text="Upload Image" />
-        <Label Text="MOVIE NAME" />
-        <Border>
-            <Entry Text="{Binding Movie.Name}" />
-        </Border>
-        <Label Text="MOVIE NAME" />
-        <Border>
-            <Entry Text="{Binding Movie.Name}" />
-        </Border>
-        <Label Text="TICKET PRICE" />
-        <Border>
-            <Entry Text="{Binding Movie.Name}" />
-        </Border>
-        <Label Text="SHOWTIME" />
-        <Border>
-            <Entry Text="{Binding Movie.Name}" />
-        </Border>
-        <Label Text="SCREENING TYPE" />
-        <Border>
-            <Entry Text="{Binding Movie.Name}" />
-        </Border>
-        <Label Text="TIME SCHEDULES" />
-        <Border>
-            <Entry Text="{Binding Movie.Name}" />
-        </Border>
-        <Label Text="MALL LOCATION" />
-        <Border>
-            <Entry Text="{Binding Movie.Name}" />
-        </Border>
-    </VerticalStackLayout>
 
 
 </ContentPage>

@@ -47,11 +47,6 @@ public class MovieService
             var _movie = JsonSerializer.Deserialize<Movie>(json);
             _movies.Add(_movie);
         }
-
         return _movies;
     }
-
-
-
-
 }
