@@ -40,7 +40,7 @@ public class AddMovieViewModel : BaseViewModel
         set
         {
             _date = value;
-            Movie.Date = value;
+            Movie.StartDate = value;
             OnPropertyChanged();
         }
     }
@@ -51,7 +51,7 @@ public class AddMovieViewModel : BaseViewModel
         set
         {
             _startTime = value;
-            Movie.StartTime = value;
+            Movie.EndDate = value;
             OnPropertyChanged();
         }
     }
@@ -62,7 +62,7 @@ public class AddMovieViewModel : BaseViewModel
         set
         {
             _endTime = value;
-            Movie.EndTime = value;
+            Movie.EndDate = value;
             OnPropertyChanged();
         }
     }
@@ -123,14 +123,14 @@ public class AddMovieViewModel : BaseViewModel
         }
 
         //check if start time is greater than end time
-        if (Movie.StartTime > Movie.EndTime)
+        if (Movie.StartDate > Movie.EndDate)
         {
             Shell.Current.DisplayAlert("Add Movie Error", "Start time cannot be greater than end time", "OK");
             return false;
         }
 
         //check if date is greater than today
-        if (Movie.Date < DateTime.Today)
+        if (Movie.StartDate < DateTime.Today)
         {
             Shell.Current.DisplayAlert("Add Movie Error", "Date cannot be less than today", "OK");
             return false;

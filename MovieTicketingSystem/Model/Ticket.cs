@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MovieTicketingSystem.Model;
+﻿namespace MovieTicketingSystem.Model;
 
 public class Ticket : BaseModel
 {
     private readonly string _ticketId;
+    public User User { get; set; } = new(); //User - John Doe
+    public Movie Movie { get; set; } = new(); //Movie - Spiderman
+    public Cinema Cinema { get; set; } = new(); //Cinema - SM seat number can be get from here 
+
     private DateTime _date; //Date - 2021-10-10
     private DateTime _time; //Time - 10:00 AM
 
@@ -45,10 +41,11 @@ public class Mall : BaseModel //Mall - SM North Edsa, MallAddress - Quezon City
     }
 }
 
-//class is depedent to Seat and Mall class
+//class is dependent to Seat and Mall class
 public class Cinema : BaseModel
 {
     public Mall Mall { get; set; } = new(); //Mall - SM
+    public List<Seat> Seats { get; set; } = new();
     private int seatCapacity; //Seat - 100
 
     public int SeatCapacity
@@ -67,25 +64,25 @@ public class Seat : BaseModel
     //one cinema has many seats
     //one mall has many cinemas
     public Cinema Cinema { get; set; } = new(); //Cinema - SM, SeatCapacity - 100
-    private int _seatRows; //SeatRows - 10
-    private int _seatColumns; //SeatColumns - 10
+    private int _seatRow; //SeatRows - 10
+    private int _seatColumn; //SeatColumns - 10
     private bool _isAvailableSeat; //IsAvailableSeat - true or false
 
-    public int SeatRows
+    public int SeatRow
     {
-        get => _seatRows;
+        get => _seatRow;
         set
         {
-            _seatRows = value;
+            _seatRow = value;
             OnPropertyChanged();
         }
     }
-    public int SeatColumns
+    public int SeatColumn
     {
-        get => _seatColumns;
+        get => _seatColumn;
         set
         {
-            _seatColumns = value;
+            _seatColumn = value;
             OnPropertyChanged();
         }
     }
@@ -104,7 +101,7 @@ public class Booking : BaseModel
 {
     public User User { get; set; } = new(); //User - John Doe
     private int _ticketQuantity;
-    
+
     public int TicketQuantity
     {
         get => _ticketQuantity;
