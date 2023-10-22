@@ -8,17 +8,38 @@ namespace MovieTicketingSystem.ViewModel;
 public class AddMovieViewModel : BaseViewModel
 {
     public Movie Movie { get; set; } = new Movie();
+    public List<string> AvailableGenre { get; set; }
+    public List<string> AvailableSubtitles { get; set; }
     private MovieService _movieService;
     private ObservableCollection<Movie> _movieCollection;
-    private ImageSource _movieImageSource;
-    private DateTime _date;
-    private DateTime _startTime;
-    private DateTime _endTime;
 
     public AddMovieViewModel(MovieService movieService)
     {
         _movieService = movieService;
-        Date = DateTime.Today;
+        AvailableGenre = new()
+        {
+            "Action",
+            "Adventure",
+            "Comedy",
+            "Drama",
+            "Fantasy",
+            "Horror",
+            "Mystery",
+            "Thriller",
+            "Western"
+        };
+
+        AvailableSubtitles = new()
+        {
+            "English",
+            "Filipino",
+            "Japanese",
+            "Korean",
+            "Mandarin",
+            "Spanish",
+            "Thai",
+            "Vietnamese"
+        };
     }
 
     public ICommand UploadImageCommand => new Command(async () => await UploadImage());
@@ -30,39 +51,6 @@ public class AddMovieViewModel : BaseViewModel
         set
         {
             _movieCollection = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public DateTime Date
-    {
-        get => _date;
-        set
-        {
-            _date = value;
-            Movie.StartDate = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public DateTime StartTime
-    {
-        get => _startTime;
-        set
-        {
-            _startTime = value;
-            Movie.EndDate = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public DateTime EndTime
-    {
-        get => _endTime;
-        set
-        {
-            _endTime = value;
-            Movie.EndDate = value;
             OnPropertyChanged();
         }
     }

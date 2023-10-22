@@ -7,18 +7,23 @@ public class Movie : BaseModel
     private string _name;
     private string _description;
     private decimal _price;
-    private string _genre;
+    public List<string> SelectedGenres { get; set; }
+    public List<string> SelectedSubtitles { get; set; }
     private string _companySource;
-    private string _subtitleLanguage;
     private bool _isUpcoming;
     private bool _isNowShowing;
     private Byte[] _image;
     //showtime start and end date
-    private string _movieDuration; //movie duration - 2 hours and 30 minutes, set 
+    private DateTime _duration;
     private DateTime _yearReleased;
     private DateTime _startDate;
     private DateTime _endDate;
     //movie duration
+
+    public Movie()
+    {
+        _startDate = _endDate = DateTime.Now;
+    }
 
     public string Name
     {
@@ -78,12 +83,12 @@ public class Movie : BaseModel
             OnPropertyChanged();
         }
     }
-    public string MovieDuration
+    public DateTime Duration
     {
-        get => _movieDuration;
+        get => _duration;
         set
         {
-            _movieDuration = value;
+            _duration = value;
             OnPropertyChanged();
         }
     }
@@ -108,32 +113,12 @@ public class Movie : BaseModel
         }
     }
 
-    public string Genre
-    {
-        get => _genre;
-        set
-        {
-            _genre = value;
-            OnPropertyChanged();
-        }
-    }
-
     public string CompanySource
     {
         get => _companySource;
         set
         {
             _companySource = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public string SubtitleLanguage
-    {
-        get => _subtitleLanguage;
-        set
-        {
-            _subtitleLanguage = value;
             OnPropertyChanged();
         }
     }

@@ -27,6 +27,7 @@
             </Style>
             <Style TargetType="Button">
                 <Setter Property="WidthRequest" Value="200" />
+                <Setter Property="HeightRequest" Value="50" />
                 <Setter Property="Background" Value="#cc4f46" />
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="FontAttributes" Value="Bold" />
@@ -35,6 +36,101 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
+    <!--  Main Layout  -->
+    <!--  Make entries wrap with border for Movie Properties  -->
+    <ScrollView Margin="5">
+        <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,100">
 
+            <StackLayout>
+                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                    <Label Text="Title" />
+                    <Border>
+                        <Entry Text="{Binding Movie.Name}" />
+                    </Border>
+                </StackLayout>
+                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                    <Label Text="Company Source" />
+                    <Border>
+                        <Entry Text="{Binding Movie.CompanySource}" />
+                    </Border>
+                </StackLayout>
+                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                    <Label Text="Price" />
+                    <Border>
+                        <Entry Text="{Binding Movie.Price}" />
+                    </Border>
+                </StackLayout>
+                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                    <Label Text="Description" />
+                    <Border>
+                        <Entry Text="{Binding Movie.Description}" />
+                    </Border>
+                </StackLayout>
+                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                    <Label Text="Duration" />
+                    <Border>
+                        <TimePicker Format="T" Time="{Binding Movie.Duration}" />
+                    </Border>
+                </StackLayout>
+                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                    <Label Text="Year Released" />
+                    <DatePicker Date="{Binding Movie.YearReleased}" />
+                </StackLayout>
+                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                    <Label Text="Start Date" />
+                    <DatePicker Date="{Binding Movie.StartDate}" />
+                </StackLayout>
+                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                    <Label Text="End Date" />
+                    <DatePicker Date="{Binding Movie.EndDate}" />
+                </StackLayout>
+                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                    <RadioButton Content="Upcoming" IsChecked="{Binding Movie.IsUpcoming}" />
+                    <RadioButton Content="Now Showing" IsChecked="{Binding Movie.IsNowShowing}" />
+                </StackLayout>
+            </StackLayout>
 
+            <StackLayout Grid.Column="1">
+                <Label Text="Genre" />
+                <CollectionView HorizontalOptions="Center" ItemsSource="{Binding AvailableGenre}">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="*,*">
+                                <CheckBox />
+                                <Label Grid.Column="1" Text="{Binding .}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+            </StackLayout>
+
+            <StackLayout Grid.Column="2">
+                <Label Text="Subtitles" />
+                <CollectionView HorizontalOptions="Center" ItemsSource="{Binding AvailableSubtitles}">
+
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid ColumnDefinitions="*,*">
+                                <CheckBox />
+                                <Label Grid.Column="1" Text="{Binding .}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="1"
+                Grid.ColumnSpan="3"
+                HorizontalOptions="Center"
+                Orientation="Horizontal"
+                Spacing="20"
+                VerticalOptions="StartAndExpand">
+                <Button Command="{Binding SaveCommand}" Text="Save Details" />
+                <Button Command="{Binding .}" Text="Reset" />
+            </StackLayout>
+        </Grid>
+    </ScrollView>
 </ContentPage>
