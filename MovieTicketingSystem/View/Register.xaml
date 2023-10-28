@@ -12,125 +12,133 @@
             <Style TargetType="Border">
                 <Setter Property="Stroke" Value="white" />
             </Style>
-
             <Style TargetType="Entry">
-                <Setter Property="WidthRequest" Value="200" />
+                <Setter Property="WidthRequest" Value="258" />
             </Style>
-
             <Style TargetType="DatePicker">
                 <Setter Property="WidthRequest" Value="200" />
             </Style>
-
             <Style TargetType="Label">
                 <Setter Property="TextColor" Value="white" />
                 <Setter Property="WidthRequest" Value="150" />
                 <Setter Property="VerticalOptions" Value="Center" />
             </Style>
-
             <Style TargetType="Button">
                 <Setter Property="WidthRequest" Value="150" />
                 <Setter Property="HeightRequest" Value="50" />
             </Style>
-
             <Style TargetType="StackLayout">
                 <Setter Property="Spacing" Value="20" />
             </Style>
-
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Grid
-        Margin="20"
-        ColumnDefinitions="*,*"
-        ColumnSpacing="20"
-        HorizontalOptions="Center"
-        RowDefinitions="*,*"
-        RowSpacing="25"
-        VerticalOptions="Center">
-        <StackLayout>
-            <!--  firstname  -->
-            <HorizontalStackLayout>
-                <Label Text="First Name" />
-                <Border>
-                    <Entry Text="{Binding User.FirstName}" />
-                </Border>
-            </HorizontalStackLayout>
-            <!--  middlename  -->
-            <HorizontalStackLayout>
-                <Label Text="Middle Name" />
-                <Border>
-                    <Entry Text="{Binding User.MiddleName}" />
-                </Border>
-            </HorizontalStackLayout>
-            <!--  lastname  -->
-            <HorizontalStackLayout>
-                <Label Text="Last Name" />
-                <Border>
-                    <Entry Text="{Binding User.LastName}" />
-                </Border>
-            </HorizontalStackLayout>
-            <!--  email  -->
-            <HorizontalStackLayout>
-                <Label Text="Email Address" />
-                <Border>
-                    <Entry Text="{Binding User.EmailAddress}" />
-                </Border>
+    <Frame BackgroundColor="Black"  BorderColor="Black" WidthRequest="800" Margin="0" >
+        <VerticalStackLayout Spacing="10">
+            <Image Source="logoww.png" HorizontalOptions="Start"    WidthRequest="350"/>
+            <HorizontalStackLayout  HorizontalOptions="Center" Spacing="20" >
+                <Frame WidthRequest="300" HeightRequest="420" BackgroundColor="Black" CornerRadius="25">
+                    <StackLayout Spacing="5">
+                        <Label Text="Username" Margin="-105,0,0,0"/>
+                        <Border WidthRequest="258">
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10,10,10,10" />
+                            </Border.StrokeShape>
+                            <Entry Text="{Binding User.Username}" />
+                        </Border>
+                        <Label Text="First Name" Margin="-105,0,0,0"/>
+                        <Border>
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10,10,10,10" />
+                            </Border.StrokeShape>
+                            <Entry Text="{Binding User.FirstName}"/>
+                        </Border>
+
+                        <Label Text="Middle Name" Margin="-105,0,0,0"/>
+                        <Border>
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10,10,10,10" />
+                            </Border.StrokeShape>
+                            <Entry Text="{Binding User.MiddleName}" />
+                        </Border>
+
+                        <Label Text="Last Name" Margin="-105,0,0,0"/>
+                        <Border>
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10,10,10,10" />
+                            </Border.StrokeShape>
+                            <Entry Text="{Binding User.LastName}" />
+                        </Border>
+
+                        <Label Text="Birth Date"  Margin="-105,0,0,0"/>
+                        <Border>
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10,10,10,10" />
+                            </Border.StrokeShape>
+                            <DatePicker Date="{Binding User.BirthDate}" />
+                        </Border>
+
+                    </StackLayout>
+                </Frame>
+
+                <Frame  BackgroundColor="Black" CornerRadius="25">
+                    <StackLayout Spacing="5">
+                        <HorizontalStackLayout>
+
+                            <Label Text="Gender" />
+                            <RadioButton Margin="-80,0,10,0" Content="Male" IsChecked="{Binding IsMale}" />
+                            <Image Source="male.png" Margin="-12,0,0,0" WidthRequest="18"/>
+                            <RadioButton Content="Female" IsChecked="{Binding IsFemale}"/>
+                            <Image Source="female.png" Margin="-2,0,0,0" WidthRequest="18"/>
+
+                        </HorizontalStackLayout>
+
+                        <Label Text="Home Address"  Margin="-105,0,0,0"/>
+                        <Border>
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10,10,10,10" />
+                            </Border.StrokeShape>
+                            <Entry Text="{Binding User.HomeAddress}" />
+                        </Border>
+
+
+                        <Label Text="Email Address" Margin="-105,0,0,0"/>
+                        <Border>
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10,10,10,10" />
+                            </Border.StrokeShape>
+                            <Entry Text="{Binding User.EmailAddress}" />
+                        </Border>
+
+                        <Label Text="Password" Margin="-105,0,0,0" />
+                        <Border>
+                            <Border.StrokeShape>
+                                <RoundRectangle CornerRadius="10,10,10,10" />
+                            </Border.StrokeShape>
+                            <Entry Text="{Binding User.Password}" IsPassword="True"/>
+                        </Border>
+
+                        <HorizontalStackLayout>
+                            <Label Text="Role" />
+                            <RadioButton Margin="-100,0,10,0" Content="Admin" IsChecked="{Binding IsAdmin}" />
+                            <Image Source="admin.png" WidthRequest="18"/>
+                            <RadioButton Content="Customer" IsChecked="{Binding IsCustomer}"/>
+                            <Image Source="customer.png" WidthRequest="18"/>
+
+                        </HorizontalStackLayout>
+
+                    </StackLayout>
+                </Frame>
             </HorizontalStackLayout>
 
-            <HorizontalStackLayout>
-                <Label Text="Birth Date" />
-                <Border>
-                    <DatePicker Date="{Binding User.BirthDate}" />
-                </Border>
-            </HorizontalStackLayout>
-        </StackLayout>
+            <Frame BackgroundColor="Black" BorderColor="Black">
+                <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
+                    <Button Command="{Binding RegisterCommand}" Text="Register" Background="RED" TextColor="white" FontAttributes="Bold" CornerRadius="25"/>
+                    <Button Command="{Binding ClearCommand}" Text="Clear" TextColor="Black" FontAttributes="Bold" CornerRadius="25"/>
+                </HorizontalStackLayout>
+            </Frame>
+        </VerticalStackLayout>
 
-
-        <StackLayout Grid.Column="1">
-            <!--  firstname  -->
-            <HorizontalStackLayout Spacing="10">
-                <Label Text="Gender" />
-                <RadioButton Content="Male" IsChecked="{Binding IsMale}" />
-                <RadioButton Content="Female" IsChecked="{Binding IsFemale}"/>
-            </HorizontalStackLayout>
-            <!--  middlename  -->
-            <HorizontalStackLayout>
-                <Label Text="Home Address" />
-                <Border>
-                    <Entry Text="{Binding User.HomeAddress}" />
-                </Border>
-            </HorizontalStackLayout>
-            <!--  lastname  -->
-            <HorizontalStackLayout>
-                <Label Text="Username" />
-                <Border>
-                    <Entry Text="{Binding User.Username}" />
-                </Border>
-            </HorizontalStackLayout>
-            <!--  email  -->
-            <HorizontalStackLayout>
-                <Label Text="Password" />
-                <Border>
-                    <Entry Text="{Binding User.Password}" />
-                </Border>
-            </HorizontalStackLayout>
-
-            <HorizontalStackLayout Spacing="10">
-                <Label Text="Role" />
-                <RadioButton Content="Admin" IsChecked="{Binding IsAdmin}" />
-                <RadioButton Content="Customer" IsChecked="{Binding IsCustomer}"/>
-            </HorizontalStackLayout>
-        </StackLayout>
-
-        <HorizontalStackLayout
-            Grid.Row="1"
-            Grid.ColumnSpan="2"
-            Padding="20"
-            HorizontalOptions="Center"
-            Spacing="10">
-            <Button Command="{Binding RegisterCommand}" Text="Register" Background="RED" TextColor="white" FontAttributes="Bold"/>
-            <Button Command="{Binding ClearCommand}" Text="Clear" TextColor="Black" FontAttributes="Bold"/>
-        </HorizontalStackLayout>
-    </Grid>
+    </Frame>
 
 </ContentPage>

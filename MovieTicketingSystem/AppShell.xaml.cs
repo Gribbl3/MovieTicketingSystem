@@ -18,5 +18,9 @@ namespace MovieTicketingSystem
             InitializeComponent();
         }
 
+        
+
     }
+
+
 }

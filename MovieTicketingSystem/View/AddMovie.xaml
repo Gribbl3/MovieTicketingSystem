@@ -38,99 +38,134 @@
 
     <!--  Main Layout  -->
     <!--  Make entries wrap with border for Movie Properties  -->
-    <ScrollView Margin="5">
-        <Grid ColumnDefinitions="*,*,*" RowDefinitions="*,100">
+    <Frame BackgroundColor="Black" BorderColor="Black">
+        <VerticalStackLayout >
+            <Image Source="logoww.png" HorizontalOptions="Start" WidthRequest="350"/>
+            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0,20,0,0">
+                <Frame WidthRequest="500" HeightRequest="550" BorderColor="Gray" BackgroundColor="Black" CornerRadius="25">
+                    <VerticalStackLayout Spacing="5">
+                        <HorizontalStackLayout>
+                            <Label Text="Title" />
+                            <Border Margin="-70,0,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,10,10" /> 
+                                </Border.StrokeShape>
+                                <Entry Text="{Binding Movie.Name}" />
+                            </Border>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout>
+                            <Label Text="Company Source" />
+                            <Border Margin="-70,0,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,10,10" />
+                                </Border.StrokeShape>
+                                <Entry Text="{Binding Movie.CompanySource}" />
+                            </Border>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout>
+                            <Label Text="Price" />
+                            <Border Margin="-70,0,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,10,10" />
+                                </Border.StrokeShape>
+                                <Entry Text="{Binding Movie.Price}" />
+                            </Border>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout>
+                            <Label Text="Description" />
+                            <Border Margin="-70,0,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,10,10" />
+                                </Border.StrokeShape>
+                                <Entry Text="{Binding Movie.Description}" />
+                            </Border>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout>
+                            <Label Text="Duration" />
+                            <Border  Margin="-70,0,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,10,10" />
+                                </Border.StrokeShape>
+                                <TimePicker Format="T" Time="{Binding Movie.Duration}" />
+                            </Border>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout>
+                            <Label Text="Year Released" />
+                            <Border  Margin="-70,0,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,10,10" />
+                                </Border.StrokeShape>
+                                <DatePicker Date="{Binding Movie.YearReleased}" />
+                            </Border>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout>
+                            <Label Text="Start Date" />
+                            <Border  Margin="-70,0,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,10,10" />
+                                </Border.StrokeShape>
+                                <DatePicker Date="{Binding Movie.StartDate}" />
+                            </Border>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout>
+                            <Label Text="End Date" />
+                            <Border  Margin="-70,0,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,10,10" />
+                                </Border.StrokeShape>
+                                <DatePicker Date="{Binding Movie.EndDate}" />
+                            </Border>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Margin="120,0,0,0">
+                            <RadioButton Content="Upcoming" IsChecked="{Binding Movie.IsUpcoming}" />
+                            <RadioButton Content="Now Showing" IsChecked="{Binding Movie.IsNowShowing}" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Margin="40,0,0,0" Spacing="5">
+                            <Button Command="{Binding SaveCommand}" Text="Save Details" CornerRadius="25" WidthRequest="180"/>
+                            <Button Command="{Binding .}" Text="Reset"  CornerRadius="25"  WidthRequest="180"/>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Frame>
 
-            <StackLayout>
-                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                    <Label Text="Title" />
-                    <Border>
-                        <Entry Text="{Binding Movie.Name}" />
-                    </Border>
-                </StackLayout>
-                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                    <Label Text="Company Source" />
-                    <Border>
-                        <Entry Text="{Binding Movie.CompanySource}" />
-                    </Border>
-                </StackLayout>
-                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                    <Label Text="Price" />
-                    <Border>
-                        <Entry Text="{Binding Movie.Price}" />
-                    </Border>
-                </StackLayout>
-                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                    <Label Text="Description" />
-                    <Border>
-                        <Entry Text="{Binding Movie.Description}" />
-                    </Border>
-                </StackLayout>
-                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                    <Label Text="Duration" />
-                    <Border>
-                        <TimePicker Format="T" Time="{Binding Movie.Duration}" />
-                    </Border>
-                </StackLayout>
-                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                    <Label Text="Year Released" />
-                    <DatePicker Date="{Binding Movie.YearReleased}" />
-                </StackLayout>
-                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                    <Label Text="Start Date" />
-                    <DatePicker Date="{Binding Movie.StartDate}" />
-                </StackLayout>
-                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                    <Label Text="End Date" />
-                    <DatePicker Date="{Binding Movie.EndDate}" />
-                </StackLayout>
-                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
-                    <RadioButton Content="Upcoming" IsChecked="{Binding Movie.IsUpcoming}" />
-                    <RadioButton Content="Now Showing" IsChecked="{Binding Movie.IsNowShowing}" />
-                </StackLayout>
-            </StackLayout>
+                <Frame WidthRequest="500" HeightRequest="550" BorderColor="Gray" BackgroundColor="Black" CornerRadius="25">
+                    <VerticalStackLayout>
+                        <HorizontalStackLayout HorizontalOptions="Center">
+                            <Label Text="Genre" Margin="100,0,50,10"/>
+                            <Label Text="Subtitles" Margin="-30,0,0,0"/>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Margin="70,10,0,0">
+                            <VerticalStackLayout>
+                                <CollectionView HorizontalOptions="Center" ItemsSource="{Binding AvailableGenre}">
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid ColumnDefinitions="*,*">
+                                                <CheckBox />
+                                                <Label Grid.Column="1" Text="{Binding .}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </VerticalStackLayout>
+                            
+                            <VerticalStackLayout Margin="50,0,0,0">
+                                <CollectionView HorizontalOptions="Center" ItemsSource="{Binding AvailableSubtitles}">
 
-            <StackLayout Grid.Column="1">
-                <Label Text="Genre" />
-                <CollectionView HorizontalOptions="Center" ItemsSource="{Binding AvailableGenre}">
-
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid ColumnDefinitions="*,*">
-                                <CheckBox />
-                                <Label Grid.Column="1" Text="{Binding .}" />
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-
-            </StackLayout>
-
-            <StackLayout Grid.Column="2">
-                <Label Text="Subtitles" />
-                <CollectionView HorizontalOptions="Center" ItemsSource="{Binding AvailableSubtitles}">
-
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Grid ColumnDefinitions="*,*">
-                                <CheckBox />
-                                <Label Grid.Column="1" Text="{Binding .}" />
-                            </Grid>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </StackLayout>
-
-            <StackLayout
-                Grid.Row="1"
-                Grid.ColumnSpan="3"
-                HorizontalOptions="Center"
-                Orientation="Horizontal"
-                Spacing="20"
-                VerticalOptions="StartAndExpand">
-                <Button Command="{Binding SaveCommand}" Text="Save Details" />
-                <Button Command="{Binding .}" Text="Reset" />
-            </StackLayout>
-        </Grid>
-    </ScrollView>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid ColumnDefinitions="*,*">
+                                                <CheckBox />
+                                                <Label Grid.Column="1" Text="{Binding .}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                        
+                    </VerticalStackLayout>
+                    
+                </Frame>
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Frame>
 </ContentPage>

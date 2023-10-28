@@ -51,10 +51,19 @@
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
 	  <None Remove="Resources\Images\add_photo_alternate.svg" />
+	  <None Remove="Resources\Images\admin.png" />
 	  <None Remove="Resources\Images\background.jpg" />
+	  <None Remove="Resources\Images\customer.png" />
+	  <None Remove="Resources\Images\female.png" />
 	  <None Remove="Resources\Images\jurassicpark.png" />
+	  <None Remove="Resources\Images\logoww.png" />
+	  <None Remove="Resources\Images\male.png" />
+	  <None Remove="Resources\Images\poster1.jpg" />
 	  <None Remove="Resources\Images\Spiderman.jpg" />
 	  <None Remove="Resources\Images\thewhale.jpg" />
+	  <None Remove="Resources\Images\ticketa.png" />
+	  <None Remove="Resources\Images\ticketb.png" />
+	  <None Remove="Resources\Images\user.png" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -20,7 +20,7 @@
         <StackLayout
             Padding="50"
             Background="black"
-            HeightRequest="500"
+            HeightRequest="420"
             Opacity="0.95"
             Spacing="10"
             VerticalOptions="Center"
@@ -29,46 +29,62 @@
                 FontAttributes="Bold"
                 FontSize="Large"
                 Text="Sign In" />
-            <Entry
-                Margin="0,20,0,0"
+
+            <Border>
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10,10,10,10" />
+                </Border.StrokeShape>
+                <Entry
                 Background="#323230"
                 Placeholder="Username"
                 Text="{Binding User.Username}" />
-            <Entry
-                Background="#323230"
-                IsPassword="True"
-                Placeholder="Password"
-                Text="{Binding User.Password}" />
+            </Border>
+
+            <Border>
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="10,10,10,10" />
+                </Border.StrokeShape>
+                <Entry
+                    Background="#323230"
+                    IsPassword="True"
+                    Placeholder="Password"
+                    Text="{Binding User.Password}" />
+            </Border>
+           
 
             <!--  margin left, top, right, bottom  -->
             <HorizontalStackLayout
-                Margin="0,30,0,5"
+                Margin="0,20,0,5"
                 HorizontalOptions="Center"
                 Spacing="10">
-
                 <Button
                     BackgroundColor="red"
                     Command="{Binding SignInCommand}"
                     CommandParameter="Admin"
-                    CornerRadius="5"
-                    FontAttributes="Bold"
-                    FontSize="Body"
+                    CornerRadius="20"
+                    WidthRequest="150"
+                    
+                    
+                    FontSize="12"
                     Text="Sign in as Admin"
-                    TextColor="white" />
+                    TextColor="white"/>
+
+               
 
                 <Button
                     BackgroundColor="red"
                     Command="{Binding SignInCommand}"
                     CommandParameter="Customer"
-                    CornerRadius="5"
-                    FontAttributes="Bold"
-                    FontSize="Body"
+                    CornerRadius="20"
+                    WidthRequest="150"
+                    
+                    FontSize="12"
                     Text="Sign in as Customer"
                     TextColor="white" />
             </HorizontalStackLayout>
 
 
-            <HorizontalStackLayout>
+            <HorizontalStackLayout Margin="0,20,0,0">
                 <Label Text="New to WinWin Movie System?" />
                 <Label
                     FontAttributes="Bold"

@@ -15,4 +15,9 @@ public partial class Customer : ContentPage
         base.OnAppearing();
         Shell.Current.Title = "User Homepage";
     }
+
+    private async void ImageTapped(object sender, EventArgs e)
+    {
+        await DisplayAlert("Image Tapped", "Image CLicked", "OK");
+    }
 }

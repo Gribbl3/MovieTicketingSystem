@@ -27,6 +27,8 @@ public class LoginViewModel : BaseViewModel
     private void SignIn(string userType)
     {
         User.IsAdmin = userType == "Admin";
+       
+
         switch (userType)
         {
             case "Admin":
