@@ -1,4 +1,6 @@
-﻿namespace MovieTicketingSystem.Model;
+﻿using System.Collections.ObjectModel;
+
+namespace MovieTicketingSystem.Model;
 
 public class Movie : BaseModel
 {
@@ -7,24 +9,23 @@ public class Movie : BaseModel
     private string _name;
     private string _description;
     private decimal _price;
-    public List<string> SelectedGenres { get; set; }
-    public List<string> SelectedSubtitles { get; set; }
     private string _companySource;
     private bool _isUpcoming;
     private bool _isNowShowing;
     private Byte[] _image;
     //showtime start and end date
-    private DateTime _duration;
+    private TimeSpan _startTime;
+    private TimeSpan _endTime;
     private DateTime _yearReleased;
     private DateTime _startDate;
     private DateTime _endDate;
-    //movie duration
+    public ObservableCollection<string> SelectedGenre { get; set; } = new();
+    public ObservableCollection<string> SelectedSubtitle { get; set; } = new();
 
     public Movie()
     {
         _startDate = _endDate = DateTime.Now;
     }
-
     public string Name
     {
         get => _name;
@@ -34,7 +35,6 @@ public class Movie : BaseModel
             OnPropertyChanged();
         }
     }
-
     public string Description
     {
         get => _description;
@@ -44,7 +44,6 @@ public class Movie : BaseModel
             OnPropertyChanged();
         }
     }
-
     public bool IsUpcoming
     {
         get => _isUpcoming;
@@ -54,7 +53,6 @@ public class Movie : BaseModel
             OnPropertyChanged();
         }
     }
-
     public bool IsNowShowing
     {
         get => _isNowShowing;
@@ -64,7 +62,6 @@ public class Movie : BaseModel
             OnPropertyChanged();
         }
     }
-
     public DateTime StartDate
     {
         get => _startDate;
@@ -83,12 +80,22 @@ public class Movie : BaseModel
             OnPropertyChanged();
         }
     }
-    public DateTime Duration
+    public TimeSpan StartTime
     {
-        get => _duration;
+        get => _startTime;
         set
         {
-            _duration = value;
+            _startTime = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public TimeSpan EndTime
+    {
+        get => _endTime;
+        set
+        {
+            _endTime = value;
             OnPropertyChanged();
         }
     }
@@ -132,6 +139,7 @@ public class Movie : BaseModel
             OnPropertyChanged();
         }
     }
+
 
     #endregion
 }
