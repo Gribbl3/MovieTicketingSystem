@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MovieTicketingSystem.View.AddMall"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:MovieTicketingSystem.Model"
+    xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
+    Title="AddMall"
+    x:DataType="vm:AddMallViewModel">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="WidthRequest" Value="100" />
+            </Style>
+            
+            <Style TargetType="Entry">
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="WidthRequest" Value="200" />
+            </Style>
+            <Style TargetType="Button">
+
+                <Setter Property="WidthRequest" Value="150" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid ColumnDefinitions="*,*" Margin="10">
+        <!--  User input  -->
+        <VerticalStackLayout>
+            <Frame>
+                <StackLayout Spacing="10">
+                    <HorizontalStackLayout>
+                        <Label Text="Mall Name" />
+                        <Entry Text="{Binding Mall.Name}" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout>
+                        <Label Text="Mall Address" />
+                        <Entry Text="{Binding Mall.Address}" />
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Spacing="5" HorizontalOptions="Center">
+                        <Button Command="{Binding SaveCommand}" Text="Save Details" />
+                        <Button Command="{Binding ResetCommand}" Text="Reset" />
+                    </HorizontalStackLayout>
+                </StackLayout>
+            </Frame>
+        </VerticalStackLayout>
+        <Frame Grid.Column="1">
+            <CollectionView EmptyView="No Mall Branches yet" ItemsSource="{Binding MallCollection}" >
+                <CollectionView.Header>
+                    <Grid ColumnDefinitions="*,*" BackgroundColor="red" Margin="5" Padding="10">
+                        <Label Text="Name"/>
+                        <Label Text="Address" Grid.Column="1"/>
+                    </Grid>
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Mall">
+                        <Grid ColumnDefinitions="*,*" Margin="5" Padding="10">
+                            <Label Text="{Binding Name}" />
+                            <Label Text="{Binding Address}" Grid.Column="1"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Frame>
+    </Grid>
+</ContentPage>

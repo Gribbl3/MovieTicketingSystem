@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MovieTicketingSystem.View.AddCinema"
-             Title="AddCinema">
+<ContentPage
+    x:Class="MovieTicketingSystem.View.AddCinema"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
+    Title="AddCinema"
+    x:DataType="vm:AddCinemaViewModel">
 
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">
-                <Setter Property="VerticalTextAlignment" Value="Center"/>
-                <Setter Property="WidthRequest" Value="200"/>
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="WidthRequest" Value="200" />
             </Style>
             <Style TargetType="Entry">
-                <Setter Property="WidthRequest" Value="300"/>
+                <Setter Property="WidthRequest" Value="300" />
             </Style>
 
             <Style TargetType="Button">
@@ -25,48 +28,67 @@
     </ContentPage.Resources>
 
     <Frame BackgroundColor="Black" BorderColor="Black">
-        <VerticalStackLayout >
-            <Image Source="logoww.png" HorizontalOptions="Start" WidthRequest="350"/>
-            <HorizontalStackLayout HorizontalOptions="Center" Spacing="10" Margin="0,50,0,0">
-                <Frame WidthRequest="500" HeightRequest="300" BorderColor="Gray" BackgroundColor="Black" CornerRadius="25">
+        <VerticalStackLayout>
+            <Image
+                HorizontalOptions="Start"
+                Source="logoww.png"
+                WidthRequest="350" />
+            <HorizontalStackLayout
+                Margin="0,50,0,0"
+                HorizontalOptions="Center"
+                Spacing="10">
+                <Frame
+                    BackgroundColor="Black"
+                    BorderColor="Gray"
+                    CornerRadius="25"
+                    HeightRequest="300"
+                    WidthRequest="500">
                     <VerticalStackLayout Spacing="5">
                         <HorizontalStackLayout>
-                            <Label Text="Cinema Branch"/>
+                            <Label Text="Cinema Branch" />
                             <Border Margin="-70,0,0,0">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="10,10,10,10" />
                                 </Border.StrokeShape>
-                                <Entry Text="Binding here"/>
+                                <Entry Text="{Binding Cinema.Mall}" />
                             </Border>
                         </HorizontalStackLayout>
-                        <HorizontalStackLayout >
-                            <Label Text="Location / Address"/>
+                        <HorizontalStackLayout>
+                            <Label Text="Location / Address" />
                             <Border Margin="-70,0,0,0">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="10,10,10,10" />
                                 </Border.StrokeShape>
-                                <Entry Text="Binding here"/>
-                            </Border>
-                        </HorizontalStackLayout>
-
-                        <HorizontalStackLayout >
-                            <Label Text="Capacity"/>
-                            <Border Margin="-70,0,0,0">
-                                <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="10,10,10,10" />
-                                </Border.StrokeShape>
-                                <Entry Text="Binding here"/>
+                                <Entry Text="Binding here" />
                             </Border>
                         </HorizontalStackLayout>
 
-                        <HorizontalStackLayout Spacing="20" Margin="120,30,0,0">
-                            <Button  Text="Save Details" FontSize="12" CornerRadius="20" WidthRequest="100"/>
-                            <Button Text="Reset"  FontSize="12" CornerRadius="20" WidthRequest="100"/>
+                        <HorizontalStackLayout>
+                            <Label Text="Capacity" />
+                            <Border Margin="-70,0,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,10,10" />
+                                </Border.StrokeShape>
+                                <Entry Text="Binding here" />
+                            </Border>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout Margin="120,30,0,0" Spacing="20">
+                            <Button
+                                CornerRadius="20"
+                                FontSize="12"
+                                Text="Save Details"
+                                WidthRequest="100" />
+                            <Button
+                                CornerRadius="20"
+                                FontSize="12"
+                                Text="Reset"
+                                WidthRequest="100" />
                         </HorizontalStackLayout>
 
                     </VerticalStackLayout>
                 </Frame>
-              
+
             </HorizontalStackLayout>
         </VerticalStackLayout>
     </Frame>

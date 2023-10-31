@@ -1,9 +1,12 @@
+using MovieTicketingSystem.ViewModel;
+
 namespace MovieTicketingSystem.View;
 
 public partial class AddCinema : ContentPage
 {
-	public AddCinema()
-	{
-		InitializeComponent();
-	}
+    public AddCinema(AddCinemaViewModel viewModel)
+    {
+        BindingContext = viewModel;
+        InitializeComponent();
+    }
 }

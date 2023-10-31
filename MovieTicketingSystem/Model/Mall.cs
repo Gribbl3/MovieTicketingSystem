@@ -2,24 +2,24 @@
 
 public class Mall : BaseModel //Mall - SM North Edsa, MallAddress - Quezon City
 {
-    private string _mallName;
-    private string _mallAddress;
+    private string _name;
+    private string _address;
 
-    public string MallName
+    public string Name
     {
-        get => _mallName;
+        get => _name;
         set
         {
-            _mallName = value;
+            _name = value;
             OnPropertyChanged();
         }
     }
-    public string MallAddress
+    public string Address
     {
-        get => _mallAddress;
+        get => _address;
         set
         {
-            _mallAddress = value;
+            _address = value;
             OnPropertyChanged();
         }
     }
