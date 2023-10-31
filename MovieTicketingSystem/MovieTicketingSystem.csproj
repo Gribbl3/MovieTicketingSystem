@@ -53,6 +53,7 @@
 	  <None Remove="Resources\Images\add_photo.png" />
 	  <None Remove="Resources\Images\add_photo_alternate.svg" />
 	  <None Remove="Resources\Images\admin.png" />
+	  <None Remove="Resources\Images\available_seat.png" />
 	  <None Remove="Resources\Images\background.jpg" />
 	  <None Remove="Resources\Images\customer.png" />
 	  <None Remove="Resources\Images\female.png" />
@@ -64,6 +65,7 @@
 	  <None Remove="Resources\Images\thewhale.jpg" />
 	  <None Remove="Resources\Images\ticketa.png" />
 	  <None Remove="Resources\Images\ticketb.png" />
+	  <None Remove="Resources\Images\unavailable_seat.png" />
 	  <None Remove="Resources\Images\user.png" />
 	</ItemGroup>
 

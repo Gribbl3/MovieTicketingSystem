@@ -3,6 +3,7 @@
     x:Class="MovieTicketingSystem.View.AddCinema"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:MovieTicketingSystem.Model"
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
     Title="AddCinema"
     x:DataType="vm:AddCinemaViewModel">
@@ -11,7 +12,7 @@
         <ResourceDictionary>
             <Style TargetType="Label">
                 <Setter Property="VerticalTextAlignment" Value="Center" />
-                <Setter Property="WidthRequest" Value="200" />
+                <Setter Property="WidthRequest" Value="220" />
             </Style>
             <Style TargetType="Entry">
                 <Setter Property="WidthRequest" Value="300" />
@@ -23,16 +24,19 @@
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="FontAttributes" Value="Bold" />
             </Style>
-
+            <Style TargetType="Picker">
+                <Setter Property="WidthRequest" Value="300" />
+            </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Frame BackgroundColor="Black" BorderColor="Black">
-        <VerticalStackLayout>
-            <Image
-                HorizontalOptions="Start"
-                Source="logoww.png"
-                WidthRequest="350" />
+
+    <VerticalStackLayout Margin="10">
+        <Image
+            HorizontalOptions="Start"
+            Source="logoww.png"
+            WidthRequest="350" />
+        <StackLayout Orientation="Horizontal">
             <HorizontalStackLayout
                 Margin="0,50,0,0"
                 HorizontalOptions="Center"
@@ -45,21 +49,34 @@
                     WidthRequest="500">
                     <VerticalStackLayout Spacing="5">
                         <HorizontalStackLayout>
-                            <Label Text="Cinema Branch" />
+                            <Label Text="Select Mall/Branch" />
                             <Border Margin="-70,0,0,0">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="10,10,10,10" />
                                 </Border.StrokeShape>
-                                <Entry Text="{Binding Cinema.Mall}" />
+                                <Picker
+                                    ItemDisplayBinding="{Binding Name}"
+                                    ItemsSource="{Binding Malls}"
+                                    SelectedItem="{Binding SelectedMallItem}" />
                             </Border>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout>
-                            <Label Text="Location / Address" />
+                            <Label Text="Selected Mall Name" />
                             <Border Margin="-70,0,0,0">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="10,10,10,10" />
                                 </Border.StrokeShape>
-                                <Entry Text="Binding here" />
+                                <Entry IsReadOnly="True" Text="{Binding SelectedMallItem.Name}" />
+                            </Border>
+                        </HorizontalStackLayout>
+
+                        <HorizontalStackLayout>
+                            <Label Text="Selected Mall Address" />
+                            <Border Margin="-70,0,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,10,10" />
+                                </Border.StrokeShape>
+                                <Entry IsReadOnly="True" Text="{Binding SelectedMallItem.Address}" />
                             </Border>
                         </HorizontalStackLayout>
 
@@ -69,17 +86,22 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="10,10,10,10" />
                                 </Border.StrokeShape>
-                                <Entry Text="Binding here" />
+                                <Entry
+                                    Keyboard="Numeric"
+                                    Placeholder="Enter Cinema Seat Capacity"
+                                    Text="{Binding SeatCapacity}" />
                             </Border>
                         </HorizontalStackLayout>
 
-                        <HorizontalStackLayout Margin="120,30,0,0" Spacing="20">
+                        <HorizontalStackLayout Margin="120,10,0,0" Spacing="20">
                             <Button
+                                Command="{Binding SaveCommand}"
                                 CornerRadius="20"
                                 FontSize="12"
                                 Text="Save Details"
                                 WidthRequest="100" />
                             <Button
+                                Command="{Binding ResetCommand}"
                                 CornerRadius="20"
                                 FontSize="12"
                                 Text="Reset"
@@ -88,8 +110,41 @@
 
                     </VerticalStackLayout>
                 </Frame>
-
             </HorizontalStackLayout>
-        </VerticalStackLayout>
-    </Frame>
+
+            <CollectionView
+                Margin="10"
+                EmptyView="No Cinema Seat Capacity"
+                Header="Cinema Seat Representation"
+                HorizontalOptions="Center"
+                ItemsSource="{Binding Cinema.Seats}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout Orientation="Vertical" Span="8" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Seat">
+                        <Grid>
+                            <StackLayout Padding="10">
+                                <Image
+                                    Aspect="AspectFill"
+                                    HeightRequest="40"
+                                    Source="available_seat.png"
+                                    WidthRequest="40">
+                                    <Image.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding IsAvailableSeat}"
+                                            TargetType="Image"
+                                            Value="False">
+                                            <Setter Property="Source" Value="unavailable_seat.png" />
+                                        </DataTrigger>
+                                    </Image.Triggers>
+                                </Image>
+                            </StackLayout>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </StackLayout>
+    </VerticalStackLayout>
+
 </ContentPage>

@@ -10,7 +10,7 @@
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:AddMall}"
+        ContentTemplate="{DataTemplate local:AddCinema}"
         Route="Customer" />
     
     <TabBar>
