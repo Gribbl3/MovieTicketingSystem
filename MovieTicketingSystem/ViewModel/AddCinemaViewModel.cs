@@ -112,11 +112,11 @@ public class AddCinemaViewModel : BaseViewModel
 
         const int columns = 8;
         int rows = (int)Math.Ceiling((double)Cinema.SeatCapacity / columns);
-        for (int row = 0; row < rows; row++)
+        for (int row = 1; row <= rows; row++)
         {
-            for (int column = 0; column < columns; column++)
+            for (int column = 1; column <= columns; column++)
             {
-                if (row * columns + column < Cinema.SeatCapacity)
+                if ((row - 1) * columns + column <= Cinema.SeatCapacity)
                 {
                     Cinema.Seats.Add(new Seat
                     {
