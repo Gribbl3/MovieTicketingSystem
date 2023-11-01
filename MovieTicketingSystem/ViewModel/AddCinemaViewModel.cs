@@ -68,6 +68,8 @@ public class AddCinemaViewModel : BaseViewModel
     private void ResetCinema()
     {
         Cinema = new Cinema();
+
+        //update frontend that cinema is reset
         OnPropertyChanged(nameof(Cinema));
         SeatCapacity = 0;
         SelectedMallItem = null;

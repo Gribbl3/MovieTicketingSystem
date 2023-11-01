@@ -86,6 +86,9 @@
 	  <MauiXaml Update="View\Admin.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\CinemaPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\Customer.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

@@ -26,6 +26,7 @@ public static class MauiProgram
         builder.Services.AddTransient<AddCinemaViewModel>();
         builder.Services.AddTransient<AddMovieViewModel>();
         builder.Services.AddTransient<AddMallViewModel>();
+        builder.Services.AddTransient<CinemaPageViewModel>();
         //viewmodel for customer and admin  
         builder.Services.AddTransient<CustomerViewModel>();
         builder.Services.AddTransient<AdminViewModel>();
@@ -40,6 +41,7 @@ public static class MauiProgram
         builder.Services.AddTransient<AddMovie>();
         builder.Services.AddTransient<AddCinema>();
         builder.Services.AddTransient<AddMall>();
+        builder.Services.AddTransient<CinemaPage>();
 
         // Registering Services
         builder.Services.AddSingleton<IUserService, UserService>();

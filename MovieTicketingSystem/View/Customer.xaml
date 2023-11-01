@@ -104,7 +104,6 @@
                                 <FileImageSource File="postermatrix.jpg"/>
                                 <FileImageSource File="posterbookoflife.jpg"/>
                                 <FileImageSource File="posterblackpanther.jpg"/>
-
                             </x:Array>
                         </CarouselView.ItemsSource>
                         <CarouselView.ItemTemplate>

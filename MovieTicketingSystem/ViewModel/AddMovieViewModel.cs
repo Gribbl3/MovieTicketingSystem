@@ -25,12 +25,16 @@ public class AddMovieViewModel : BaseViewModel
 
     public ICommand UploadImageCommand => new Command(async () => await UploadImage());
     public ICommand SaveCommand => new Command(async () => await Save());
-    public ICommand ResetCommand => new Command(async () => await Reset());
+    public ICommand ResetCommand => new Command(Reset);
 
-    private async Task Reset()
+    /// <summary>
+    /// Reset the movie object and image
+    /// </summary>
+    private void Reset()
     {
         //reset the movie object
         Movie = new Movie();
+        OnPropertyChanged(nameof(Movie));
         //reset the image
         Image = "add_photo.png";
     }

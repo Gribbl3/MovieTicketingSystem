@@ -5,26 +5,29 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:local="clr-namespace:MovieTicketingSystem.View"
     Shell.FlyoutBehavior="Disabled"
-    Shell.TabBarBackgroundColor="#cc4f46"
-    Shell.NavBarIsVisible="False">
+    Shell.NavBarIsVisible="False"
+    Shell.TabBarBackgroundColor="#cc4f46">
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:AddCinema}"
+        ContentTemplate="{DataTemplate local:CinemaPage}"
         Route="Customer" />
-    
+
     <TabBar>
         <Tab Title="Home">
-            <ShellContent ContentTemplate="{DataTemplate local:Admin}" Route="Admin"/>
+            <ShellContent ContentTemplate="{DataTemplate local:Admin}" Route="Admin" />
         </Tab>
         <Tab Title="Add Movie">
             <ShellContent ContentTemplate="{DataTemplate local:AddMovie}" Route="AddMovie" />
         </Tab>
         <Tab Title="Add Cinema">
-            <ShellContent ContentTemplate="{DataTemplate local:AddCinema}" Route="AddCinema"/>
+            <ShellContent ContentTemplate="{DataTemplate local:AddCinema}" Route="AddCinema" />
         </Tab>
         <Tab Title="Add Mall">
-            <ShellContent ContentTemplate="{DataTemplate local:AddMall}" Route="AddMall"/>
+            <ShellContent ContentTemplate="{DataTemplate local:AddMall}" Route="AddMall" />
+        </Tab>
+        <Tab Title="Cinema Page">
+            <ShellContent ContentTemplate="{DataTemplate local:CinemaPage}" Route="CinemaPage" />
         </Tab>
     </TabBar>
 
