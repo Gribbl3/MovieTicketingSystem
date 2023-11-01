@@ -21,6 +21,7 @@ public class AddCinemaViewModel : BaseViewModel
     }
 
     public ICommand SaveCommand => new Command(async () => await AddCinema());
+    public ICommand ResetCommand => new Command(ResetCinema);
 
     public int SeatCapacity
     {
@@ -32,8 +33,20 @@ public class AddCinemaViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
+    public Mall SelectedMallItem
+    {
+        get => _selectedMallItem;
+        set
+        {
+            _selectedMallItem = value;
+            OnPropertyChanged();
+        }
+    }
 
-
+    /// <summary>
+    /// Add or creates cinema json file
+    /// </summary>
+    /// <returns></returns>
     private async Task AddCinema()
     {
         bool isValidCinema = ValidateCinema();
@@ -49,22 +62,22 @@ public class AddCinemaViewModel : BaseViewModel
         await Shell.Current.DisplayAlert("Success", "Cinema added successfully", "OK");
     }
 
-    public ICommand ResetCommand => new Command(ResetCinema);
-
-    private void ResetCinema(object obj)
+    /// <summary>
+    /// Resets all cinema properties to default
+    /// </summary>
+    private void ResetCinema()
     {
-        throw new NotImplementedException();
+        Cinema = new Cinema();
+        OnPropertyChanged(nameof(Cinema));
+        SeatCapacity = 0;
+        SelectedMallItem = null;
     }
 
-    public Mall SelectedMallItem
-    {
-        get => _selectedMallItem;
-        set
-        {
-            _selectedMallItem = value;
-            OnPropertyChanged();
-        }
-    }
+
+    /// <summary>
+    /// Creates cinemas folder if not exists
+    /// </summary>
+    /// <returns>void</returns>
     private async Task CreateCinemasFolder()
     {
         try
@@ -81,6 +94,10 @@ public class AddCinemaViewModel : BaseViewModel
         }
     }
 
+    /// <summary>
+    /// Validates user input for cinema
+    /// </summary>
+    /// <returns>bool</returns>
     private bool ValidateCinema()
     {
         if (SelectedMallItem == null)
@@ -93,8 +110,13 @@ public class AddCinemaViewModel : BaseViewModel
             Shell.Current.DisplayAlert("Error", "Please enter cinema seat capacity", "OK");
             return false;
         }
+        Cinema.Mall = SelectedMallItem;
         return true;
     }
+
+    /// <summary>
+    ///  Get Malls from json files
+    /// </summary>
     private async void GetMallsFromJson()
     {
         string[] mallFiles = Directory.GetFiles(_mallFolder);
@@ -106,6 +128,9 @@ public class AddCinemaViewModel : BaseViewModel
         }
     }
 
+    /// <summary>
+    /// Generate cinema seats after user input seat capacity
+    /// </summary>
     private void GenerateCinemaSeats()
     {
         Cinema.Seats.Clear();
