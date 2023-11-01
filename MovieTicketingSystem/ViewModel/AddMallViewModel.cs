@@ -11,10 +11,6 @@ public class AddMallViewModel : BaseViewModel
     public Mall Mall { get; set; } = new();
     public ObservableCollection<Mall> MallCollection { get; set; } = new();
 
-    public AddMallViewModel()
-    {
-        GetMallsFromJson();
-    }
     public ICommand SaveCommand => new Command(async () => await AddMall());
     public ICommand ResetCommand => new Command(ResetMall);
 
@@ -28,12 +24,21 @@ public class AddMallViewModel : BaseViewModel
         if (!isValidMall)
             return;
 
+        GenerateId();
         MallCollection.Add(Mall);
         string json = JsonSerializer.Serialize(Mall);
         string mallFile = Path.Combine(mainDir, "Malls", $"{Guid.NewGuid()}.json");
         await File.WriteAllTextAsync(mallFile, json);
 
         await Shell.Current.DisplayAlert("Success", "Mall added successfully", "OK");
+    }
+
+    /// <summary>
+    /// Generates mall id
+    /// </summary>
+    private void GenerateId()
+    {
+        Mall.Id = MallCollection.Count + 1;
     }
 
     /// <summary>
@@ -91,8 +96,10 @@ public class AddMallViewModel : BaseViewModel
     /// Get malls from json files
     /// </summary>
     /// <returns>void</returns>
-    private async void GetMallsFromJson()
+    public async void GetMallsFromJson()
     {
+        MallCollection.Clear();
+
         await CreateMallsFolder();
         //check from folder json files
         string mallsFolder = Path.Combine(mainDir, "Malls");

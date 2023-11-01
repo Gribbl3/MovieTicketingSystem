@@ -5,6 +5,7 @@ using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
 
+[QueryProperty(nameof(CinemaCount), nameof(CinemaCount))]
 public class AddCinemaViewModel : BaseViewModel
 {
     private readonly string _mallFolder = Path.Combine(FileSystem.Current.AppDataDirectory, "Malls");
@@ -13,12 +14,8 @@ public class AddCinemaViewModel : BaseViewModel
     public ObservableCollection<Mall> Malls { get; set; } = new();
     private Mall _selectedMallItem;
     private int _seatCapacity;
+    public int CinemaCount { get; set; }
 
-
-    public AddCinemaViewModel()
-    {
-        GetMallsFromJson();
-    }
 
     public ICommand SaveCommand => new Command(async () => await AddCinema());
     public ICommand ResetCommand => new Command(ResetCinema);
@@ -53,6 +50,7 @@ public class AddCinemaViewModel : BaseViewModel
         if (!isValidCinema)
             return;
 
+        GenerateId();
         await CreateCinemasFolder();
 
         string json = JsonSerializer.Serialize(Cinema);
@@ -60,6 +58,14 @@ public class AddCinemaViewModel : BaseViewModel
         await File.WriteAllTextAsync(cinemaFile, json);
 
         await Shell.Current.DisplayAlert("Success", "Cinema added successfully", "OK");
+    }
+
+    /// <summary>
+    /// Generates cinema id
+    /// </summary>
+    private void GenerateId()
+    {
+        Cinema.Id = CinemaCount + 1;
     }
 
     /// <summary>
@@ -96,6 +102,7 @@ public class AddCinemaViewModel : BaseViewModel
         }
     }
 
+
     /// <summary>
     /// Validates user input for cinema
     /// </summary>
@@ -119,7 +126,7 @@ public class AddCinemaViewModel : BaseViewModel
     /// <summary>
     ///  Get Malls from json files
     /// </summary>
-    private async void GetMallsFromJson()
+    public async void GetMallsFromJson()
     {
         string[] mallFiles = Directory.GetFiles(_mallFolder);
         foreach (string mallFile in mallFiles)

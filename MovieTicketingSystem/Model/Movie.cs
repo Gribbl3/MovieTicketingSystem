@@ -4,6 +4,8 @@ namespace MovieTicketingSystem.Model;
 
 public class Movie : BaseModel
 {
+    public int Id { get; set; }
+
     #region Fields and Properties
     //generate field and properties
     private string _name;

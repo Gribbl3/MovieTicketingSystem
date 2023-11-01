@@ -33,12 +33,17 @@
     <ScrollView>
         <VerticalStackLayout Margin="10">
             <Image
-           HorizontalOptions="Start"
-           Source="logoww.png"
-           WidthRequest="350" />
-            <Frame BorderColor="White" BackgroundColor="Black" Margin="0,10,0,0" WidthRequest="900" MaximumHeightRequest="250">
+                HorizontalOptions="Start"
+                Source="logoww.png"
+                WidthRequest="350" />
+            <Frame
+                Margin="0,10,0,0"
+                BackgroundColor="Black"
+                BorderColor="White"
+                MaximumHeightRequest="250"
+                WidthRequest="900">
                 <VerticalStackLayout Spacing="10">
-                    <HorizontalStackLayout Spacing="30" Margin="40,0,0,0">
+                    <HorizontalStackLayout Margin="40,0,0,0" Spacing="30">
                         <HorizontalStackLayout HorizontalOptions="Center">
                             <Label Text="Select Mall/Branch" />
                             <Border Margin="-70,0,0,0">
@@ -46,9 +51,9 @@
                                     <RoundRectangle CornerRadius="10,10,10,10" />
                                 </Border.StrokeShape>
                                 <Picker
-                                ItemDisplayBinding="{Binding Name}"
-                                ItemsSource="{Binding Malls}"
-                                SelectedItem="{Binding SelectedMallItem}" />
+                                    ItemDisplayBinding="{Binding Name}"
+                                    ItemsSource="{Binding Malls}"
+                                    SelectedItem="{Binding SelectedMallItem}" />
                             </Border>
                         </HorizontalStackLayout>
                         <HorizontalStackLayout>
@@ -61,7 +66,7 @@
                             </Border>
                         </HorizontalStackLayout>
                     </HorizontalStackLayout>
-                    <HorizontalStackLayout Spacing="30" Margin="40,0,0,0">
+                    <HorizontalStackLayout Margin="40,0,0,0" Spacing="30">
                         <HorizontalStackLayout>
                             <Label Text="Selected Mall Address" />
                             <Border Margin="-70,0,0,0">
@@ -78,31 +83,29 @@
                                     <RoundRectangle CornerRadius="10,10,10,10" />
                                 </Border.StrokeShape>
                                 <Entry
-                           Keyboard="Numeric"
-                           Placeholder="Enter Cinema Seat Capacity"
-                           Text="{Binding SeatCapacity}" />
+                                    Keyboard="Numeric"
+                                    Placeholder="Enter Cinema Seat Capacity"
+                                    Text="{Binding SeatCapacity}" />
                             </Border>
                         </HorizontalStackLayout>
                     </HorizontalStackLayout>
 
-                    <HorizontalStackLayout HorizontalOptions="Center" Margin="0,20,0,0" >
+                    <HorizontalStackLayout Margin="0,20,0,0" HorizontalOptions="Center">
                         <HorizontalStackLayout Spacing="10">
                             <Button
-                       Command="{Binding SaveCommand}"
-                       CornerRadius="20"
-                       FontSize="12"
-                       Text="Save Details"
-                       WidthRequest="100" />
+                                Command="{Binding SaveCommand}"
+                                CornerRadius="20"
+                                FontSize="12"
+                                Text="Save Details"
+                                WidthRequest="100" />
                             <Button
-                       Command="{Binding ResetCommand}"
-                       CornerRadius="20"
-                       FontSize="12"
-                       Text="Reset"
-                       WidthRequest="100" />
+                                Command="{Binding ResetCommand}"
+                                CornerRadius="20"
+                                FontSize="12"
+                                Text="Reset"
+                                WidthRequest="100" />
                         </HorizontalStackLayout>
                     </HorizontalStackLayout>
-
-
                 </VerticalStackLayout>
             </Frame>
 
@@ -116,10 +119,10 @@
                     WidthRequest="800">
                     <CollectionView.ItemsLayout>
                         <GridItemsLayout
-                             HorizontalItemSpacing="2"
-                             Orientation="Vertical"
-                             Span="8"
-                             VerticalItemSpacing="2" />
+                            HorizontalItemSpacing="2"
+                            Orientation="Vertical"
+                            Span="8"
+                            VerticalItemSpacing="2" />
                     </CollectionView.ItemsLayout>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:Seat">
@@ -128,23 +131,29 @@
                                     <Frame BackgroundColor="Transparent" BorderColor="Transparent">
                                         <VerticalStackLayout>
                                             <Image
-                                                 Aspect="AspectFill"
-                                                 HeightRequest="40"
-                                                 Source="available_seat.png"
-                                                 WidthRequest="55"
-                                                 Margin="0,0,0,5"
-                                                BackgroundColor="Transparent">
+                                                Margin="0,0,0,5"
+                                                Aspect="AspectFill"
+                                                BackgroundColor="Transparent"
+                                                HeightRequest="40"
+                                                Source="available_seat.png"
+                                                WidthRequest="55">
                                                 <Image.Triggers>
                                                     <DataTrigger
-                                                     Binding="{Binding IsAvailableSeat}"
-                                                     TargetType="Image"
+                                                        Binding="{Binding IsAvailableSeat}"
+                                                        TargetType="Image"
                                                         Value="False">
                                                         <Setter Property="Source" Value="unavailable_seat.png" />
                                                     </DataTrigger>
                                                 </Image.Triggers>
                                             </Image>
-                                            <Label Text="{Binding SeatRow, StringFormat='Row {0}'}" WidthRequest="50" FontSize="11"/>
-                                            <Label Text="{Binding SeatColumn, StringFormat='Column {0}'}" WidthRequest="80" FontSize="11"/>
+                                            <Label
+                                                FontSize="11"
+                                                Text="{Binding SeatRow, StringFormat='Row {0}'}"
+                                                WidthRequest="50" />
+                                            <Label
+                                                FontSize="11"
+                                                Text="{Binding SeatColumn, StringFormat='Column {0}'}"
+                                                WidthRequest="80" />
                                         </VerticalStackLayout>
                                     </Frame>
                                 </StackLayout>
@@ -157,5 +166,5 @@
 
     </ScrollView>
 
-    
+
 </ContentPage>

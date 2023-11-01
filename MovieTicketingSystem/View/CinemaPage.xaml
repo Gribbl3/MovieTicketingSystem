@@ -10,32 +10,52 @@
     x:DataType="vm:CinemaPageViewModel">
     <VerticalStackLayout Margin="10">
         <HorizontalStackLayout
-                Margin="0,20,0,10"
-                HorizontalOptions="Center"
-                Spacing="5">
-            <Button Command="{Binding AddCinema}" CornerRadius="20" BackgroundColor="Red" TextColor="White" Text="Add Cinema" />
-            <Button Command="{Binding}"  CornerRadius="20" BackgroundColor="Red" TextColor="White" Text="Edit" />
-            <Button Command="{Binding}" CornerRadius="20" BackgroundColor="Red" TextColor="White" Text="Delete" />
+            Margin="0,20,0,10"
+            HorizontalOptions="Center"
+            Spacing="5">
+            <Button
+                BackgroundColor="Red"
+                Command="{Binding AddCinemaCommand}"
+                CornerRadius="20"
+                Text="Add Cinema"
+                TextColor="White" />
+            <Button
+                BackgroundColor="Red"
+                Command="{Binding }"
+                CornerRadius="20"
+                Text="Edit"
+                TextColor="White" />
+            <Button
+                BackgroundColor="Red"
+                Command="{Binding DeleteCinemaCommand}"
+                CornerRadius="20"
+                Text="Delete"
+                TextColor="White" />
         </HorizontalStackLayout>
         <ScrollView>
             <CollectionView ItemsSource="{Binding CinemaCollection}">
                 <CollectionView.Header>
                     <Frame BackgroundColor="Black">
-                        <Grid ColumnDefinitions="*,*,*">
-                            <Label Text="Mall Name" />
-                            <Label Grid.Column="1" Text="Address" />
-                            <Label Grid.Column="2" Text="Seat Capacity" />
+                        <Grid ColumnDefinitions="*,*,*,*">
+                            <Label Text="ID" />
+                            <Label Grid.Column="1" Text="Mall Name" />
+                            <Label Grid.Column="2" Text="Address" />
+                            <Label Grid.Column="3" Text="Seat Capacity" />
                         </Grid>
                     </Frame>
                 </CollectionView.Header>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Cinema">
-                        <Frame CornerRadius="5" BackgroundColor="Black" BorderColor="Black">
+                        <Frame
+                            BackgroundColor="Black"
+                            BorderColor="Black"
+                            CornerRadius="5">
                             <VerticalStackLayout>
-                                <Grid ColumnDefinitions="*,*,*">
-                                    <Label Text="{Binding Mall.Name}" />
-                                    <Label Grid.Column="1" Text="{Binding Mall.Address}" />
-                                    <Label Grid.Column="2" Text="{Binding SeatCapacity}" />
+                                <Grid ColumnDefinitions="*,*,*,*">
+                                    <Label Text="{Binding Id}" />
+                                    <Label Grid.Column="1" Text="{Binding Mall.Name}" />
+                                    <Label Grid.Column="2" Text="{Binding Mall.Address}" />
+                                    <Label Grid.Column="3" Text="{Binding SeatCapacity}" />
                                 </Grid>
                             </VerticalStackLayout>
                         </Frame>

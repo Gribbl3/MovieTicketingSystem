@@ -14,7 +14,7 @@
                 <Setter Property="HorizontalOptions" Value="Start" />
                 <Setter Property="WidthRequest" Value="100" />
             </Style>
-            
+
             <Style TargetType="Entry">
                 <Setter Property="VerticalTextAlignment" Value="Center" />
                 <Setter Property="HorizontalOptions" Value="Start" />
@@ -27,19 +27,22 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    
 
-    <ScrollView >
-        <Frame BackgroundColor="Black" BorderColor="Black" >
-            <VerticalStackLayout >
+
+    <ScrollView>
+        <Frame BackgroundColor="Black" BorderColor="Black">
+            <VerticalStackLayout>
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
-                    <Frame BackgroundColor="Black" WidthRequest="500" HeightRequest="200">
+                    <Frame
+                        BackgroundColor="Black"
+                        HeightRequest="200"
+                        WidthRequest="500">
                         <VerticalStackLayout Spacing="10">
                             <HorizontalStackLayout>
                                 <Label Text="Mall Name" />
                                 <Border>
                                     <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="10,10,10,10"/>
+                                        <RoundRectangle CornerRadius="10,10,10,10" />
                                     </Border.StrokeShape>
                                     <Entry Text="{Binding Mall.Name}" />
                                 </Border>
@@ -48,43 +51,62 @@
                                 <Label Text="Mall Address" />
                                 <Border>
                                     <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="10,10,10,10"/>
+                                        <RoundRectangle CornerRadius="10,10,10,10" />
                                     </Border.StrokeShape>
                                     <Entry Text="{Binding Mall.Address}" />
                                 </Border>
                             </HorizontalStackLayout>
-                            <HorizontalStackLayout Spacing="5" HorizontalOptions="Center">
-                                <Button Command="{Binding SaveCommand}" Text="Save Details" CornerRadius="20" BackgroundColor="Red" TextColor="white"/>
-                                <Button Command="{Binding ResetCommand}" Text="Reset"  CornerRadius="20" BackgroundColor="Red" TextColor="white"/>
+                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">
+                                <Button
+                                    BackgroundColor="Red"
+                                    Command="{Binding SaveCommand}"
+                                    CornerRadius="20"
+                                    Text="Save Details"
+                                    TextColor="white" />
+                                <Button
+                                    BackgroundColor="Red"
+                                    Command="{Binding ResetCommand}"
+                                    CornerRadius="20"
+                                    Text="Reset"
+                                    TextColor="white" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
-                    <Frame BackgroundColor="Black"  WidthRequest="500" HorizontalOptions="Center">
+                    <Frame
+                        BackgroundColor="Black"
+                        HorizontalOptions="Center"
+                        WidthRequest="500">
                         <VerticalStackLayout>
                             <HorizontalStackLayout>
-                                <CollectionView EmptyView="No Mall Branches yet" ItemsSource="{Binding MallCollection}" >
+                                <CollectionView EmptyView="No Mall Branches yet" ItemsSource="{Binding MallCollection}">
                                     <CollectionView.Header>
-                                        <Grid ColumnDefinitions="*,*"  Margin="100,0,0,0" Padding="10">
-                                            <Label Text="NAME"/>
-                                            <Label Text="ADDRESS" Grid.Column="1"/>
-                                         </Grid>
-                                        </CollectionView.Header>
+                                        <Grid
+                                            Margin="100,0,0,0"
+                                            Padding="10"
+                                            ColumnDefinitions="*,*,*">
+                                            <Label Text="ID" />
+                                            <Label Grid.Column="1" Text="NAME" />
+                                            <Label Grid.Column="2" Text="ADDRESS" />
+                                        </Grid>
+                                    </CollectionView.Header>
                                     <CollectionView.ItemTemplate>
-                                <DataTemplate x:DataType="model:Mall">
-                                            <Grid ColumnDefinitions="*,*" Margin="100,0,0,0" Padding="10">
-                                        <Label Text="{Binding Name}" />
-                                         <Label Text="{Binding Address}" Grid.Column="1"/>
-                                     </Grid>
-                                 </DataTemplate>
+                                        <DataTemplate x:DataType="model:Mall">
+                                            <Grid
+                                                Margin="100,0,0,0"
+                                                Padding="10"
+                                                ColumnDefinitions="*,*,*">
+                                                <Label Text="{Binding Id}" />
+                                                <Label Grid.Column="1" Text="{Binding Name}" />
+                                                <Label Grid.Column="2" Text="{Binding Address}" />
+                                            </Grid>
+                                        </DataTemplate>
                                     </CollectionView.ItemTemplate>
-                                    </CollectionView>
+                                </CollectionView>
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
-                        
                     </Frame>
                 </HorizontalStackLayout>
             </VerticalStackLayout>
         </Frame>
     </ScrollView>
-    
 </ContentPage>

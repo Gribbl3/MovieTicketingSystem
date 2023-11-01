@@ -4,9 +4,17 @@ namespace MovieTicketingSystem.View;
 
 public partial class AddCinema : ContentPage
 {
+    AddCinemaViewModel _viewModel;
     public AddCinema(AddCinemaViewModel viewModel)
     {
-        BindingContext = viewModel;
         InitializeComponent();
+        BindingContext = viewModel;
+        _viewModel = viewModel;
+    }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+        _viewModel.GetMallsFromJson();
     }
 }

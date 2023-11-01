@@ -20,15 +20,13 @@
         <Tab Title="Add Movie">
             <ShellContent ContentTemplate="{DataTemplate local:AddMovie}" Route="AddMovie" />
         </Tab>
-        <Tab Title="Add Cinema">
-            <ShellContent ContentTemplate="{DataTemplate local:AddCinema}" Route="AddCinema" />
-        </Tab>
         <Tab Title="Add Mall">
             <ShellContent ContentTemplate="{DataTemplate local:AddMall}" Route="AddMall" />
         </Tab>
-        <Tab Title="Cinema Page">
+        <Tab Title="Cinema">
             <ShellContent ContentTemplate="{DataTemplate local:CinemaPage}" Route="CinemaPage" />
         </Tab>
     </TabBar>
+
 
 </Shell>

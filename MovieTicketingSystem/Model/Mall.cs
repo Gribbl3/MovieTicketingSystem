@@ -2,6 +2,8 @@
 
 public class Mall : BaseModel //Mall - SM North Edsa, MallAddress - Quezon City
 {
+    public int Id { get; set; }
+
     private string _name;
     private string _address;
 

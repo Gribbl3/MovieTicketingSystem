@@ -5,6 +5,7 @@ namespace MovieTicketingSystem.Model;
 //class is dependent to Seat and Mall class
 public class Cinema : BaseModel
 {
+    public int Id { get; set; }
     public Mall Mall { get; set; } = new(); //Mall - SM
     public ObservableCollection<Seat> Seats { get; set; } = new();
     private int seatCapacity; //Seat - 100
