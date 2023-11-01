@@ -117,28 +117,40 @@
                 EmptyView="No Cinema Seat Capacity"
                 Header="Cinema Seat Representation"
                 HorizontalOptions="Center"
-                ItemsSource="{Binding Cinema.Seats}">
+                ItemsSource="{Binding Cinema.Seats}"
+                WidthRequest="800">
                 <CollectionView.ItemsLayout>
-                    <GridItemsLayout Orientation="Vertical" Span="8" />
+                    <GridItemsLayout
+                        HorizontalItemSpacing="2"
+                        Orientation="Vertical"
+                        Span="8"
+                        VerticalItemSpacing="2" />
                 </CollectionView.ItemsLayout>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Seat">
                         <Grid>
-                            <StackLayout Padding="10">
-                                <Image
-                                    Aspect="AspectFill"
-                                    HeightRequest="40"
-                                    Source="available_seat.png"
-                                    WidthRequest="40">
-                                    <Image.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding IsAvailableSeat}"
-                                            TargetType="Image"
-                                            Value="False">
-                                            <Setter Property="Source" Value="unavailable_seat.png" />
-                                        </DataTrigger>
-                                    </Image.Triggers>
-                                </Image>
+                            <StackLayout>
+                                <Frame>
+                                    <VerticalStackLayout>
+                                        <Image
+                                            Aspect="AspectFill"
+                                            HeightRequest="40"
+                                            Source="available_seat.png"
+                                            WidthRequest="40"
+                                            Margin="0,0,0,5">
+                                            <Image.Triggers>
+                                                <DataTrigger
+                                                    Binding="{Binding IsAvailableSeat}"
+                                                    TargetType="Image"
+                                                    Value="False">
+                                                    <Setter Property="Source" Value="unavailable_seat.png" />
+                                                </DataTrigger>
+                                            </Image.Triggers>
+                                        </Image>
+                                        <Label Text="{Binding SeatRow, StringFormat='Row {0}'}" WidthRequest="50" FontSize="11"/>
+                                        <Label Text="{Binding SeatColumn, StringFormat='Column {0}'}" WidthRequest="80" FontSize="11"/>
+                                    </VerticalStackLayout>
+                                </Frame>
                             </StackLayout>
                         </Grid>
                     </DataTemplate>
