@@ -140,21 +140,10 @@
                                     <DatePicker Date="{Binding Movie.EndDate}" />
                                 </Border>
                             </HorizontalStackLayout>
-                            <HorizontalStackLayout Margin="120,0,0,0">
-                                <RadioButton Content="Upcoming" IsChecked="{Binding Movie.IsUpcoming}" />
+                            <HorizontalStackLayout Margin="0,0,0,0">
+                                <Label Text="Status" />
+                                <RadioButton Content="Upcoming" IsChecked="{Binding Movie.IsUpcoming}"  Margin="-100,0,0,0"/>
                                 <RadioButton Content="Now Showing" IsChecked="{Binding Movie.IsNowShowing}" />
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout Margin="40,0,0,0" Spacing="5">
-                                <Button
-                                    Command="{Binding SaveCommand}"
-                                    CornerRadius="25"
-                                    Text="Save Details"
-                                    WidthRequest="180" />
-                                <Button
-                                    Command="{Binding ResetCommand}"
-                                    CornerRadius="25"
-                                    Text="Reset"
-                                    WidthRequest="180" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
@@ -197,18 +186,36 @@
                                     </CollectionView>
                                 </VerticalStackLayout>
                             </HorizontalStackLayout>
+                            <HorizontalStackLayout Margin="40,10,0,0" Spacing="5" HorizontalOptions="Center">
+                                <Button
+                                    Command="{Binding SaveCommand}"
+                                    CornerRadius="25"
+                                    Text="Save Details"
+                                    WidthRequest="180" />
+                                <Button
+                                    Command="{Binding ResetCommand}"
+                                    CornerRadius="25"
+                                    Text="Reset"
+                                    WidthRequest="180" />
+                            </HorizontalStackLayout>
                         </VerticalStackLayout>
 
                     </Frame>
+                    <Frame BackgroundColor="Transparent" CornerRadius="25" BorderColor="White" WidthRequest="400" MaximumHeightRequest="550"> 
+                        <StackLayout>
+                            <!--  Change UI  -->
+                            <Image Source="{Binding Image}" Aspect="AspectFit" />
+                            <Button
+                                 Command="{Binding UploadImageCommand}"
+                                 CornerRadius="25"
+                                 Text="Add Movie Image"
+                                 WidthRequest="180" 
+                                Margin="0,100,0,0"/>
+                        </StackLayout>
+                    </Frame>
                 </HorizontalStackLayout>
 
-                <!--  Change UI  -->
-                <Image Source="{Binding Image}" />
-                <Button
-                    Command="{Binding UploadImageCommand}"
-                    CornerRadius="25"
-                    Text="Add Movie Image"
-                    WidthRequest="180" />
+               
 
             </VerticalStackLayout>
         </Frame>

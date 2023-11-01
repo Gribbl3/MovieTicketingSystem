@@ -9,10 +9,18 @@
     Title="CinemaPage"
     x:DataType="vm:CinemaPageViewModel">
     <VerticalStackLayout Margin="10">
+        <HorizontalStackLayout
+                Margin="0,20,0,10"
+                HorizontalOptions="Center"
+                Spacing="5">
+            <Button Command="{Binding AddCinema}" CornerRadius="20" BackgroundColor="Red" TextColor="White" Text="Add Cinema" />
+            <Button Command="{Binding}"  CornerRadius="20" BackgroundColor="Red" TextColor="White" Text="Edit" />
+            <Button Command="{Binding}" CornerRadius="20" BackgroundColor="Red" TextColor="White" Text="Delete" />
+        </HorizontalStackLayout>
         <ScrollView>
             <CollectionView ItemsSource="{Binding CinemaCollection}">
                 <CollectionView.Header>
-                    <Frame>
+                    <Frame BackgroundColor="Black">
                         <Grid ColumnDefinitions="*,*,*">
                             <Label Text="Mall Name" />
                             <Label Grid.Column="1" Text="Address" />
@@ -22,7 +30,7 @@
                 </CollectionView.Header>
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Cinema">
-                        <Frame CornerRadius="5">
+                        <Frame CornerRadius="5" BackgroundColor="Black" BorderColor="Black">
                             <VerticalStackLayout>
                                 <Grid ColumnDefinitions="*,*,*">
                                     <Label Text="{Binding Mall.Name}" />
@@ -35,13 +43,5 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </ScrollView>
-        <HorizontalStackLayout
-            Margin="0,20,0,0"
-            HorizontalOptions="Center"
-            Spacing="5">
-            <Button Command="{Binding AddCinema}" Text="Add Cinema" />
-            <Button Command="{Binding}" Text="Edit" />
-            <Button Command="{Binding}" Text="Delete" />
-        </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>
