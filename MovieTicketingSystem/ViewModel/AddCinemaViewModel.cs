@@ -8,10 +8,19 @@ namespace MovieTicketingSystem.ViewModel;
 [QueryProperty(nameof(CinemaCollection), nameof(CinemaCollection))]
 public class AddCinemaViewModel : BaseViewModel
 {
-    private readonly string mallFolder = Path.Combine(FileSystem.Current.AppDataDirectory, "Malls");
-    private readonly string mainDir = Path.Combine(FileSystem.Current.AppDataDirectory, "Cinemas");
+    private readonly string mallFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Malls.json");
+    private readonly string cinemaFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Cinemas.json");
     public Cinema Cinema { get; set; } = new();
-    public ObservableCollection<Mall> Malls { get; set; } = new();
+    private ObservableCollection<Mall> _mallCollection = new();
+    public ObservableCollection<Mall> MallCollection
+    {
+        get => _mallCollection;
+        set
+        {
+            _mallCollection = value;
+            OnPropertyChanged();
+        }
+    }
     public ObservableCollection<Cinema> CinemaCollection { get; set; } = new();
     private Mall _selectedMallItem;
     public Mall SelectedMallItem
@@ -52,11 +61,10 @@ public class AddCinemaViewModel : BaseViewModel
 
         GenerateId();
 
-        string json = JsonSerializer.Serialize(Cinema);
-        string cinemaFile = Path.Combine(mainDir, $"{Guid.NewGuid()}.json");
-        await File.WriteAllTextAsync(cinemaFile, json);
-
         CinemaCollection.Add(Cinema);
+        string json = JsonSerializer.Serialize<ObservableCollection<Cinema>>(CinemaCollection);
+        await File.WriteAllTextAsync(cinemaFilePath, json);
+
         await Shell.Current.DisplayAlert("Success", "Cinema added successfully", "OK");
 
         //Go back to cinema page
@@ -113,13 +121,15 @@ public class AddCinemaViewModel : BaseViewModel
     /// </summary>
     public async void GetMallsFromJson()
     {
-        string[] mallFiles = Directory.GetFiles(mallFolder);
-        foreach (string mallFile in mallFiles)
+        if (!File.Exists(mallFilePath))
         {
-            string json = await File.ReadAllTextAsync(mallFile);
-            Mall mall = JsonSerializer.Deserialize<Mall>(json);
-            Malls.Add(mall);
+            //if file does not exist, display error message and let user go back to previous page
+            await Shell.Current.DisplayAlert("Error", "Mall file not found, Add a Mall to proceed", "OK");
+            await Shell.Current.GoToAsync("..");
+            return;
         }
+        string json = await File.ReadAllTextAsync(mallFilePath);
+        MallCollection = JsonSerializer.Deserialize<ObservableCollection<Mall>>(json);
     }
 
     /// <summary>

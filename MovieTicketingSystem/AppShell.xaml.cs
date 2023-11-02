@@ -15,6 +15,8 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(AddMovie), typeof(AddMovie));
         Routing.RegisterRoute(nameof(AddCinema), typeof(AddCinema));
         Routing.RegisterRoute(nameof(AddMall), typeof(AddMall));
+        Routing.RegisterRoute(nameof(CinemaPage), typeof(CinemaPage));
+        Routing.RegisterRoute(nameof(EditCinema), typeof(EditCinema));
 
         InitializeComponent();
     }

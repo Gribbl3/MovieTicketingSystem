@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="MovieTicketingSystem.View.AddCinema"
+    x:Class="MovieTicketingSystem.View.EditCinema"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MovieTicketingSystem.View"
     xmlns:model="clr-namespace:MovieTicketingSystem.Model"
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
-    Title="AddCinema"
-    x:DataType="vm:AddCinemaViewModel">
+    Title="EditCinema"
+    x:DataType="vm:EditCinemaViewModel">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -93,10 +94,10 @@
                     <HorizontalStackLayout Margin="0,20,0,0" HorizontalOptions="Center">
                         <HorizontalStackLayout Spacing="10">
                             <Button
-                                Command="{Binding SaveCommand}"
+                                Command="{Binding SaveEditCommand}"
                                 CornerRadius="20"
                                 FontSize="12"
-                                Text="Save Details"
+                                Text="Save Editted Details"
                                 WidthRequest="100" />
                             <Button
                                 Command="{Binding ResetCommand}"
@@ -163,8 +164,5 @@
                 </CollectionView>
             </StackLayout>
         </VerticalStackLayout>
-
     </ScrollView>
-
-
 </ContentPage>

@@ -9,7 +9,7 @@ namespace MovieTicketingSystem.ViewModel;
 [QueryProperty(nameof(CinemaCollection), nameof(CinemaCollection))]
 public class CinemaPageViewModel : BaseViewModel
 {
-    private readonly string cinemaDir = Path.Combine(FileSystem.Current.AppDataDirectory, "Cinemas");
+    private readonly string cinemaFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Cinemas.json");
     private ObservableCollection<Cinema> _cinemaCollection = new();
     public ObservableCollection<Cinema> CinemaCollection
     {
@@ -21,6 +21,11 @@ public class CinemaPageViewModel : BaseViewModel
         }
     }
 
+    public CinemaPageViewModel()
+    {
+        GetCinemasFromJson();
+    }
+
     public ICommand AddCinemaCommand => new Command(GoToAddCinemaPage);
     public ICommand DeleteCinemaCommand => new Command(DeleteCinema);
     public ICommand EditCinemaCommand => new Command(GoToEditCinemaPage);
@@ -30,7 +35,6 @@ public class CinemaPageViewModel : BaseViewModel
     /// </summary>
     private async void GoToAddCinemaPage()
     {
-        string cinemaCollectionJson = JsonSerializer.Serialize(CinemaCollection);
         var navigationParameter = new Dictionary<string, object>
         {
             { nameof(CinemaCollection), CinemaCollection }
@@ -47,16 +51,14 @@ public class CinemaPageViewModel : BaseViewModel
         if (string.IsNullOrEmpty(result) || !int.TryParse(result, out int id))
             return;
 
-        string[] cinemaFiles = Directory.GetFiles(cinemaDir);
-
-        for (int index = 0; index < cinemaFiles.Length; index++)
+        foreach (Cinema cinema in CinemaCollection)
         {
-            string json = await File.ReadAllTextAsync(cinemaFiles[index]);
-            Cinema Cinema = JsonSerializer.Deserialize<Cinema>(json);
-            if (id == Cinema.Id)
+            if (cinema.Id == id)
             {
-                File.Delete(cinemaFiles[index]);
-                CinemaCollection.Remove(CinemaCollection.FirstOrDefault(cinema => cinema.Id == id));
+                CinemaCollection.Remove(cinema);
+                string cinemaJson = JsonSerializer.Serialize(CinemaCollection);
+                await File.WriteAllTextAsync(cinemaFilePath, cinemaJson);
+                await Shell.Current.DisplayAlert("Success", "Cinema deleted successfully", "OK");
                 return;
             }
         }
@@ -66,36 +68,35 @@ public class CinemaPageViewModel : BaseViewModel
 
     private async void GoToEditCinemaPage()
     {
-        await Shell.Current.DisplayAlert("Edit Cinema", "Edit cinema feature is not yet available", "OK");
-    }
+        string result = await Shell.Current.DisplayPromptAsync("Edit Cinema", "Enter cinema id to edit");
+        if (string.IsNullOrEmpty(result) || !int.TryParse(result, out int id))
+            return;
 
-    private async Task CreateCinemasFolder()
-    {
-        try
+        foreach (Cinema cinema in CinemaCollection)
         {
-            if (!Directory.Exists(cinemaDir))
+            if (cinema.Id == id)
             {
-                Directory.CreateDirectory(cinemaDir);
+                var navigationParameter = new Dictionary<string, object>
+                {
+                    { nameof(Cinema), cinema },
+                    { nameof(CinemaCollection), CinemaCollection}
+                };
+                await Shell.Current.GoToAsync($"{nameof(EditCinema)}", navigationParameter);
                 return;
             }
         }
-        catch (Exception ex)
-        {
-            await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
-        }
     }
 
-    public async Task GetCinemasFromJson()
-    {
-        CinemaCollection.Clear();
 
-        await CreateCinemasFolder();
-        string[] cinemaFiles = Directory.GetFiles(cinemaDir);
-        foreach (string cinemaFile in cinemaFiles)
+    private async void GetCinemasFromJson()
+    {
+        if (!File.Exists(cinemaFilePath))
         {
-            string json = await File.ReadAllTextAsync(cinemaFile);
-            Cinema cinema = JsonSerializer.Deserialize<Cinema>(json);
-            CinemaCollection.Add(cinema);
+            CinemaCollection = new ObservableCollection<Cinema>();
+            return;
         }
+
+        string json = await File.ReadAllTextAsync(cinemaFilePath);
+        CinemaCollection = JsonSerializer.Deserialize<ObservableCollection<Cinema>>(json);
     }
 }

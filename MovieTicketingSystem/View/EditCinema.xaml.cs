@@ -2,9 +2,9 @@ using MovieTicketingSystem.ViewModel;
 
 namespace MovieTicketingSystem.View;
 
-public partial class CinemaPage : ContentPage
+public partial class EditCinema : ContentPage
 {
-    public CinemaPage(CinemaPageViewModel viewModel)
+    public EditCinema(EditCinemaViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;
