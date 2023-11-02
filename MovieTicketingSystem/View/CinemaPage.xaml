@@ -8,32 +8,27 @@
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
     Title="CinemaPage"
     x:DataType="vm:CinemaPageViewModel">
-    <VerticalStackLayout Margin="10">
-        <HorizontalStackLayout
-            Margin="0,20,0,10"
-            HorizontalOptions="Center"
-            Spacing="5">
-            <Button
-                BackgroundColor="Red"
-                Command="{Binding AddCinemaCommand}"
-                CornerRadius="20"
-                Text="Add Cinema"
-                TextColor="White" />
-            <Button
-                BackgroundColor="Red"
-                Command="{Binding }"
-                CornerRadius="20"
-                Text="Edit"
-                TextColor="White" />
-            <Button
-                BackgroundColor="Red"
-                Command="{Binding DeleteCinemaCommand}"
-                CornerRadius="20"
-                Text="Delete"
-                TextColor="White" />
-        </HorizontalStackLayout>
-        <ScrollView>
+    <Grid
+        Margin="10"
+        ColumnDefinitions="*"
+        RowDefinitions="*,Auto">
+        <ScrollView Grid.ColumnSpan="2">
+            <!--  only use datatemplate when binding data  -->
             <CollectionView ItemsSource="{Binding CinemaCollection}">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout>
+                        <Label
+                            Margin="0,200,0,0"
+                            FontAttributes="Bold"
+                            HorizontalTextAlignment="Center"
+                            Text="No Cinemas yet"
+                            VerticalTextAlignment="Center" />
+                        <Label
+                            HorizontalTextAlignment="Center"
+                            Text="Add Cinemas by pressing the [Add Cinema] button below"
+                            VerticalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
                 <CollectionView.Header>
                     <Frame BackgroundColor="Black">
                         <Grid ColumnDefinitions="*,*,*,*">
@@ -63,5 +58,29 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </ScrollView>
-    </VerticalStackLayout>
+        <HorizontalStackLayout
+            Grid.Row="1"
+            Margin="0,20,0,10"
+            HorizontalOptions="Center"
+            Spacing="5">
+            <Button
+                BackgroundColor="Red"
+                Command="{Binding AddCinemaCommand}"
+                CornerRadius="20"
+                Text="Add Cinema"
+                TextColor="White" />
+            <Button
+                BackgroundColor="Red"
+                Command="{Binding EditCinemaCommand}"
+                CornerRadius="20"
+                Text="Edit"
+                TextColor="White" />
+            <Button
+                BackgroundColor="Red"
+                Command="{Binding DeleteCinemaCommand}"
+                CornerRadius="20"
+                Text="Delete"
+                TextColor="White" />
+        </HorizontalStackLayout>
+    </Grid>
 </ContentPage>

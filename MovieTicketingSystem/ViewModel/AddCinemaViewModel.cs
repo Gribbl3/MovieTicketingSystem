@@ -5,21 +5,25 @@ using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
 
-[QueryProperty(nameof(CinemaCount), nameof(CinemaCount))]
+[QueryProperty(nameof(CinemaCollection), nameof(CinemaCollection))]
 public class AddCinemaViewModel : BaseViewModel
 {
-    private readonly string _mallFolder = Path.Combine(FileSystem.Current.AppDataDirectory, "Malls");
+    private readonly string mallFolder = Path.Combine(FileSystem.Current.AppDataDirectory, "Malls");
     private readonly string mainDir = Path.Combine(FileSystem.Current.AppDataDirectory, "Cinemas");
     public Cinema Cinema { get; set; } = new();
     public ObservableCollection<Mall> Malls { get; set; } = new();
+    public ObservableCollection<Cinema> CinemaCollection { get; set; } = new();
     private Mall _selectedMallItem;
+    public Mall SelectedMallItem
+    {
+        get => _selectedMallItem;
+        set
+        {
+            _selectedMallItem = value;
+            OnPropertyChanged();
+        }
+    }
     private int _seatCapacity;
-    public int CinemaCount { get; set; }
-
-
-    public ICommand SaveCommand => new Command(async () => await AddCinema());
-    public ICommand ResetCommand => new Command(ResetCinema);
-
     public int SeatCapacity
     {
         get => _seatCapacity;
@@ -30,15 +34,11 @@ public class AddCinemaViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
-    public Mall SelectedMallItem
-    {
-        get => _selectedMallItem;
-        set
-        {
-            _selectedMallItem = value;
-            OnPropertyChanged();
-        }
-    }
+
+
+    public ICommand SaveCommand => new Command(async () => await AddCinema());
+    public ICommand ResetCommand => new Command(ResetCinema);
+
 
     /// <summary>
     /// Add or creates cinema json file
@@ -51,13 +51,20 @@ public class AddCinemaViewModel : BaseViewModel
             return;
 
         GenerateId();
-        await CreateCinemasFolder();
 
         string json = JsonSerializer.Serialize(Cinema);
         string cinemaFile = Path.Combine(mainDir, $"{Guid.NewGuid()}.json");
         await File.WriteAllTextAsync(cinemaFile, json);
 
+        CinemaCollection.Add(Cinema);
         await Shell.Current.DisplayAlert("Success", "Cinema added successfully", "OK");
+
+        //Go back to cinema page
+        var navigationParameter = new Dictionary<string, object>
+        {
+            { nameof(CinemaCollection), CinemaCollection }
+        };
+        await Shell.Current.GoToAsync($"..", navigationParameter);
     }
 
     /// <summary>
@@ -65,7 +72,7 @@ public class AddCinemaViewModel : BaseViewModel
     /// </summary>
     private void GenerateId()
     {
-        Cinema.Id = CinemaCount + 1;
+        Cinema.Id = CinemaCollection.Count + 1;
     }
 
     /// <summary>
@@ -80,28 +87,6 @@ public class AddCinemaViewModel : BaseViewModel
         SeatCapacity = 0;
         SelectedMallItem = null;
     }
-
-
-    /// <summary>
-    /// Creates cinemas folder if not exists
-    /// </summary>
-    /// <returns>void</returns>
-    private async Task CreateCinemasFolder()
-    {
-        try
-        {
-            if (!Directory.Exists(mainDir))
-            {
-                Directory.CreateDirectory(mainDir);
-                return;
-            }
-        }
-        catch (Exception ex)
-        {
-            await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
-        }
-    }
-
 
     /// <summary>
     /// Validates user input for cinema
@@ -128,7 +113,7 @@ public class AddCinemaViewModel : BaseViewModel
     /// </summary>
     public async void GetMallsFromJson()
     {
-        string[] mallFiles = Directory.GetFiles(_mallFolder);
+        string[] mallFiles = Directory.GetFiles(mallFolder);
         foreach (string mallFile in mallFiles)
         {
             string json = await File.ReadAllTextAsync(mallFile);
@@ -165,6 +150,5 @@ public class AddCinemaViewModel : BaseViewModel
                 }
             }
         }
-
     }
 }
