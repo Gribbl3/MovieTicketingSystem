@@ -42,8 +42,8 @@ public class MoviePageViewModel : BaseViewModel
 
 
     public ICommand AddMovieCommand => new Command(AddMovieAsync);
-    public ICommand DeleteMovieCommand => new Command<int>(DeleteMovie);
-    public ICommand EditMovieCommand => new Command<Movie>(EditMovie);
+    public ICommand DeleteMovieCommand => new Command(DeleteMovie);
+    public ICommand EditMovieCommand => new Command(EditMovie);
 
 
     /// <summary>
@@ -64,7 +64,6 @@ public class MoviePageViewModel : BaseViewModel
     /// <summary>
     /// Add movie to json file
     /// </summary>
-    /// <returns></returns>
     private async void AddMovieAsync()
     {
         var navigationParameter = new Dictionary<string, object>
@@ -74,15 +73,55 @@ public class MoviePageViewModel : BaseViewModel
         await Shell.Current.GoToAsync($"{nameof(AddMovie)}", navigationParameter);
     }
 
-    private async void DeleteMovie(int id)
+    /// <summary>
+    /// Delete movie from json file
+    /// </summary>
+    private async void DeleteMovie()
     {
-        await Shell.Current.DisplayAlert("Delete Movie", "Not implemented yet", "OK");
+        string result = await Shell.Current.DisplayPromptAsync("Delete Movie", "Enter movie id to delete", placeholder: "Enter movie id", keyboard: Keyboard.Numeric);
+        if (string.IsNullOrEmpty(result) || !int.TryParse(result, out int id))
+        {
+            await Shell.Current.DisplayAlert("Error", "Invalid input", "OK");
+            return;
+        }
+
+        foreach (Movie movie in MovieCollection)
+        {
+            if (movie.Id == id)
+            {
+                MovieCollection.Remove(movie);
+                string movieJson = JsonSerializer.Serialize(MovieCollection);
+                await File.WriteAllTextAsync(movieFilePath, movieJson);
+                await Shell.Current.DisplayAlert("Success", "Movie deleted successfully", "OK");
+                return;
+            }
+        }
+
+        await Shell.Current.DisplayAlert("Error", "Movie not found", "OK");
     }
 
 
-    private async void EditMovie(Movie movie)
+    private async void EditMovie()
     {
-        await Shell.Current.DisplayAlert("Edit Movie", "Not implemented yet", "OK");
+        string result = await Shell.Current.DisplayPromptAsync("Edit Movie", "Enter movie id to edit", placeholder: "Enter movie id");
+        if (string.IsNullOrEmpty(result) || !int.TryParse(result, out int id))
+        {
+            return;
+        }
+
+        foreach (Movie movie in MovieCollection)
+        {
+            if (movie.Id == id)
+            {
+                var navigationParameter = new Dictionary<string, object>
+                {
+                    { nameof(Movie), movie },
+                    { nameof(MovieCollection), MovieCollection }
+                };
+                await Shell.Current.GoToAsync($"{nameof(EditMovie)}", navigationParameter);
+                return;
+            }
+        }
     }
 
 }

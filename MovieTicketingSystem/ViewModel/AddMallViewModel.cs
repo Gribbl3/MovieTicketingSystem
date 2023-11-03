@@ -114,6 +114,11 @@ public class AddMallViewModel : BaseViewModel
         //await Shell.Current.DisplayAlert("Error", "Mall not found", "OK");
     }
 
+    /// <summary>
+    /// Edits mall, gets mall from user input and sets it as selected mall for edit
+    /// Mall gets passed as a parameter from command parameter 
+    /// </summary>
+    /// <param name="mall"></param>
     private void EditMall(Mall mall)
     {
         //if we use this, it will modify the mall in the collection
@@ -133,6 +138,9 @@ public class AddMallViewModel : BaseViewModel
         isEditing = true;
     }
 
+    /// <summary>
+    /// Saves edited mall to json file
+    /// </summary>
     private async void SaveEditedMall()
     {
         //if user is not editing, display error message
@@ -172,7 +180,7 @@ public class AddMallViewModel : BaseViewModel
     /// </summary>
     private void GenerateId()
     {
-        //
+
         Mall.Id = MallCollection.Count + 1;
     }
 
@@ -185,17 +193,15 @@ public class AddMallViewModel : BaseViewModel
         if (isEditing)
         {
             SelectedMallForEdit = new Mall();
-            OnPropertyChanged(nameof(SelectedMallForEdit));
             return;
         }
 
         Mall = new Mall();
-        OnPropertyChanged(nameof(Mall));
 
     }
 
     /// <summary>
-    /// Validate mall name and address
+    /// Validates mall name and address
     /// </summary>
     /// <returns>boolean</returns>
     private async Task<bool> ValidateMall(Mall mall)

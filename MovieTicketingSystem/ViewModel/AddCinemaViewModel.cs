@@ -76,11 +76,39 @@ public class AddCinemaViewModel : BaseViewModel
     }
 
     /// <summary>
-    /// Generates cinema id
+    /// Generates cinema id 
     /// </summary>
     private void GenerateId()
     {
-        Cinema.Id = CinemaCollection.Count + 1;
+        int newId = 1;
+        bool isFound = false;
+
+        //or i can also store all the ids in a list and get the max id and add 1 to it
+
+
+        while (!isFound)
+        {
+            bool isMatchFound = false;
+            foreach (Cinema cinema in CinemaCollection)
+            {
+                int id = cinema.Id;
+                if (id == newId)
+                {
+                    isMatchFound = true;
+                    newId++;
+                    break;
+                }
+            }
+
+            if (!isMatchFound)
+            {
+                isFound = true;
+            }
+
+        }
+
+        Cinema.Id = newId;
+
     }
 
     /// <summary>
