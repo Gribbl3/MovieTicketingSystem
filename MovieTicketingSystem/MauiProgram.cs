@@ -22,12 +22,20 @@ public static class MauiProgram
         // Registering ViewModels
         builder.Services.AddTransient<RegisterViewModel>();
         builder.Services.AddTransient<LoginViewModel>();
-        builder.Services.AddTransient<HomePageViewModel>();
-        builder.Services.AddTransient<AddMovieViewModel>();
+
+        //viewmodel for admin's page
+        //cinema
+        builder.Services.AddTransient<CinemaPageViewModel>();
         builder.Services.AddTransient<AddCinemaViewModel>();
         builder.Services.AddTransient<EditCinemaViewModel>();
+        //mall
         builder.Services.AddTransient<AddMallViewModel>();
-        builder.Services.AddTransient<CinemaPageViewModel>();
+
+        //movie
+        builder.Services.AddTransient<AddMovieViewModel>();
+        builder.Services.AddTransient<MoviePageViewModel>();
+
+        builder.Services.AddTransient<HomePageViewModel>();
         //viewmodel for customer and admin  
         builder.Services.AddTransient<CustomerViewModel>();
         builder.Services.AddTransient<AdminViewModel>();
@@ -44,6 +52,7 @@ public static class MauiProgram
         builder.Services.AddTransient<AddMall>();
         builder.Services.AddTransient<CinemaPage>();
         builder.Services.AddTransient<EditCinema>();
+        builder.Services.AddTransient<MoviePage>();
 
         // Registering Services
         builder.Services.AddSingleton<IUserService, UserService>();

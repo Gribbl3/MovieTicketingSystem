@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MovieTicketingSystem.View.MoviePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:MovieTicketingSystem.Model"
+    xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
+    Title="MoviePage"
+    x:DataType="vm:MoviePageViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="WidthRequest" Value="100" />
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="Margin" Value="5" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid
+        Margin="10"
+        RowDefinitions="*,auto"
+        RowSpacing="10">
+        <VerticalStackLayout Spacing="5">
+            <Label FontSize="20" Text="BOOKINGS" />
+            <Frame>
+                <CollectionView ItemsSource="{Binding MovieCollection}">
+                    <CollectionView.EmptyView>
+                        <ContentView HeightRequest="500">
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    HorizontalTextAlignment="Center"
+                                    Text="No movies added yet" />
+                                <Label HorizontalTextAlignment="Center" Text="Try adding by pressing the Add Movie button below" />
+                            </VerticalStackLayout>
+                        </ContentView>
+                    </CollectionView.EmptyView>
+                    <CollectionView.Header>
+                        <ContentView>
+                            <VerticalStackLayout Spacing="3">  
+                                <Grid ColumnDefinitions="*,*,*,*,*" IsVisible="{Binding IsVisible}">
+                                    <Label Grid.Column="0" Text="ID" />
+                                    <Label Grid.Column="1" Text="TICKET PRICE" />
+                                    <Label Grid.Column="2" Text="SHOW TIME" />
+                                    <Label Grid.Column="3" Text="MOVIE" />
+                                    <Label Grid.Column="4" Text="STATUS" />
+                                </Grid>
+                                <BoxView Background="gray" HeightRequest="2" />
+                            </VerticalStackLayout>
+                        </ContentView>
+                    </CollectionView.Header>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Movie">
+                            <Grid ColumnDefinitions="*,*,*,*,*">
+                                <Label Grid.Column="0" Text="{Binding Id}" />
+                                <Label Grid.Column="1" Text="{Binding Price, StringFormat='₱{0:F2}'}" />
+                                <Label Grid.Column="2" Text="{Binding EndDate}" />
+                                <Label Grid.Column="3" Text="{Binding Name}" />
+                                <Label Grid.Column="4" FontAttributes="Bold">
+                                    <Label.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding IsNowShowing}"
+                                            TargetType="Label"
+                                            Value="True">
+                                            <Setter Property="Text" Value="NOW SHOWING" />
+                                            <Setter Property="TextColor" Value="green" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                                            Binding="{Binding IsNowShowing}"
+                                            TargetType="Label"
+                                            Value="False">
+                                            <Setter Property="Text" Value="UPCOMING" />
+                                            <Setter Property="TextColor" Value="red" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+        </VerticalStackLayout>
+        <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center">
+            <Button Command="{Binding AddMovieCommand}" Text="Add" />
+            <Button Command="{Binding EditMovieCommand}" Text="Edit" />
+            <Button Command="{Binding DeleteMovieCommand}" Text="Delete" />
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

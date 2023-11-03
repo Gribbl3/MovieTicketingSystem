@@ -17,8 +17,8 @@
         <Tab Title="Home">
             <ShellContent ContentTemplate="{DataTemplate local:Admin}" Route="Admin" />
         </Tab>
-        <Tab Title="Add Movie">
-            <ShellContent ContentTemplate="{DataTemplate local:AddMovie}" Route="AddMovie" />
+        <Tab Title="Movie">
+            <ShellContent ContentTemplate="{DataTemplate local:MoviePage}" Route="MoviePage" />
         </Tab>
         <Tab Title="Mall">
             <ShellContent ContentTemplate="{DataTemplate local:AddMall}" Route="AddMall" />

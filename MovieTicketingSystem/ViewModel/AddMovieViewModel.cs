@@ -1,27 +1,58 @@
 ﻿using MovieTicketingSystem.Model;
-using MovieTicketingSystem.Service;
 using System.Collections.ObjectModel;
+using System.Text.Json;
 using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
 
+[QueryProperty(nameof(MovieCollection), nameof(MovieCollection))]
 public class AddMovieViewModel : BaseViewModel
 {
-    public Movie Movie { get; set; } = new Movie();
+    private readonly string movieFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Movies.json");
+
+    private Movie _movie = new();
+    public Movie Movie
+    {
+        get => _movie;
+        set
+        {
+            _movie = value;
+            OnPropertyChanged();
+        }
+    }
+    private ObservableCollection<Movie> _movieCollection;
+    public ObservableCollection<Movie> MovieCollection
+    {
+        get => _movieCollection;
+        set
+        {
+            _movieCollection = value;
+            OnPropertyChanged();
+        }
+    }
+    private string _image;
+    public string Image
+    {
+        get => _image;
+        set
+        {
+            _image = value;
+            OnPropertyChanged();
+        }
+    }
+    private const string _defaultImage = "add_photo.png";
+
     public ObservableCollection<Genre> AvailableGenre { get; set; }
     public ObservableCollection<Subtitle> AvailableSubtitle { get; set; }
 
-    private MovieService _movieService;
-    private ObservableCollection<Movie> _movieCollection;
-    private const string _defaultImage = "add_photo.png";
-    private string _image;
-    public AddMovieViewModel(MovieService movieService)
+
+    public AddMovieViewModel()
     {
-        _movieService = movieService;
         Image = _defaultImage;
         PopulateGenres();
         PopulateSubtitles();
     }
+
 
     public ICommand UploadImageCommand => new Command(async () => await UploadImage());
     public ICommand SaveCommand => new Command(async () => await Save());
@@ -34,29 +65,7 @@ public class AddMovieViewModel : BaseViewModel
     {
         //reset the movie object
         Movie = new Movie();
-        OnPropertyChanged(nameof(Movie));
-        //reset the image
         Image = "add_photo.png";
-    }
-
-    public ObservableCollection<Movie> MovieCollection
-    {
-        get => _movieCollection;
-        set
-        {
-            _movieCollection = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public string Image
-    {
-        get => _image;
-        set
-        {
-            _image = value;
-            OnPropertyChanged();
-        }
     }
 
     private async Task UploadImage()
@@ -106,14 +115,34 @@ public class AddMovieViewModel : BaseViewModel
             return;
         }
 
-        var result = await _movieService.AddMovieAsync(Movie);
-        if (result)
-        {
-            await Shell.Current.DisplayAlert("Add Movie", "Movie added successfully", "OK");
-            return;
-        }
+        MovieCollection.Add(Movie);
+        await SaveMovieToJson();
 
-        await Shell.Current.DisplayAlert("Add Movie Error", "Something went wrong", "OK");
+    }
+
+    private async Task SaveMovieToJson()
+    {
+        GenerateId();
+        string json = JsonSerializer.Serialize(MovieCollection);
+        await File.WriteAllTextAsync(movieFilePath, json);
+
+        await Shell.Current.DisplayAlert("Add Movie", "Movie added successfully", "OK");
+        NavigateBack();
+    }
+
+    private async void NavigateBack()
+    {
+        var navigationParameter = new Dictionary<string, object>
+        {
+            { nameof(MovieCollection), MovieCollection }
+        };
+
+        await Shell.Current.GoToAsync("..", navigationParameter);
+    }
+
+    private void GenerateId()
+    {
+        Movie.Id = MovieCollection.Count + 1;
     }
 
     //validators
