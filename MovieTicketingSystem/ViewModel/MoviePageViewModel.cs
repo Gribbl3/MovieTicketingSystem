@@ -81,7 +81,6 @@ public class MoviePageViewModel : BaseViewModel
         string result = await Shell.Current.DisplayPromptAsync("Delete Movie", "Enter movie id to delete", placeholder: "Enter movie id", keyboard: Keyboard.Numeric);
         if (string.IsNullOrEmpty(result) || !int.TryParse(result, out int id))
         {
-            await Shell.Current.DisplayAlert("Error", "Invalid input", "OK");
             return;
         }
 

@@ -39,14 +39,15 @@
                         </ContentView>
                     </CollectionView.EmptyView>
                     <CollectionView.Header>
-                        <ContentView>
-                            <VerticalStackLayout Spacing="3">  
-                                <Grid ColumnDefinitions="*,*,*,*,*" IsVisible="{Binding IsVisible}">
+                        <ContentView IsVisible="{Binding IsVisible}">
+                            <VerticalStackLayout Spacing="3">
+                                <Grid ColumnDefinitions="*,*,*,*,*,*">
                                     <Label Grid.Column="0" Text="ID" />
-                                    <Label Grid.Column="1" Text="TICKET PRICE" />
-                                    <Label Grid.Column="2" Text="SHOW TIME" />
-                                    <Label Grid.Column="3" Text="MOVIE" />
-                                    <Label Grid.Column="4" Text="STATUS" />
+                                    <Label Grid.Column="1" Text="MOVIE" />
+                                    <Label Grid.Column="2" Text="TICKET PRICE" />
+                                    <Label Grid.Column="3" Text="SHOW TIME" />
+                                    <Label Grid.Column="4" Text="DURATION" />
+                                    <Label Grid.Column="5" Text="STATUS" />
                                 </Grid>
                                 <BoxView Background="gray" HeightRequest="2" />
                             </VerticalStackLayout>
@@ -54,12 +55,21 @@
                     </CollectionView.Header>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:Movie">
-                            <Grid ColumnDefinitions="*,*,*,*,*">
+                            <Grid ColumnDefinitions="*,*,*,*,*,*">
                                 <Label Grid.Column="0" Text="{Binding Id}" />
-                                <Label Grid.Column="1" Text="{Binding Price, StringFormat='₱{0:F2}'}" />
-                                <Label Grid.Column="2" Text="{Binding EndDate}" />
-                                <Label Grid.Column="3" Text="{Binding Name}" />
-                                <Label Grid.Column="4" FontAttributes="Bold">
+                                <Label Grid.Column="1" Text="{Binding Name}" />
+                                <Label Grid.Column="2" Text="{Binding Price, StringFormat='₱{0:F2}'}" />
+                                <Label Grid.Column="3">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding StartDate, StringFormat='{0:d}'}" />
+                                            <Span Text=" to " />
+                                            <Span Text="{Binding EndDate, StringFormat='{0:d}'}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Grid.Column="4" Text="{Binding Duration, StringFormat='{0:hh}hr/s and {0:mm}min/s'}" />
+                                <Label Grid.Column="5" FontAttributes="Bold">
                                     <Label.Triggers>
                                         <DataTrigger
                                             Binding="{Binding IsNowShowing}"

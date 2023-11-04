@@ -56,6 +56,8 @@
 	  <None Remove="Resources\Images\available_seat.png" />
 	  <None Remove="Resources\Images\background.jpg" />
 	  <None Remove="Resources\Images\customer.png" />
+	  <None Remove="Resources\Images\delete.png" />
+	  <None Remove="Resources\Images\edit.png" />
 	  <None Remove="Resources\Images\female.png" />
 	  <None Remove="Resources\Images\jurassicpark.png" />
 	  <None Remove="Resources\Images\logoww.png" />

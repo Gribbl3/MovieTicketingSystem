@@ -8,21 +8,17 @@ public class Movie : BaseModel
 
     #region Fields and Properties
     //generate field and properties
-    private string _name;
-    private string _description;
+    private string _name, _description, _companySource;
+    private bool _isUpcoming, _isNowShowing;
     private decimal _price;
-    private string _companySource;
-    private bool _isUpcoming;
-    private bool _isNowShowing;
     private Byte[] _image;
     //showtime start and end date
-    private TimeSpan _startTime;
-    private TimeSpan _endTime;
-    private DateTime _yearReleased;
-    private DateTime _startDate;
-    private DateTime _endDate;
+    private TimeSpan _startTime, _endTime;
+    private DateTime _yearReleased, _startDate, _endDate;
     public ObservableCollection<string> SelectedGenre { get; set; } = new();
     public ObservableCollection<string> SelectedSubtitle { get; set; } = new();
+    public TimeSpan Duration => EndTime - StartTime;
+
 
     public Movie()
     {
@@ -141,7 +137,5 @@ public class Movie : BaseModel
             OnPropertyChanged();
         }
     }
-
-
     #endregion
 }

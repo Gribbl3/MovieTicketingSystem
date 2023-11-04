@@ -7,4 +7,5 @@ public class Icons
     public static string TicketIcon = "\ue638";
     public static string UserIcon = "\ue7fd";
     public static string AdminIcon = "\uf650";
+    public static string EditIcon = "\ue3c9";
 }

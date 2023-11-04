@@ -10,10 +10,11 @@ namespace MovieTicketingSystem.ViewModel;
 public class EditMovieViewModel : BaseViewModel
 {
     private readonly string movieFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Movies.json");
-    private readonly string defaultImage = "defaultImage.png";
+    private readonly string defaultImage = "add_photo.png";
 
-    public ObservableCollection<Genre> AvailableGenre { get; set; }
-    public ObservableCollection<Subtitle> AvailableSubtitle { get; set; }
+
+    public ObservableCollection<Genre> AvailableGenre { get; set; } = new();
+    public ObservableCollection<Subtitle> AvailableSubtitle { get; set; } = new();
 
 
     private string _image;
@@ -35,6 +36,8 @@ public class EditMovieViewModel : BaseViewModel
         {
             _movie = value;
             OnPropertyChanged();
+            CloneSelectedGenre();
+            CloneSelectedSubtitle();
         }
     }
 
@@ -48,6 +51,14 @@ public class EditMovieViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
+
+
+    public EditMovieViewModel()
+    {
+        PopulateGenre();
+        PopulateSubtitle();
+    }
+
 
     public ICommand UploadImageCommand => new Command(async () => await UploadImage());
     public ICommand SaveCommand => new Command(async () => await Save());
@@ -76,18 +87,25 @@ public class EditMovieViewModel : BaseViewModel
             return;
         }
 
-        MovieCollection.Add(Movie);
-        await SaveMovieToJson();
+        //check Movie in the Movie Collection then save to movie json file
+        for (int index = 0; index < MovieCollection.Count; index++)
+        {
+            if (MovieCollection[index].Id == Movie.Id)
+            {
+                //inserts the updated movie in the collection
+                MovieCollection[index] = Movie;
+                await SaveMovieToJson();
+            }
+        }
 
     }
 
     private async Task SaveMovieToJson()
     {
-        GenerateId();
         string json = JsonSerializer.Serialize(MovieCollection);
         await File.WriteAllTextAsync(movieFilePath, json);
 
-        await Shell.Current.DisplayAlert("Add Movie", "Movie added successfully", "OK");
+        await Shell.Current.DisplayAlert("Edit Movie", "Movie edited successfully", "OK");
         NavigateBack();
     }
 
@@ -101,16 +119,17 @@ public class EditMovieViewModel : BaseViewModel
         await Shell.Current.GoToAsync("..", navigationParameter);
     }
 
-    private void GenerateId()
-    {
-        Movie.Id = MovieCollection.Count + 1;
-    }
-
     private void Reset()
     {
-        //reset the movie object
+        //get the current id first
+        int id = Movie.Id;
+        //reset the movie
         Movie = new Movie();
         Image = defaultImage;
+        PopulateSubtitle();
+        PopulateGenre();
+        //set the id back to the movie
+        Movie.Id = id;
     }
 
     private async Task UploadImage()
@@ -244,5 +263,70 @@ public class EditMovieViewModel : BaseViewModel
             Shell.Current.DisplayAlert("Add Movie Error", "Please select a subtitle", "OK");
         }
         return hasSelectedGenre;
+    }
+
+    /// <summary>
+    /// Generates genre
+    /// </summary>
+    private void PopulateGenre()
+    {
+        AvailableGenre = new()
+        {
+            new Genre{Name = "Action"},
+            new Genre{Name = "Adventure"},
+            new Genre{Name = "Comedy"},
+            new Genre{Name = "Drama"},
+            new Genre{Name = "Fantasy"},
+            new Genre{Name = "Horror"},
+            new Genre{Name = "Mystery"},
+            new Genre{Name = "Thriller"},
+            new Genre{Name = "Western"}
+        };
+    }
+
+    /// <summary>
+    /// Clones selected genre from movie to available genre
+    /// </summary>
+    private void CloneSelectedGenre()
+    {
+        foreach (var genre in AvailableGenre)
+        {
+            if (Movie.SelectedGenre.Contains(genre.Name))
+            {
+                genre.IsSelected = true;
+            }
+        }
+    }
+
+    /// <summary>
+    /// Generates subtitle
+    /// </summary>
+    private void PopulateSubtitle()
+    {
+        AvailableSubtitle = new()
+        {
+            new Subtitle{Language = "English"},
+            new Subtitle{Language = "Filipino"},
+            new Subtitle{Language = "Japanese"},
+            new Subtitle{Language = "Korean"},
+            new Subtitle{Language = "Mandarin"},
+            new Subtitle{Language = "Spanish"},
+            new Subtitle{Language = "Thai"},
+            new Subtitle{Language = "Vietnamese"}
+        };
+    }
+
+    /// <summary>
+    /// Clones selected subtitle from movie to available subtitle
+    /// </summary>
+    private void CloneSelectedSubtitle()
+    {
+        foreach (var subtitle in AvailableSubtitle)
+        {
+            if (Movie.SelectedSubtitle.Contains(subtitle.Language))
+            {
+                subtitle.IsSelected = true;
+            }
+        }
     }
 }
