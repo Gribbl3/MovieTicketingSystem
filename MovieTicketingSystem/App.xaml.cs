@@ -13,25 +13,30 @@ namespace MovieTicketingSystem
 
         protected override Window CreateWindow(IActivationState activationState)
         {
-            var window = base.CreateWindow(activationState);
-
-            const int newWidth = 1366;
-            const int newHeight = 768;
-
-            window.X = 200;
-            window.Y = 100;
-
-            window.Width = newWidth;
-            window.Height = newHeight;
-
-            window.MinimumHeight = newHeight;
-            window.MinimumWidth = newWidth;
-
-            window.MaximumHeight = newHeight;
-            window.MaximumWidth = newWidth;
-
+            Window window = base.CreateWindow(activationState);
+            window.Activated += Window_Activated;
             return window;
+        }
 
+        private async void Window_Activated(object sender, EventArgs e)
+        {
+        const int DefaultWidth = 1024;
+        const int DefaultHeight = 800;
+
+        var window = sender as Window;
+
+        // change window size.
+        window.Width = DefaultWidth;
+        window.Height = DefaultHeight;
+
+        // give it some time to complete window resizing task.
+        await window.Dispatcher.DispatchAsync(() => { });
+
+        var disp = DeviceDisplay.Current.MainDisplayInfo;
+
+        // move to screen center
+        window.X = (disp.Width / disp.Density - window.Width) / 2;
+        window.Y = (disp.Height / disp.Density - window.Height) / 2;
         }
 
     }

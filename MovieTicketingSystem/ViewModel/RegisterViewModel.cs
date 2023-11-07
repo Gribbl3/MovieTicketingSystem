@@ -1,5 +1,6 @@
 ﻿using MovieTicketingSystem.Model;
 using MovieTicketingSystem.Service;
+using MovieTicketingSystem.View;
 using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
@@ -69,11 +70,11 @@ public class RegisterViewModel : BaseViewModel
         _userService.AddUser(User);
         if (User.IsAdmin)
         {
-            Shell.Current.GoToAsync("//Admin");
+            Shell.Current.GoToAsync($"//{nameof(Admin)}");
         }
         else
         {
-            Shell.Current.GoToAsync("//Customer");
+            Shell.Current.GoToAsync($"//{nameof(Customer)}");
         }
 
 

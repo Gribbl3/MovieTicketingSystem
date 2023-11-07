@@ -24,7 +24,7 @@
         RowSpacing="10">
         <VerticalStackLayout Spacing="5">
             <Label FontSize="20" Text="BOOKINGS" />
-            <Frame>
+            <Frame BackgroundColor="black">
                 <CollectionView ItemsSource="{Binding MovieCollection}">
                     <CollectionView.EmptyView>
                         <ContentView HeightRequest="500">

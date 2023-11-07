@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MovieTicketingSystem.View.TicketPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converter="clr-namespace:MovieTicketingSystem.Converters"
+    xmlns:local="clr-namespace:MovieTicketingSystem"
+    xmlns:model="clr-namespace:MovieTicketingSystem.Model"
+    xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
+    Title="TicketPage"
+    x:DataType="vm:TicketPageViewModel">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:ByteArrayToImageSourceConverter x:Key="ImageConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="*,auto">
+        <VerticalStackLayout>
+            <Label Text="{Binding Movie.Name}" />
+            <Image Source="{Binding Movie.Image, Converter={StaticResource ImageConverter}}" />
+            <CollectionView ItemsSource="{Binding Movie.SelectedGenre}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Genre">
+                        <ContentPage>
+                            <Label Text="{Binding Name}" />
+                        </ContentPage>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+        <Button Command="{Binding GoBackCommand}" Text="Go Back" Grid.Row="1"/>
+    </Grid>
+</ContentPage>

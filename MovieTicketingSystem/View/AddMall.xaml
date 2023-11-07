@@ -107,7 +107,7 @@
                 </VerticalStackLayout>
 
                 <!--  right column  -->
-                <Frame WidthRequest="700">
+                <Frame BackgroundColor="Black" WidthRequest="700">
                     <CollectionView EmptyView="No Mall Branches yet" ItemsSource="{Binding MallCollection}">
                         <CollectionView.Header>
                             <Grid

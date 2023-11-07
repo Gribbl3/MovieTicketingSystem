@@ -3,114 +3,144 @@
     x:Class="MovieTicketingSystem.View.Customer"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converter="clr-namespace:MovieTicketingSystem.Converters"
     xmlns:model="clr-namespace:MovieTicketingSystem.Model"
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
     Title="Customer"
     x:DataType="vm:CustomerViewModel">
 
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converter:ByteArrayToImageSourceConverter x:Key="ImageConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
     <ScrollView>
         <Frame BackgroundColor="Black" BorderColor="Black">
-            <VerticalStackLayout >
+            <VerticalStackLayout>
                 <Frame BackgroundColor="Black" BorderColor="Black">
-                    <!--Top Level date, ticket button and user button-->
-                    <HorizontalStackLayout >
+                    <!--  Top Level date, ticket button and user button  -->
+                    <HorizontalStackLayout>
                         <HorizontalStackLayout>
-                            <Image Source="logoww.png" HorizontalOptions="Start" WidthRequest="250" Margin="0,-10,0,0" />
-                            <Label Text="|" FontSize="20" Margin="0,0,0,0"/>
-                            <Label Text="Date Here" FontSize="20" TextColor="LightGray" Margin="0,0,0,0"/>
+                            <Image
+                                Margin="0,-10,0,0"
+                                HorizontalOptions="Start"
+                                Source="logoww.png"
+                                WidthRequest="250" />
+                            <Label
+                                Margin="0,0,0,0"
+                                FontSize="20"
+                                Text="|" />
+                            <Label
+                                Margin="0,0,0,0"
+                                FontSize="20"
+                                Text="Date Here"
+                                TextColor="LightGray" />
                         </HorizontalStackLayout>
                         <HorizontalStackLayout Spacing="20">
-                            <ImageButton Source="ticketa.png" BackgroundColor="Black" Margin="750,0,0,0" WidthRequest="20"/>
-                            <ImageButton Source="user.png" BackgroundColor="Black" WidthRequest="20"/>
+                            <ImageButton
+                                Margin="750,0,0,0"
+                                BackgroundColor="Black"
+                                Source="ticketa.png"
+                                WidthRequest="20" />
+                            <ImageButton
+                                BackgroundColor="Black"
+                                Source="user.png"
+                                WidthRequest="20" />
                         </HorizontalStackLayout>
                     </HorizontalStackLayout>
-                </Frame >
-                <Frame HeightRequest="400" BackgroundColor="Black" BorderColor="DimGrey">
-                    <!--Featured Movie, title and subtitle, genres, year, part, company, buy ticket button-->
+                </Frame>
+                <Frame
+                    BackgroundColor="Black"
+                    BorderColor="DimGrey"
+                    HeightRequest="400">
+                    <!--  Featured Movie, title and subtitle, genres, year, part, company, buy ticket button  -->
                     <VerticalStackLayout>
-                        <HorizontalStackLayout HorizontalOptions="Center" >
-                            <Frame HeightRequest="370" WidthRequest="630" BackgroundColor="Black">
+                        <HorizontalStackLayout HorizontalOptions="Center">
+                            <Frame
+                                BackgroundColor="Black"
+                                HeightRequest="370"
+                                WidthRequest="630">
                                 <StackLayout HorizontalOptions="Center">
-                                    <HorizontalStackLayout  HorizontalOptions="Center">
-                                        <!--Collection View sa mga genres ari-->
-                                        <Label Text="Genre1" TextColor="LightGray"/>
-                                        <Label Text=" | "  TextColor="LightGray"/>
-                                        <Label Text="Genre2"  TextColor="LightGray"/>
-                                        <Label Text=" | "/>
-                                        <Label Text="Genre2"  TextColor="LightGray"/>
+                                    <HorizontalStackLayout HorizontalOptions="Center">
+                                        <!--  Collection View sa mga genres ari  -->
+                                        <Label Text="Genre1" TextColor="LightGray" />
+                                        <Label Text=" | " TextColor="LightGray" />
+                                        <Label Text="Genre2" TextColor="LightGray" />
+                                        <Label Text=" | " />
+                                        <Label Text="Genre2" TextColor="LightGray" />
                                     </HorizontalStackLayout>
-                                    <Label Text="MAIN TITLE" FontSize="55" FontAttributes="Bold" Margin="0,40,0,0" HorizontalOptions="Center"/>
-                                    <Label Text="subtitle" FontSize="Title" FontAttributes="Bold" Margin="0,-10,0,0" HorizontalOptions="Center"/>
+                                    <Label
+                                        Margin="0,40,0,0"
+                                        FontAttributes="Bold"
+                                        FontSize="55"
+                                        HorizontalOptions="Center"
+                                        Text="MAIN TITLE" />
+                                    <Label
+                                        Margin="0,-10,0,0"
+                                        FontAttributes="Bold"
+                                        FontSize="Title"
+                                        HorizontalOptions="Center"
+                                        Text="subtitle" />
 
-                                    <HorizontalStackLayout  HorizontalOptions="Center" Margin="0,55,0,0">
-                                        <!--Binding ari, wala lang nako ge butang kay ma bug ig run-->
-                                        <Label Text="2023 (Year)" TextColor="LightGray"/>
-                                        <Label Text=" | "  TextColor="LightGray"/>
-                                        <Label Text="Sequel (part)"  TextColor="LightGray"/>
-                                        <Label Text=" | "/>
-                                        <Label Text="Company"  TextColor="LightGray"/>
+                                    <HorizontalStackLayout Margin="0,55,0,0" HorizontalOptions="Center">
+                                        <!--  Binding ari, wala lang nako ge butang kay ma bug ig run  -->
+                                        <Label Text="2023 (Year)" TextColor="LightGray" />
+                                        <Label Text=" | " TextColor="LightGray" />
+                                        <Label Text="Sequel (part)" TextColor="LightGray" />
+                                        <Label Text=" | " />
+                                        <Label Text="Company" TextColor="LightGray" />
                                     </HorizontalStackLayout>
 
-                                    <Button Text="Buy Ticket" TextColor="White" BackgroundColor="Red" Margin="0,30,0,0" WidthRequest="105" CornerRadius="18"/>
+                                    <Button
+                                        Margin="0,30,0,0"
+                                        BackgroundColor="Red"
+                                        CornerRadius="18"
+                                        Text="Buy Ticket"
+                                        TextColor="White"
+                                        WidthRequest="105" />
 
                                 </StackLayout>
-                            </Frame >
-                            <Frame HeightRequest="370" WidthRequest="630" BackgroundColor="Black" BorderColor="Black">
+                            </Frame>
+                            <Frame
+                                BackgroundColor="Black"
+                                BorderColor="Black"
+                                HeightRequest="370"
+                                WidthRequest="630">
                                 <StackLayout>
-                                    <Image Source="poster1.jpg" Aspect="AspectFill" />
+                                    <Image Aspect="AspectFill" Source="poster1.jpg" />
                                 </StackLayout>
                             </Frame>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </Frame>
-                
-                <!-- carouselview sa mga movies-->
-                <!-- Issue kay walay space in between images-->
 
-                <Label Text="NOW SHOWING" FontSize="Large" Margin="0,10,0,0"/>
-                <Frame HeightRequest="300" BackgroundColor="Black">
+                <!--  carouselview sa mga movies  -->
 
-                    <CarouselView>
-                        <CarouselView.ItemsSource>
-                            <x:Array Type="{x:Type FileImageSource}">
-                                <FileImageSource File="posterspiderman.jpg"/>
-                                <FileImageSource File="postermatrix.jpg"/>
-                                <FileImageSource File="posterbookoflife.jpg"/>
-                                <FileImageSource File="posterblackpanther.jpg"/>
+                <Label
+                    Margin="0,10,0,0"
+                    FontSize="Large"
+                    Text="NOW SHOWING" />
+                <Frame BackgroundColor="Black" HeightRequest="300">
 
-                            </x:Array>
-                        </CarouselView.ItemsSource>
+                    <CarouselView ItemsSource="{Binding MovieCollection}">
+                        <CarouselView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="10" Orientation="Horizontal" />
+                        </CarouselView.ItemsLayout>
                         <CarouselView.ItemTemplate>
-                            <DataTemplate>
-                                <Image Source="{Binding .}" Aspect="AspectFit">
+                            <DataTemplate x:DataType="model:Movie">
+                                <Image>
+                                    <!--  only show image when isnowshowing value is true  -->
+                                    <Image.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding IsNowShowing}"
+                                            TargetType="Image"
+                                            Value="True">
+                                            <Setter Property="Source" Value="{Binding Image, Converter={StaticResource ImageConverter}}" />
+                                        </DataTrigger>
+                                    </Image.Triggers>
                                     <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="ImageTapped"/>
-                                    </Image.GestureRecognizers>
-                                </Image>
-                            </DataTemplate>
-                        </CarouselView.ItemTemplate>
-                    </CarouselView>
-                </Frame>
-                
-                <!--Carouselview for coming soon mvoies-->
-
-                <Label Text="COMING SOON" FontSize="Large" Margin="0,10,0,0"/>
-                <Frame HeightRequest="300" BackgroundColor="Black">
-
-                    <CarouselView>
-                        <CarouselView.ItemsSource>
-                            <x:Array Type="{x:Type FileImageSource}">
-                                <FileImageSource File="posterspiderman.jpg"/>
-                                <FileImageSource File="postermatrix.jpg"/>
-                                <FileImageSource File="posterbookoflife.jpg"/>
-                                <FileImageSource File="posterblackpanther.jpg"/>
-                            </x:Array>
-                        </CarouselView.ItemsSource>
-                        <CarouselView.ItemTemplate>
-                            <DataTemplate>
-                                <Image Source="{Binding .}" Aspect="AspectFit">
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Tapped="ImageTapped"/>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CustomerViewModel}},Path=GoToTicketPageCommand}" CommandParameter="{Binding .}" />
                                     </Image.GestureRecognizers>
                                 </Image>
                             </DataTemplate>
@@ -118,6 +148,37 @@
                     </CarouselView>
                 </Frame>
 
+                <!--  Carouselview for coming soon mvoies  -->
+
+                <Label
+                    Margin="0,10,0,0"
+                    FontSize="Large"
+                    Text="COMING SOON" />
+                <Frame BackgroundColor="Black" HeightRequest="300">
+                    <CarouselView ItemsSource="{Binding MovieCollection}">
+                        <CarouselView.ItemsLayout>
+                            <LinearItemsLayout ItemSpacing="10" Orientation="Horizontal" />
+                        </CarouselView.ItemsLayout>
+                        <CarouselView.ItemTemplate>
+                            <DataTemplate x:DataType="model:Movie">
+                                <Image>
+                                    <!--  only show image when isnowshowing value is true  -->
+                                    <Image.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding IsUpcoming}"
+                                            TargetType="Image"
+                                            Value="True">
+                                            <Setter Property="Source" Value="{Binding Image, Converter={StaticResource ImageConverter}}" />
+                                        </DataTrigger>
+                                    </Image.Triggers>
+                                    <Image.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CustomerViewModel}},Path=GoToTicketPageCommand}" CommandParameter="{Binding .}" />
+                                    </Image.GestureRecognizers>
+                                </Image>
+                            </DataTemplate>
+                        </CarouselView.ItemTemplate>
+                    </CarouselView>
+                </Frame>
             </VerticalStackLayout>
         </Frame>
     </ScrollView>

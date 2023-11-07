@@ -41,6 +41,9 @@ public static class MauiProgram
         builder.Services.AddTransient<CustomerViewModel>();
         builder.Services.AddTransient<AdminViewModel>();
 
+        //viewmodel for ticket page
+        builder.Services.AddTransient<TicketPageViewModel>();
+
 
         // Registering View
         builder.Services.AddTransient<HomePage>();
@@ -55,11 +58,13 @@ public static class MauiProgram
         builder.Services.AddTransient<EditCinema>();
         builder.Services.AddTransient<MoviePage>();
         builder.Services.AddTransient<EditMovie>();
+        builder.Services.AddTransient<TicketPage>();
 
         // Registering Services
         builder.Services.AddSingleton<IUserService, UserService>();
         //different GUID's cannot be possible if service is singleton
         builder.Services.AddTransient<MovieService>();
+        builder.Services.AddSingleton<JsonFileService>();
 
         //converter
         builder.Services.AddSingleton<ByteArrayToImageSourceConverter>();
