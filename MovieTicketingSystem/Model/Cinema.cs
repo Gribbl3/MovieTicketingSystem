@@ -6,6 +6,7 @@ namespace MovieTicketingSystem.Model;
 public class Cinema : BaseModel
 {
     public int Id { get; set; }
+    public string Name { get; set; }
     public Mall Mall { get; set; } = new(); //Mall - SM
     public ObservableCollection<Seat> Seats { get; set; } = new();
     private int seatCapacity; //Seat - 100

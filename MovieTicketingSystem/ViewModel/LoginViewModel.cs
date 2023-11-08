@@ -27,7 +27,7 @@ public class LoginViewModel : BaseViewModel
     private void SignIn(string userType)
     {
         User.IsAdmin = userType == "Admin";
-       
+
 
         switch (userType)
         {
@@ -50,6 +50,8 @@ public class LoginViewModel : BaseViewModel
             {
                 Shell.Current.GoToAsync($"{nameof(Customer)}");
             }
+            User = new User();
+            OnPropertyChanged(nameof(User));
         }
     }
 

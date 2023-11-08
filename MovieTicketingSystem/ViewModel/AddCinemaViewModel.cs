@@ -60,7 +60,7 @@ public class AddCinemaViewModel : BaseViewModel
             return;
 
         GenerateId();
-
+        GenerateName();
         CinemaCollection.Add(Cinema);
         string json = JsonSerializer.Serialize<ObservableCollection<Cinema>>(CinemaCollection);
         await File.WriteAllTextAsync(cinemaFilePath, json);
@@ -109,6 +109,18 @@ public class AddCinemaViewModel : BaseViewModel
 
         Cinema.Id = newId;
 
+    }
+
+    /// <summary>
+    /// Generates cinema name based on mall name and cinema count on that mall
+    /// </summary>
+    private void GenerateName()
+    {
+        const string NAME = "CINEMA";
+
+        //check the current cinema collection number of cinemas in the mall
+        int cinemaCount = CinemaCollection.Where(c => c.Mall.Id == SelectedMallItem.Id).Count();
+        Cinema.Name = $"{SelectedMallItem.Name}- {NAME} - {cinemaCount + 1}";
     }
 
     /// <summary>
