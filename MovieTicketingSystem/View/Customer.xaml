@@ -3,6 +3,7 @@
     x:Class="MovieTicketingSystem.View.Customer"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:sys="clr-namespace:System;assembly=netstandard"
     xmlns:converter="clr-namespace:MovieTicketingSystem.Converters"
     xmlns:model="clr-namespace:MovieTicketingSystem.Model"
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
@@ -34,7 +35,7 @@
                             <Label
                                 Margin="0,0,0,0"
                                 FontSize="20"
-                                Text="Date Here"
+                                Text="{Binding Source={x:Static sys:DateTime.Today}, StringFormat='{0:d}'}"
                                 TextColor="LightGray" />
                         </HorizontalStackLayout>
                         <HorizontalStackLayout Spacing="20">

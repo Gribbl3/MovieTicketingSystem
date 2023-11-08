@@ -26,14 +26,11 @@
         <Tab Title="Cinema">
             <ShellContent ContentTemplate="{DataTemplate local:CinemaPage}" Route="CinemaPage" />
         </Tab>
-
-    </TabBar>
-
-    <TabBar>
-        <Tab Title="Customer">
-            <ShellContent ContentTemplate="{DataTemplate local:Customer}" Route="Customer"/>
+        <Tab Title="Logout">
+            <ShellContent ContentTemplate="{DataTemplate local:Logout}" Route="Logout" />
         </Tab>
     </TabBar>
+
 
 
 </Shell>

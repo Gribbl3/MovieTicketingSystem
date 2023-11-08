@@ -106,6 +106,9 @@
 	  <MauiXaml Update="View\Login.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\Logout.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\MoviePage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
