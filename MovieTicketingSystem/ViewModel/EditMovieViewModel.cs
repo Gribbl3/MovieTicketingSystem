@@ -199,10 +199,23 @@ public class EditMovieViewModel : BaseViewModel
         }
 
         //check if start time is greater than end time
-        if (Movie.StartTime > Movie.EndTime)
+        //check if start time is greater than end time
+        if (!ValidateShowtimes())
         {
-            Shell.Current.DisplayAlert("Add Movie Error", "Start time cannot be greater than end time", "OK");
             return false;
+        }
+        return true;
+    }
+
+    private bool ValidateShowtimes()
+    {
+        foreach (var showtime in Movie.Showtimes)
+        {
+            if (showtime.StartTime >= showtime.EndTime)
+            {
+                Shell.Current.DisplayAlert("Add Movie Error", "Start time cannot be greater than or equal to end time for a showtime", "OK");
+                return false;
+            }
         }
         return true;
     }

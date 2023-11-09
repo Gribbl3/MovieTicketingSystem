@@ -1,4 +1,5 @@
-﻿using MovieTicketingSystem.Model;
+﻿using Microsoft.Maui.Layouts;
+using MovieTicketingSystem.Model;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Windows.Input;
@@ -9,6 +10,19 @@ namespace MovieTicketingSystem.ViewModel;
 public class AddMovieViewModel : BaseViewModel
 {
     private readonly string movieFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Movies.json");
+    private const string _defaultImage = "add_photo.png";
+
+    private int _numsOfDate;
+    public int NumsOfDate
+    {
+        get => _numsOfDate;
+        set
+        {
+            _numsOfDate = value;
+            GenerateShowtime();
+            OnPropertyChanged();
+        }
+    }
 
     private Movie _movie = new();
     public Movie Movie
@@ -40,7 +54,6 @@ public class AddMovieViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
-    private const string _defaultImage = "add_photo.png";
 
     public ObservableCollection<Genre> AvailableGenre { get; set; }
     public ObservableCollection<Subtitle> AvailableSubtitle { get; set; }
@@ -183,10 +196,23 @@ public class AddMovieViewModel : BaseViewModel
         }
 
         //check if start time is greater than end time
-        if (Movie.StartTime > Movie.EndTime)
+        if(!ValidateShowtimes())
         {
-            Shell.Current.DisplayAlert("Add Movie Error", "Start time cannot be greater than end time", "OK");
             return false;
+        }
+        
+        return true;
+    }
+
+    private bool ValidateShowtimes()
+    {
+        foreach (var showtime in Movie.Showtimes)
+        {
+            if (showtime.StartTime >= showtime.EndTime)
+            {
+                Shell.Current.DisplayAlert("Add Movie Error", "Start time cannot be greater than or equal to end time for a showtime", "OK");
+                return false;
+            }
         }
         return true;
     }
@@ -278,5 +304,14 @@ public class AddMovieViewModel : BaseViewModel
             Shell.Current.DisplayAlert("Add Movie Error", "Please select a subtitle", "OK");
         }
         return hasSelectedGenre;
+    }
+
+    private void GenerateShowtime()
+    {
+        int showtimeCount = NumsOfDate;
+        for (int index = 0; index < showtimeCount; index++)
+        {
+            Movie.Showtimes.Add(new Showtime());
+        }
     }
 }

@@ -56,7 +56,7 @@
                         BackgroundColor="Black"
                         BorderColor="Gray"
                         CornerRadius="25"
-                        HeightRequest="550"
+                        HeightRequest="700"
                         WidthRequest="500">
                         <VerticalStackLayout Spacing="5">
                             <HorizontalStackLayout>
@@ -95,24 +95,8 @@
                                     <Entry Text="{Binding Movie.Description}" />
                                 </Border>
                             </HorizontalStackLayout>
-                            <HorizontalStackLayout>
-                                <Label Text="Start Time" />
-                                <Border Margin="-70,0,0,0">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="10,10,10,10" />
-                                    </Border.StrokeShape>
-                                    <TimePicker Format="T" Time="{Binding Movie.StartTime}" />
-                                </Border>
-                            </HorizontalStackLayout>
-                            <HorizontalStackLayout>
-                                <Label Text="End Time" />
-                                <Border Margin="-70,0,0,0">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="10,10,10,10" />
-                                    </Border.StrokeShape>
-                                    <TimePicker Format="T" Time="{Binding Movie.EndTime}" />
-                                </Border>
-                            </HorizontalStackLayout>
+
+
                             <HorizontalStackLayout>
                                 <Label Text="Year Released" />
                                 <Border Margin="-70,0,0,0">
@@ -142,11 +126,51 @@
                             </HorizontalStackLayout>
                             <HorizontalStackLayout Margin="0,0,0,0">
                                 <Label Text="Status" />
-                                <RadioButton Content="Upcoming" IsChecked="{Binding Movie.IsUpcoming}"  Margin="-100,0,0,0"/>
+                                <RadioButton
+                                    Margin="-100,0,0,0"
+                                    Content="Upcoming"
+                                    IsChecked="{Binding Movie.IsUpcoming}" />
                                 <RadioButton Content="Now Showing" IsChecked="{Binding Movie.IsNowShowing}" />
                             </HorizontalStackLayout>
+                            <HorizontalStackLayout>
+                                <Label Text="Number of showings" />
+                                <Border Margin="-70,0,0,0">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="10,10,10,10" />
+                                    </Border.StrokeShape>
+                                    <Entry Text="{Binding NumsOfDate}" />
+                                </Border>
+                            </HorizontalStackLayout>
+                            <CollectionView ItemsSource="{Binding Movie.Showtimes}">
+                                <CollectionView.EmptyView>
+                                    <Label Text="No Showtimes" />
+                                </CollectionView.EmptyView>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:Showtime">
+                                        <Grid ColumnDefinitions="*,*" RowDefinitions="*,*">
+                                            <Label Text="Start time" VerticalTextAlignment="Center" />
+                                            <TimePicker
+                                                Grid.Column="1"
+                                                Format="T"
+                                                Time="{Binding StartTime}" />
+                                            <Label
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                Text="End time"
+                                                VerticalTextAlignment="Center" />
+                                            <TimePicker
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Format="T"
+                                                Time="{Binding EndTime}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
                         </VerticalStackLayout>
                     </Frame>
+
+
 
                     <Frame
                         BackgroundColor="Black"
@@ -186,7 +210,10 @@
                                     </CollectionView>
                                 </VerticalStackLayout>
                             </HorizontalStackLayout>
-                            <HorizontalStackLayout Margin="40,10,0,0" Spacing="5" HorizontalOptions="Center">
+                            <HorizontalStackLayout
+                                Margin="40,10,0,0"
+                                HorizontalOptions="Center"
+                                Spacing="5">
                                 <Button
                                     Command="{Binding SaveCommand}"
                                     CornerRadius="25"
@@ -201,21 +228,26 @@
                         </VerticalStackLayout>
 
                     </Frame>
-                    <Frame BackgroundColor="Transparent" CornerRadius="25" BorderColor="White" WidthRequest="400" MaximumHeightRequest="550"> 
+                    <Frame
+                        BackgroundColor="Transparent"
+                        BorderColor="White"
+                        CornerRadius="25"
+                        MaximumHeightRequest="550"
+                        WidthRequest="400">
                         <StackLayout>
                             <!--  Change UI  -->
-                            <Image Source="{Binding Image}" Aspect="AspectFit" />
+                            <Image Aspect="AspectFit" Source="{Binding Image}" />
                             <Button
-                                 Command="{Binding UploadImageCommand}"
-                                 CornerRadius="25"
-                                 Text="Add Movie Image"
-                                 WidthRequest="180" 
-                                Margin="0,100,0,0"/>
+                                Margin="0,100,0,0"
+                                Command="{Binding UploadImageCommand}"
+                                CornerRadius="25"
+                                Text="Add Movie Image"
+                                WidthRequest="180" />
                         </StackLayout>
                     </Frame>
                 </HorizontalStackLayout>
 
-               
+
 
             </VerticalStackLayout>
         </Frame>

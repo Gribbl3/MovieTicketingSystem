@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 
 namespace MovieTicketingSystem.Model;
 
@@ -13,17 +14,19 @@ public class Movie : BaseModel
     private decimal _price;
     private Byte[] _image;
     //showtime start and end date
-    private TimeSpan _startTime, _endTime;
     private DateTime _yearReleased, _startDate, _endDate;
+    private TimeSpan _duration;
     public ObservableCollection<string> SelectedGenre { get; set; } = new();
     public ObservableCollection<string> SelectedSubtitle { get; set; } = new();
-    public TimeSpan Duration => EndTime - StartTime;
+    private ObservableCollection<Showtime> _showtimes = new();
 
 
     public Movie()
     {
         _startDate = _endDate = DateTime.Now;
     }
+
+
     public string Name
     {
         get => _name;
@@ -33,6 +36,7 @@ public class Movie : BaseModel
             OnPropertyChanged();
         }
     }
+
     public string Description
     {
         get => _description;
@@ -42,6 +46,7 @@ public class Movie : BaseModel
             OnPropertyChanged();
         }
     }
+
     public bool IsUpcoming
     {
         get => _isUpcoming;
@@ -51,6 +56,7 @@ public class Movie : BaseModel
             OnPropertyChanged();
         }
     }
+
     public bool IsNowShowing
     {
         get => _isNowShowing;
@@ -60,6 +66,7 @@ public class Movie : BaseModel
             OnPropertyChanged();
         }
     }
+
     public DateTime StartDate
     {
         get => _startDate;
@@ -69,6 +76,7 @@ public class Movie : BaseModel
             OnPropertyChanged();
         }
     }
+
     public DateTime EndDate
     {
         get => _endDate;
@@ -78,25 +86,17 @@ public class Movie : BaseModel
             OnPropertyChanged();
         }
     }
-    public TimeSpan StartTime
-    {
-        get => _startTime;
-        set
-        {
-            _startTime = value;
-            OnPropertyChanged();
-        }
-    }
 
-    public TimeSpan EndTime
+    public ObservableCollection<Showtime> Showtimes
     {
-        get => _endTime;
+        get => _showtimes;
         set
         {
-            _endTime = value;
+            _showtimes = value;
             OnPropertyChanged();
         }
     }
+    
     //image is byte array because there is no imagesource datatype in json
     public Byte[] Image
     {
@@ -134,6 +134,16 @@ public class Movie : BaseModel
         set
         {
             _yearReleased = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public TimeSpan Duration
+    {
+        get => _duration;
+        set
+        {
+            _duration = value;
             OnPropertyChanged();
         }
     }

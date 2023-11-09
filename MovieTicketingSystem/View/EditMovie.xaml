@@ -93,7 +93,7 @@
                                     <Entry Text="{Binding Movie.Description}" />
                                 </Border>
                             </HorizontalStackLayout>
-                            <HorizontalStackLayout>
+                            <!--<HorizontalStackLayout>
                                 <Label Text="Start Time" />
                                 <Border Margin="-70,0,0,0">
                                     <Border.StrokeShape>
@@ -110,7 +110,7 @@
                                     </Border.StrokeShape>
                                     <TimePicker Format="T" Time="{Binding Movie.EndTime}" />
                                 </Border>
-                            </HorizontalStackLayout>
+                            </HorizontalStackLayout>-->
                             <HorizontalStackLayout>
                                 <Label Text="Year Released" />
                                 <Border Margin="-70,0,0,0">
