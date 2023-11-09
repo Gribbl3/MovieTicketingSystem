@@ -39,8 +39,8 @@
                     <!--  Adding Mall  -->
                     <Frame
                         BackgroundColor="Black"
-                        HeightRequest="250"
-                        WidthRequest="500">
+                        HeightRequest="220"
+                        WidthRequest="350">
                         <VerticalStackLayout Spacing="10">
                             <Label HorizontalOptions="Start" Text="Add Mall" />
                             <HorizontalStackLayout>
@@ -61,20 +61,28 @@
                                     <Entry Placeholder="Enter Mall Address" Text="{Binding Mall.Address}" />
                                 </Border>
                             </HorizontalStackLayout>
-                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">
-                                <Button Command="{Binding AddCommand}" Text="Save Details" />
-                                <Button
+                            <HorizontalStackLayout HorizontalOptions="End" Spacing="5">
+                                <ImageButton
+                                    Margin="0,10,30,0"
+                                    BackgroundColor="Transparent"
+                                    Command="{Binding AddCommand}"
+                                    Scale="0.7"
+                                    Source="saveicon.png" />
+                                <ImageButton
+                                    Margin="0,10,0,0"
+                                    BackgroundColor="Transparent"
                                     Command="{Binding ResetCommand}"
                                     CommandParameter="{Binding Mall}"
-                                    Text="Reset" />
+                                    Scale="0.3"
+                                    Source="reseticon.png" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
                     <!--  Editing Mall  -->
                     <Frame
                         BackgroundColor="Black"
-                        HeightRequest="250"
-                        WidthRequest="500">
+                        HeightRequest="220"
+                        WidthRequest="350">
                         <VerticalStackLayout Spacing="10">
                             <Label HorizontalOptions="Start" Text="Edit Mall" />
                             <HorizontalStackLayout>
@@ -95,12 +103,20 @@
                                     <Entry Placeholder="Please select a Mall" Text="{Binding SelectedMallForEdit.Address}" />
                                 </Border>
                             </HorizontalStackLayout>
-                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">
-                                <Button Command="{Binding SaveCommand}" Text="Save Edit Details" />
-                                <Button
+                            <HorizontalStackLayout HorizontalOptions="End">
+                                <ImageButton
+                                    Margin="0,10,30,0"
+                                    BackgroundColor="Transparent"
+                                    Command="{Binding SaveCommand}"
+                                    Scale="0.7"
+                                    Source="saveicon.png" />
+                                <ImageButton
+                                    Margin="0,10,0,0"
+                                    BackgroundColor="Transparent"
                                     Command="{Binding ResetCommand}"
                                     CommandParameter="{Binding SelectedMallForEdit}"
-                                    Text="Reset" />
+                                    Scale="0.3"
+                                    Source="reseticon.png" />
                             </HorizontalStackLayout>
                         </VerticalStackLayout>
                     </Frame>
@@ -115,9 +131,16 @@
                                 Padding="10"
                                 ColumnDefinitions="*,*,*,*">
                                 <Label Text="ID" />
-                                <Label Grid.Column="1" Text="NAME" />
-                                <Label Grid.Column="2" Text="ADDRESS" />
+                                <Label
+                                    Grid.Column="1"
+                                    Margin="-50,0,0,0"
+                                    Text="NAME" />
+                                <Label
+                                    Grid.Column="2"
+                                    Margin="-50,0,0,0"
+                                    Text="ADDRESS" />
                             </Grid>
+
                         </CollectionView.Header>
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="model:Mall">
@@ -126,26 +149,41 @@
                                     Padding="10"
                                     ColumnDefinitions="*,*,*,*">
                                     <Label Text="{Binding Id}" />
-                                    <Label Grid.Column="1" Text="{Binding Name}" />
-                                    <Label Grid.Column="2" Text="{Binding Address}" />
+                                    <BoxView
+                                        Margin="0,0,0,50"
+                                        HeightRequest="1"
+                                        WidthRequest="1500" />
+                                    <Label
+                                        Grid.Column="1"
+                                        Margin="-49,0,0,0"
+                                        Text="{Binding Name}" />
+
+                                    <Label
+                                        Grid.Column="2"
+                                        Margin="-49,0,0,0"
+                                        Text="{Binding Address}" />
                                     <VerticalStackLayout
                                         Grid.Column="3"
                                         Margin="0,0,8,0"
                                         Spacing="5">
                                         <!--  Uses the viewmodel's Command  -->
-                                        <Button
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AddMallViewModel}}, Path=EditCommand}"
-                                            CommandParameter="{Binding .}"
-                                            CornerRadius="5"
-                                            Text="Edit"
-                                            WidthRequest="100" />
-                                        <Button
-                                            Background="gray"
-                                            Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AddMallViewModel}}, Path=DeleteCommand}"
-                                            CommandParameter="{Binding Id}"
-                                            CornerRadius="5"
-                                            Text="Delete"
-                                            WidthRequest="100" />
+                                        <HorizontalStackLayout Margin="0,0,0,0" Spacing="10">
+
+                                            <ImageButton
+                                                Margin="-20,0,30,0"
+                                                BackgroundColor="Transparent"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AddMallViewModel}}, Path=EditCommand}"
+                                                CommandParameter="{Binding .}"
+                                                Scale="0.7"
+                                                Source="editicon.png" />
+
+                                            <ImageButton
+                                                BackgroundColor="Transparent"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:AddMallViewModel}}, Path=DeleteCommand}"
+                                                CommandParameter="{Binding Id}"
+                                                Scale="0.9"
+                                                Source="deleteicon.png" />
+                                        </HorizontalStackLayout>
                                     </VerticalStackLayout>
                                 </Grid>
                             </DataTemplate>

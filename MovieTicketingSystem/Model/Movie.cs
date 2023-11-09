@@ -1,5 +1,4 @@
 ﻿using System.Collections.ObjectModel;
-using System.Runtime.CompilerServices;
 
 namespace MovieTicketingSystem.Model;
 
@@ -19,7 +18,7 @@ public class Movie : BaseModel
     public ObservableCollection<string> SelectedGenre { get; set; } = new();
     public ObservableCollection<string> SelectedSubtitle { get; set; } = new();
     private ObservableCollection<Showtime> _showtimes = new();
-
+    private ObservableCollection<Cinema> _cinemas = new();
 
     public Movie()
     {
@@ -96,7 +95,7 @@ public class Movie : BaseModel
             OnPropertyChanged();
         }
     }
-    
+
     //image is byte array because there is no imagesource datatype in json
     public Byte[] Image
     {
@@ -144,6 +143,16 @@ public class Movie : BaseModel
         set
         {
             _duration = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ObservableCollection<Cinema> Cinemas
+    {
+        get => _cinemas;
+        set
+        {
+            _cinemas = value;
             OnPropertyChanged();
         }
     }

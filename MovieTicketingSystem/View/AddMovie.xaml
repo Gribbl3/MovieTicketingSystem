@@ -35,7 +35,6 @@
                 <Setter Property="TextColor" Value="White" />
                 <Setter Property="FontAttributes" Value="Bold" />
             </Style>
-
         </ResourceDictionary>
     </ContentPage.Resources>
 
@@ -59,15 +58,6 @@
                         HeightRequest="700"
                         WidthRequest="500">
                         <VerticalStackLayout Spacing="5">
-                            <HorizontalStackLayout>
-                                <Label Text="Title" />
-                                <Border Margin="-70,0,0,0">
-                                    <Border.StrokeShape>
-                                        <RoundRectangle CornerRadius="10,10,10,10" />
-                                    </Border.StrokeShape>
-                                    <Entry Text="{Binding Movie.Name}" />
-                                </Border>
-                            </HorizontalStackLayout>
                             <HorizontalStackLayout>
                                 <Label Text="Company Source" />
                                 <Border Margin="-70,0,0,0">
@@ -95,8 +85,6 @@
                                     <Entry Text="{Binding Movie.Description}" />
                                 </Border>
                             </HorizontalStackLayout>
-
-
                             <HorizontalStackLayout>
                                 <Label Text="Year Released" />
                                 <Border Margin="-70,0,0,0">
