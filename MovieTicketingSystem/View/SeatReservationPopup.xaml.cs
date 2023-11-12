@@ -1,10 +1,11 @@
+using CommunityToolkit.Maui.Views;
 using MovieTicketingSystem.ViewModel;
 
 namespace MovieTicketingSystem.View;
 
-public partial class TicketPage : ContentPage
+public partial class SeatReservationPopup : Popup
 {
-    public TicketPage(TicketPageViewModel viewModel)
+    public SeatReservationPopup(SeatReservationPopupViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;

@@ -89,12 +89,11 @@
                         </CollectionView.ItemsLayout>
                         <CollectionView.ItemTemplate>
                             <DataTemplate x:DataType="model:Cinema">
-
                                 <Button
+                                    Text="{Binding Name}"
                                     Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TicketPageViewModel}}, Path=GetSeatCommand}"
                                     CommandParameter="{Binding .}"
-                                    Text="{Binding Name}"
-                                    WidthRequest="200" />
+                                    WidthRequest="200"/>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
                     </CollectionView>
@@ -103,7 +102,7 @@
                 <Button
                     Margin="20,50,0,0"
                     BackgroundColor="red"
-                    Command="{Binding .}"
+                    Command="{Binding DisplayPopupCommand}"
                     FontAttributes="Bold"
                     HorizontalOptions="End"
                     IsVisible="{Binding IsCinemaSelected}"

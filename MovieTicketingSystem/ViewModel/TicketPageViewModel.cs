@@ -1,4 +1,5 @@
-﻿using MovieTicketingSystem.Model;
+﻿using CommunityToolkit.Maui.Core;
+using MovieTicketingSystem.Model;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Windows.Input;
@@ -10,7 +11,7 @@ public class TicketPageViewModel : BaseViewModel
 {
     private readonly string mallFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Malls.json");
     private readonly string cinemaFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Cinemas.json");
-
+    private readonly IPopupService popupService;
 
     private Movie _movie;
     public Movie Movie
@@ -19,6 +20,17 @@ public class TicketPageViewModel : BaseViewModel
         set
         {
             _movie = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private Cinema _cinema;
+    public Cinema Cinema
+    {
+        get => _cinema;
+        set
+        {
+            _cinema = value;
             OnPropertyChanged();
         }
     }
@@ -67,13 +79,15 @@ public class TicketPageViewModel : BaseViewModel
         }
     }
 
-    public TicketPageViewModel()
+    public TicketPageViewModel(IPopupService popupService)
     {
         MallCollection = JsonSerializer.Deserialize<ObservableCollection<Mall>>(File.ReadAllText(mallFilePath));
+        this.popupService = popupService;
     }
 
     public ICommand GetCinemaCommand => new Command<Mall>(GetCinemaCollectionFromJson);
     public ICommand GetSeatCommand => new Command<Cinema>(GetSeatCollectionFromCinema);
+    public ICommand DisplayPopupCommand => new Command(DisplayPopup);
 
     private void GetCinemaCollectionFromJson(Mall Mall)
     {
@@ -83,6 +97,9 @@ public class TicketPageViewModel : BaseViewModel
 
         //filter cinema collection by mall
         CinemaCollection = new ObservableCollection<Cinema>(CinemaCollection.Where(c => c.Mall.Id == Mall.Id));
+
+        List<int> movieCinemaIds = Movie.Cinemas.Select(c => c.Id).ToList();
+        CinemaCollection = new ObservableCollection<Cinema>(CinemaCollection.Where(c => movieCinemaIds.Contains(c.Id)));
 
         //enable cinema selection
         IsCinemaSelectionEnabled = true;
@@ -95,6 +112,13 @@ public class TicketPageViewModel : BaseViewModel
     {
         //set cinema selected to true to show seat selection button
         IsCinemaSelected = true;
+        this.Cinema = Cinema;
     }
 
+    private void DisplayPopup()
+    {
+        this.popupService.ShowPopup<SeatReservationPopupViewModel>(onPresenting: viewModel => viewModel.PerformUpdates(Cinema));
+    }
 }
+
+

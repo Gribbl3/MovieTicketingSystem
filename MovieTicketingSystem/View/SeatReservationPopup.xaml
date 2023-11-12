@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup
+    x:Class="MovieTicketingSystem.View.SeatReservationPopup"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:MovieTicketingSystem.Model"
+    xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
+    x:DataType="vm:SeatReservationPopupViewModel">
+    <toolkit:Popup.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Text" Value="white" />
+        </Style>
+    </toolkit:Popup.Resources>
+    <ScrollView HeightRequest="700" WidthRequest="1000" BackgroundColor="black">
+        <VerticalStackLayout>
+       
+            <CollectionView ItemsSource="{Binding Cinema.Seats}">
+                <CollectionView.ItemsLayout>
+                    <GridItemsLayout
+                        HorizontalItemSpacing="2"
+                        Orientation="Vertical"
+                        Span="8"
+                        VerticalItemSpacing="2" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Seat">
+                        <StackLayout>
+                            <Frame BackgroundColor="Transparent" BorderColor="Transparent">
+                                <VerticalStackLayout>
+                                    <Image
+                                        Margin="0,0,0,5"
+                                        Aspect="AspectFill"
+                                        BackgroundColor="Transparent"
+                                        HeightRequest="40"
+                                        Source="available_seat.png"
+                                        WidthRequest="55">
+                                        <Image.Triggers>
+                                            <DataTrigger
+                                                Binding="{Binding IsAvailableSeat}"
+                                                TargetType="Image"
+                                                Value="False">
+                                                <Setter Property="Source" Value="unavailable_seat.png" />
+                                            </DataTrigger>
+                                        </Image.Triggers>
+                                    </Image>
+                                    <Label
+                                        FontSize="11"
+                                        Text="{Binding SeatRow, StringFormat='Row {0}'}"
+                                        WidthRequest="50" />
+                                    <Label
+                                        FontSize="11"
+                                        Text="{Binding SeatColumn, StringFormat='Column {0}'}"
+                                        WidthRequest="80" />
+                                </VerticalStackLayout>
+                            </Frame>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+</toolkit:Popup>

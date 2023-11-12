@@ -1,5 +1,4 @@
-﻿using Microsoft.Maui.Layouts;
-using MovieTicketingSystem.Model;
+﻿using MovieTicketingSystem.Model;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Windows.Input;
@@ -10,6 +9,7 @@ namespace MovieTicketingSystem.ViewModel;
 public class AddMovieViewModel : BaseViewModel
 {
     private readonly string movieFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Movies.json");
+    private readonly string cinemaFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Cinemas.json");
     private const string _defaultImage = "add_photo.png";
 
     private int _numsOfDate;
@@ -34,6 +34,7 @@ public class AddMovieViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
+
     private ObservableCollection<Movie> _movieCollection;
     public ObservableCollection<Movie> MovieCollection
     {
@@ -44,6 +45,7 @@ public class AddMovieViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
+
     private string _image;
     public string Image
     {
@@ -55,8 +57,20 @@ public class AddMovieViewModel : BaseViewModel
         }
     }
 
+    private ObservableCollection<Cinema> _cinemaCollection;
+    public ObservableCollection<Cinema> CinemaCollection
+    {
+        get => _cinemaCollection;
+        set
+        {
+            _cinemaCollection = value;
+            OnPropertyChanged();
+        }
+    }
+
     public ObservableCollection<Genre> AvailableGenre { get; set; }
     public ObservableCollection<Subtitle> AvailableSubtitle { get; set; }
+
 
 
     public AddMovieViewModel()
@@ -64,6 +78,7 @@ public class AddMovieViewModel : BaseViewModel
         Image = _defaultImage;
         PopulateGenres();
         PopulateSubtitles();
+        CinemaCollection = JsonSerializer.Deserialize<ObservableCollection<Cinema>>(File.ReadAllText(Path.Combine(FileSystem.Current.AppDataDirectory, cinemaFilePath)));
     }
 
 
@@ -128,6 +143,9 @@ public class AddMovieViewModel : BaseViewModel
             return;
         }
 
+        AddCinemaToMovie();
+        GenerateId();
+
         MovieCollection.Add(Movie);
         await SaveMovieToJson();
 
@@ -135,7 +153,6 @@ public class AddMovieViewModel : BaseViewModel
 
     private async Task SaveMovieToJson()
     {
-        GenerateId();
         string json = JsonSerializer.Serialize(MovieCollection);
         await File.WriteAllTextAsync(movieFilePath, json);
 
@@ -158,6 +175,16 @@ public class AddMovieViewModel : BaseViewModel
         Movie.Id = MovieCollection.Count + 1;
     }
 
+    private void AddCinemaToMovie()
+    {
+        foreach (var cinema in CinemaCollection)
+        {
+            if (cinema.IsSelected)
+            {
+                Movie.Cinemas.Add(cinema);
+            }
+        }
+    }
     //validators
     private bool ValidateMovie()
     {
@@ -196,11 +223,17 @@ public class AddMovieViewModel : BaseViewModel
         }
 
         //check if start time is greater than end time
-        if(!ValidateShowtimes())
+        if (!ValidateShowtimes())
         {
             return false;
         }
-        
+
+        //check if cinemas are selected
+        if (!ValidateCinemas())
+        {
+            return false;
+        }
+
         return true;
     }
 
@@ -224,8 +257,20 @@ public class AddMovieViewModel : BaseViewModel
             Shell.Current.DisplayAlert("Add Movie Error", $"{fieldName} is required", "OK");
             return false;
         }
+        return true;
+    }
+
+    private bool ValidateCinemas()
+    {
+        //check if cinema collection has selected cinema
+        const int NoSelectedCinema = -1;
+        if (CinemaCollection.IndexOf(CinemaCollection.FirstOrDefault(cinema => cinema.IsSelected)) == NoSelectedCinema)
+        {
+            return false;
+        }
 
         return true;
+
     }
 
     private void PopulateGenres()
@@ -308,6 +353,9 @@ public class AddMovieViewModel : BaseViewModel
 
     private void GenerateShowtime()
     {
+        //clear previous showtime
+        Movie.Showtimes.Clear();
+
         int showtimeCount = NumsOfDate;
         for (int index = 0; index < showtimeCount; index++)
         {

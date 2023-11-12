@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 using MovieTicketingSystem.Converters;
 using MovieTicketingSystem.Service;
 using MovieTicketingSystem.View;
@@ -13,6 +14,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {
                 fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -69,6 +71,8 @@ public static class MauiProgram
         //converter
         builder.Services.AddSingleton<ByteArrayToImageSourceConverter>();
 
+        //popup
+        builder.Services.AddTransientPopup<SeatReservationPopup, SeatReservationPopupViewModel>();
 
 
 #if DEBUG

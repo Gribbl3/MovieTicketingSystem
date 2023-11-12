@@ -9,6 +9,7 @@ public class Cinema : BaseModel
     public string Name { get; set; }
     public Mall Mall { get; set; } = new(); //Mall - SM
     public ObservableCollection<Seat> Seats { get; set; } = new();
+    public bool IsSelected { get; set; } //used when adding movies, to know if the cinema is already selected
     private int seatCapacity; //Seat - 100
 
     public int SeatCapacity
