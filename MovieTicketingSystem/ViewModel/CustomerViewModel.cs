@@ -7,6 +7,7 @@ using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
 
+[QueryProperty(nameof(Customer), nameof(Customer))]
 public class CustomerViewModel : BaseViewModel
 {
     private JsonFileService _service;
@@ -41,5 +42,4 @@ public class CustomerViewModel : BaseViewModel
         };
         await Shell.Current.GoToAsync($"{nameof(TicketPage)}",navigationParameter);
     }
-
 }

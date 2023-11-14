@@ -42,13 +42,17 @@ public class LoginViewModel : BaseViewModel
         bool isValidUser = ValidateUser();
         if (isValidUser)
         {
+            var navigationParameter = new Dictionary<string, object>
+            {
+                { nameof(User), User }
+            };
             if (User.IsAdmin)
             {
                 Shell.Current.GoToAsync($"//{nameof(Admin)}?name={_firstName}");
             }
             else
             {
-                Shell.Current.GoToAsync($"{nameof(Customer)}");
+                Shell.Current.GoToAsync($"//{nameof(Customer)}",navigationParameter);
             }
             User = new User();
             OnPropertyChanged(nameof(User));

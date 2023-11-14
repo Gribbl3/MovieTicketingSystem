@@ -15,7 +15,8 @@
 
     <TabBar>
         <Tab Title="Home">
-            <ShellContent ContentTemplate="{DataTemplate local:Admin}" Route="Admin" />
+            <ShellContent ContentTemplate="{DataTemplate local:Admin}" Route="Admin"/>
+            
         </Tab>
         <Tab Title="Movie">
             <ShellContent ContentTemplate="{DataTemplate local:MoviePage}" Route="MoviePage" />
@@ -29,8 +30,18 @@
         <Tab Title="Logout">
             <ShellContent ContentTemplate="{DataTemplate local:Logout}" Route="Logout" />
         </Tab>
+
+        
     </TabBar>
 
+    <TabBar >
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate local:Customer}" Route="Customer"/>
+        </Tab>
+        <Tab>
+            <ShellContent ContentTemplate="{DataTemplate local:TicketPage}" Route="TicketPage"/>
+        </Tab>
+    </TabBar>
 
 
 </Shell>
