@@ -5,7 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
     Title="Register"
-    x:DataType="vm:RegisterViewModel">
+    x:DataType="vm:RegisterViewModel"
+    BackgroundImageSource="backgroundblur.png">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -33,11 +34,11 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <Frame BackgroundColor="Black"  BorderColor="Black" WidthRequest="800" Margin="0" >
+    <Frame BackgroundColor="Transparent"  BorderColor="Transparent" WidthRequest="800" Margin="0" >
         <VerticalStackLayout Spacing="10">
-            <Image Source="logoww.png" HorizontalOptions="Start"    WidthRequest="350"/>
+            <Image Source="logowwblur.png" HorizontalOptions="Start"    WidthRequest="350"/>
             <HorizontalStackLayout  HorizontalOptions="Center" Spacing="20" >
-                <Frame WidthRequest="300" HeightRequest="420" BackgroundColor="Black" CornerRadius="25">
+                <Frame WidthRequest="300" HeightRequest="420" BackgroundColor="Black" BorderColor="Gray" CornerRadius="25">
                     <StackLayout Spacing="5">
                         <Label Text="Username" Margin="-105,0,0,0"/>
                         <Border WidthRequest="258">
@@ -81,7 +82,7 @@
                     </StackLayout>
                 </Frame>
 
-                <Frame  BackgroundColor="Black" CornerRadius="25">
+                <Frame  BackgroundColor="Black" BorderColor="Gray"   CornerRadius="25">
                     <StackLayout Spacing="5">
                         <HorizontalStackLayout>
 
@@ -131,7 +132,7 @@
                 </Frame>
             </HorizontalStackLayout>
 
-            <Frame BackgroundColor="Black" BorderColor="Black">
+            <Frame BackgroundColor="Transparent" BorderColor="Transparent">
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
                     <Button Command="{Binding RegisterCommand}" Text="Register" Background="RED" TextColor="white" FontAttributes="Bold" CornerRadius="25"/>
                     <Button Command="{Binding ClearCommand}" Text="Clear" TextColor="Black" FontAttributes="Bold" CornerRadius="25"/>

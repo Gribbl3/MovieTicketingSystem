@@ -50,17 +50,21 @@
 
 	<ItemGroup>
 	  <None Remove="Resources\Fonts\MaterialIcons-Regular.ttf" />
+	  <None Remove="Resources\Images\addicon.png" />
 	  <None Remove="Resources\Images\add_photo.png" />
 	  <None Remove="Resources\Images\add_photo_alternate.svg" />
 	  <None Remove="Resources\Images\admin.png" />
 	  <None Remove="Resources\Images\available_seat.png" />
 	  <None Remove="Resources\Images\background.jpg" />
+	  <None Remove="Resources\Images\backgroundblur.png" />
+	  <None Remove="Resources\Images\check.png" />
 	  <None Remove="Resources\Images\customer.png" />
 	  <None Remove="Resources\Images\delete.png" />
 	  <None Remove="Resources\Images\edit.png" />
 	  <None Remove="Resources\Images\female.png" />
 	  <None Remove="Resources\Images\jurassicpark.png" />
 	  <None Remove="Resources\Images\logoww.png" />
+	  <None Remove="Resources\Images\logowwblur.png" />
 	  <None Remove="Resources\Images\male.png" />
 	  <None Remove="Resources\Images\poster1.jpg" />
 	  <None Remove="Resources\Images\Spiderman.jpg" />

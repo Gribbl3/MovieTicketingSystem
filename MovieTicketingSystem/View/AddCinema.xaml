@@ -6,7 +6,8 @@
     xmlns:model="clr-namespace:MovieTicketingSystem.Model"
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
     Title="AddCinema"
-    x:DataType="vm:AddCinemaViewModel">
+    x:DataType="vm:AddCinemaViewModel"
+    BackgroundImageSource="backgroundblur.png">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -20,8 +21,7 @@
 
             <Style TargetType="Button">
                 <Setter Property="WidthRequest" Value="200" />
-                <Setter Property="Background" Value="#cc4f46" />
-                <Setter Property="TextColor" Value="White" />
+               
                 <Setter Property="FontAttributes" Value="Bold" />
             </Style>
             <Style TargetType="Picker">
@@ -34,12 +34,12 @@
         <VerticalStackLayout Margin="10">
             <Image
                 HorizontalOptions="Start"
-                Source="logoww.png"
+                Source="logowwblur.png"
                 WidthRequest="350" />
             <Frame
                 Margin="0,10,0,0"
                 BackgroundColor="Black"
-                BorderColor="White"
+                BorderColor="gray"
                 MaximumHeightRequest="250"
                 WidthRequest="900">
                 <VerticalStackLayout Spacing="10">
@@ -85,25 +85,59 @@
                                 <Entry
                                     Keyboard="Numeric"
                                     Placeholder="Enter Cinema Seat Capacity"
-                                    Text="{Binding SeatCapacity}" />
+                                    Text="{Binding SeatCapacity}"
+                                    />
                             </Border>
                         </HorizontalStackLayout>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Margin="0,20,0,0" HorizontalOptions="Center">
                         <HorizontalStackLayout Spacing="10">
-                            <Button
-                                Command="{Binding SaveCommand}"
-                                CornerRadius="20"
-                                FontSize="12"
-                                Text="Save Details"
-                                WidthRequest="100" />
-                            <Button
-                                Command="{Binding ResetCommand}"
-                                CornerRadius="20"
-                                FontSize="12"
-                                Text="Reset"
-                                WidthRequest="100" />
+                            
+                            
+
+                            <HorizontalStackLayout HorizontalOptions="End" Spacing="5">
+                                <HorizontalStackLayout Spacing="-25">
+                                    <ImageButton
+
+                                       BackgroundColor="Transparent"
+                                       Command="{Binding SaveCommand}"
+                                       Scale="0.4"
+                                       Source="check.png" />
+                                    <Button
+                                       BackgroundColor="Transparent"
+                                        
+                                       Command="{Binding SaveCommand}"
+                                     TextColor="#43A047"
+                                       CornerRadius="20"
+                                       FontSize="12"
+                                       Text="Save Details"
+                                       WidthRequest="100" />
+                                    
+                                </HorizontalStackLayout>
+
+                                <HorizontalStackLayout Spacing="-45">
+                                    <ImageButton
+                                       
+                                        BackgroundColor="Transparent"
+                                        Command="{Binding ResetCommand}"
+                                        Scale="0.3"
+                                        Source="reseticon.png" />
+                                    <Button
+                                        Command="{Binding ResetCommand}"
+                                        BackgroundColor="Transparent"
+                                        CornerRadius="20"
+                                        FontSize="12"
+                                        Text="Reset"
+                                        TextColor="Red"
+                                        WidthRequest="100" />
+                                    
+                                </HorizontalStackLayout>
+                                
+                                
+                            </HorizontalStackLayout>
+
+
                         </HorizontalStackLayout>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>

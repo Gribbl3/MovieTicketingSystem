@@ -7,15 +7,14 @@
     xmlns:model="clr-namespace:MovieTicketingSystem.Model"
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
     Title="CinemaPage"
-    x:DataType="vm:CinemaPageViewModel">
+    x:DataType="vm:CinemaPageViewModel"
+    BackgroundImageSource="backgroundblur.png">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Button">
                 <Setter Property="WidthRequest" Value="150" />
                 <Setter Property="CornerRadius" Value="20" />
-                <Setter Property="TextColor" Value="white" />
-                <Setter Property="Background" Value="red" />
-
+                
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -76,9 +75,20 @@
             Margin="0,20,0,10"
             HorizontalOptions="Center"
             Spacing="5">
-            <Button Command="{Binding AddCinemaCommand}" Text="Add Cinema" />
-            <Button Command="{Binding EditCinemaCommand}" Text="Edit" />
-            <Button Command="{Binding DeleteCinemaCommand}" Text="Delete" />
+           
+            <HorizontalStackLayout Spacing="-40">
+                <ImageButton Command="{Binding AddCinemaCommand}" Source="addicon.png" BackgroundColor="Transparent" Scale="0.5" />
+                <Button Command="{Binding AddCinemaCommand}" Text="Add Cinema" FontAttributes="Bold" TextColor="#43A047" BackgroundColor="Transparent"/>
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Spacing="-70">
+                <ImageButton Command="{Binding EditCinemaCommand}" Source="editicon.png" BackgroundColor="Transparent" Scale="0.7"/>
+                <Button Command="{Binding EditCinemaCommand}"  Text="Edit" FontAttributes="Bold" TextColor="White" BackgroundColor="Transparent"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="-60">
+                <ImageButton Command="{Binding DeleteCinemaCommand}" Source="deleteicon.png" BackgroundColor="Transparent" Scale="0.8"/>
+                <Button Command="{Binding DeleteCinemaCommand}" FontAttributes="Bold" Text="Delete" TextColor="Red" BackgroundColor="Transparent" />
+            </HorizontalStackLayout>
         </HorizontalStackLayout>
     </Grid>
 </ContentPage>
