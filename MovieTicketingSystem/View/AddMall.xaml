@@ -6,7 +6,8 @@
     xmlns:model="clr-namespace:MovieTicketingSystem.Model"
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
     Title="AddMall"
-    x:DataType="vm:AddMallViewModel">
+    x:DataType="vm:AddMallViewModel"
+    BackgroundImageSource="backgroundblur.png">
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style TargetType="Label">
@@ -33,12 +34,14 @@
 
     <ScrollView Margin="20">
         <VerticalStackLayout Spacing="10">
+            <Image Source="logowwblur.png" HorizontalOptions="Start"    WidthRequest="350"/>
             <HorizontalStackLayout HorizontalOptions="Center" Spacing="10">
                 <!--  left column  -->
                 <VerticalStackLayout Spacing="10">
                     <!--  Adding Mall  -->
                     <Frame
                         BackgroundColor="Black"
+                        BorderColor="Gray"
                         HeightRequest="220"
                         WidthRequest="350">
                         <VerticalStackLayout Spacing="10">
@@ -66,8 +69,8 @@
                                     Margin="0,10,30,0"
                                     BackgroundColor="Transparent"
                                     Command="{Binding AddCommand}"
-                                    Scale="0.7"
-                                    Source="saveicon.png" />
+                                    Scale="0.4"
+                                    Source="check.png" />
                                 <ImageButton
                                     Margin="0,10,0,0"
                                     BackgroundColor="Transparent"
@@ -81,6 +84,7 @@
                     <!--  Editing Mall  -->
                     <Frame
                         BackgroundColor="Black"
+                        BorderColor="Gray"
                         HeightRequest="220"
                         WidthRequest="350">
                         <VerticalStackLayout Spacing="10">
@@ -108,8 +112,8 @@
                                     Margin="0,10,30,0"
                                     BackgroundColor="Transparent"
                                     Command="{Binding SaveCommand}"
-                                    Scale="0.7"
-                                    Source="saveicon.png" />
+                                    Scale="0.4"
+                                    Source="check.png" />
                                 <ImageButton
                                     Margin="0,10,0,0"
                                     BackgroundColor="Transparent"
@@ -123,7 +127,7 @@
                 </VerticalStackLayout>
 
                 <!--  right column  -->
-                <Frame BackgroundColor="Black" WidthRequest="700">
+                <Frame BackgroundColor="Black" BorderColor="Gray" WidthRequest="700">
                     <CollectionView EmptyView="No Mall Branches yet" ItemsSource="{Binding MallCollection}">
                         <CollectionView.Header>
                             <Grid
