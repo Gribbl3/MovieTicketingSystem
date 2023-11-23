@@ -40,7 +40,7 @@
     </ContentPage.Resources>
 
     <ScrollView>
-        <Frame BackgroundColor="Black" BorderColor="Black">
+        <Frame BackgroundColor="#1D1B1B" BorderColor="#1D1B1B">
             <VerticalStackLayout>
                 <Image
                     HorizontalOptions="Start"
@@ -51,7 +51,7 @@
                     HorizontalOptions="Center"
                     Spacing="10">
                     <Frame
-                        BackgroundColor="Black"
+                        BackgroundColor="#1D1B1B"
                         BorderColor="Gray"
                         CornerRadius="25"
                         HeightRequest="550"
@@ -150,7 +150,7 @@
                     </Frame>
 
                     <Frame
-                        BackgroundColor="Black"
+                        BackgroundColor="#1D1B1B"
                         BorderColor="Gray"
                         CornerRadius="25"
                         HeightRequest="550"

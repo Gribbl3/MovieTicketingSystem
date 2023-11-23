@@ -38,7 +38,7 @@
         <VerticalStackLayout Spacing="10">
             <Image Source="logowwblur.png" HorizontalOptions="Start"    WidthRequest="350"/>
             <HorizontalStackLayout  HorizontalOptions="Center" Spacing="20" >
-                <Frame WidthRequest="300" HeightRequest="420" BackgroundColor="Black" BorderColor="Gray" CornerRadius="25">
+                <Frame WidthRequest="300" HeightRequest="420" BackgroundColor="#101820" BorderColor="#101820" CornerRadius="25">
                     <StackLayout Spacing="5">
                         <Label Text="Username" Margin="-105,0,0,0"/>
                         <Border WidthRequest="258">
@@ -82,7 +82,7 @@
                     </StackLayout>
                 </Frame>
 
-                <Frame  BackgroundColor="Black" BorderColor="Gray"   CornerRadius="25">
+                <Frame  BackgroundColor="#101820" BorderColor="#101820"   CornerRadius="25">
                     <StackLayout Spacing="5">
                         <HorizontalStackLayout>
 
@@ -134,8 +134,8 @@
 
             <Frame BackgroundColor="Transparent" BorderColor="Transparent">
                 <HorizontalStackLayout HorizontalOptions="Center" Spacing="20">
-                    <Button Command="{Binding RegisterCommand}" Text="Register" Background="RED" TextColor="white" FontAttributes="Bold" CornerRadius="25"/>
-                    <Button Command="{Binding ClearCommand}" Text="Clear" TextColor="Black" FontAttributes="Bold" CornerRadius="25"/>
+                    <Button Command="{Binding RegisterCommand}" Text="Register" Background="#EC4D37" TextColor="white" FontAttributes="Bold" CornerRadius="25"/>
+                    <Button Command="{Binding ClearCommand}" Text="Clear" TextColor="#1D1B1B" FontAttributes="Bold" CornerRadius="25"/>
                 </HorizontalStackLayout>
             </Frame>
         </VerticalStackLayout>

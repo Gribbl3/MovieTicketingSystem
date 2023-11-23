@@ -40,7 +40,7 @@
                     </VerticalStackLayout>
                 </CollectionView.EmptyView>
                 <CollectionView.Header>
-                    <Frame BackgroundColor="Black">
+                    <Frame BackgroundColor="#101820">
                         <Grid ColumnDefinitions="*,*,*,*,*">
                             <Label Text="ID" />
                             <Label Grid.Column="1" Text="NAME" />
@@ -53,8 +53,8 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="model:Cinema">
                         <Frame
-                            BackgroundColor="Black"
-                            BorderColor="Black"
+                            BackgroundColor="#101820"
+                            BorderColor="#101820"
                             CornerRadius="5">
                             <VerticalStackLayout>
                                 <Grid ColumnDefinitions="*,*,*,*,*">
@@ -78,16 +78,16 @@
            
             <HorizontalStackLayout Spacing="-40">
                 <ImageButton Command="{Binding AddCinemaCommand}" Source="addicon.png" BackgroundColor="Transparent" Scale="0.5" />
-                <Button Command="{Binding AddCinemaCommand}" Text="Add Cinema" FontAttributes="Bold" TextColor="#43A047" BackgroundColor="Transparent"/>
+                <Button Command="{Binding AddCinemaCommand}" Text="Add Cinema" FontAttributes="Bold" TextColor="#43A047" BackgroundColor="Transparent" BorderColor="Transparent"/>
             </HorizontalStackLayout>
             <HorizontalStackLayout Spacing="-70">
                 <ImageButton Command="{Binding EditCinemaCommand}" Source="editicon.png" BackgroundColor="Transparent" Scale="0.7"/>
-                <Button Command="{Binding EditCinemaCommand}"  Text="Edit" FontAttributes="Bold" TextColor="White" BackgroundColor="Transparent"/>
+                <Button Command="{Binding EditCinemaCommand}"  Text="Edit" FontAttributes="Bold" TextColor="White" BackgroundColor="Transparent" BorderColor="Transparent"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout Spacing="-60">
                 <ImageButton Command="{Binding DeleteCinemaCommand}" Source="deleteicon.png" BackgroundColor="Transparent" Scale="0.8"/>
-                <Button Command="{Binding DeleteCinemaCommand}" FontAttributes="Bold" Text="Delete" TextColor="Red" BackgroundColor="Transparent" />
+                <Button Command="{Binding DeleteCinemaCommand}" FontAttributes="Bold" Text="Delete" TextColor="#EC4D37" BackgroundColor="Transparent" BorderColor="Transparent"/>
             </HorizontalStackLayout>
         </HorizontalStackLayout>
     </Grid>

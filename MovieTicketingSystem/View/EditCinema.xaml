@@ -39,7 +39,7 @@
                 WidthRequest="350" />
             <Frame
                 Margin="0,10,0,0"
-                BackgroundColor="Black"
+                BackgroundColor="#1D1B1B"
                 BorderColor="White"
                 MaximumHeightRequest="250"
                 WidthRequest="900">

@@ -23,7 +23,7 @@
             </Style>
             <Style TargetType="Button">
                 <Setter Property="WidthRequest" Value="150" />
-                <Setter Property="Background" Value="red" />
+                <Setter Property="Background" Value="#EC4D37" />
                 <Setter Property="TextColor" Value="white" />
                 <Setter Property="CornerRadius" Value="20" />
             </Style>
@@ -40,8 +40,8 @@
                 <VerticalStackLayout Spacing="10">
                     <!--  Adding Mall  -->
                     <Frame
-                        BackgroundColor="Black"
-                        BorderColor="Gray"
+                        BackgroundColor="#101820"
+                        BorderColor="#101820"
                         HeightRequest="220"
                         WidthRequest="350">
                         <VerticalStackLayout Spacing="10">
@@ -83,8 +83,8 @@
                     </Frame>
                     <!--  Editing Mall  -->
                     <Frame
-                        BackgroundColor="Black"
-                        BorderColor="Gray"
+                        BackgroundColor="#101820"
+                        BorderColor="#101820"
                         HeightRequest="220"
                         WidthRequest="350">
                         <VerticalStackLayout Spacing="10">
@@ -127,7 +127,7 @@
                 </VerticalStackLayout>
 
                 <!--  right column  -->
-                <Frame BackgroundColor="Black" BorderColor="Gray" WidthRequest="700">
+                <Frame BackgroundColor="#101820" BorderColor="#101820" WidthRequest="700">
                     <CollectionView EmptyView="No Mall Branches yet" ItemsSource="{Binding MallCollection}">
                         <CollectionView.Header>
                             <Grid

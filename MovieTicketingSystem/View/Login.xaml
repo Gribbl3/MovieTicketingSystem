@@ -19,7 +19,7 @@
         <Image Aspect="AspectFill" Source="background.jpg" />
         <StackLayout
             Padding="50"
-            Background="black"
+            Background="#101820"
             HeightRequest="420"
             Opacity="0.95"
             Spacing="10"
@@ -58,7 +58,7 @@
                 HorizontalOptions="Center"
                 Spacing="10">
                 <Button
-                    BackgroundColor="red"
+                    BackgroundColor="#EC4D37"
                     Command="{Binding SignInCommand}"
                     CommandParameter="Admin"
                     CornerRadius="20"
@@ -72,7 +72,7 @@
                
 
                 <Button
-                    BackgroundColor="red"
+                    BackgroundColor="#EC4D37"
                     Command="{Binding SignInCommand}"
                     CommandParameter="Customer"
                     CornerRadius="20"
@@ -89,7 +89,7 @@
                 <Label
                     FontAttributes="Bold"
                     Text=" Sign up now"
-                    TextColor="red">
+                    TextColor="#EC4D37">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding RegisterCommand}" />
                     </Label.GestureRecognizers>

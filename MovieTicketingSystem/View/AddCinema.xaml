@@ -38,8 +38,8 @@
                 WidthRequest="350" />
             <Frame
                 Margin="0,10,0,0"
-                BackgroundColor="Black"
-                BorderColor="gray"
+                BackgroundColor="#101820"
+                BorderColor="#101820"
                 MaximumHeightRequest="250"
                 WidthRequest="900">
                 <VerticalStackLayout Spacing="10">
@@ -106,9 +106,9 @@
                                        Source="check.png" />
                                     <Button
                                        BackgroundColor="Transparent"
-                                        
+                                       BorderColor="Transparent"
                                        Command="{Binding SaveCommand}"
-                                     TextColor="#43A047"
+                                       TextColor="#43A047"
                                        CornerRadius="20"
                                        FontSize="12"
                                        Text="Save Details"
@@ -126,10 +126,11 @@
                                     <Button
                                         Command="{Binding ResetCommand}"
                                         BackgroundColor="Transparent"
+                                         BorderColor="Transparent"
                                         CornerRadius="20"
                                         FontSize="12"
                                         Text="Reset"
-                                        TextColor="Red"
+                                        TextColor="#EC4D37"
                                         WidthRequest="100" />
                                     
                                 </HorizontalStackLayout>

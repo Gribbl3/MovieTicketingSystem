@@ -26,7 +26,7 @@
                         FontAttributes="Bold"
                         FontSize="24"
                         Text=" CINEMA"
-                        TextColor="red" />
+                        TextColor="#EC4D37" />
                     <Span Text="{Binding Source={x:Static sys:DateTime.Now}, StringFormat='{0: | dddd MMMM dd, yyyy}'}" TextColor="{StaticResource Gray200}" />
                 </FormattedString>
             </Label.FormattedText>
@@ -78,7 +78,7 @@
                 Text="2023 | SEQUEL | SONY PICTURES ENTERTAINMENT"
                 TextColor="{StaticResource Gray200}"/>
             <Button
-                Background="red"
+                Background="#EC4D37"
                 BorderColor="AliceBlue"
                 FontAttributes="Bold"
                 HeightRequest="40"

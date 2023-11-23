@@ -25,7 +25,7 @@
                 <Setter Property="WidthRequest" Value="150" />
             </Style>
             <Style TargetType="Label">
-                <Setter Property="TextColor" Value="red" />
+                <Setter Property="TextColor" Value="#EC4D37" />
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="FontSize" Value="15" />
             </Style>
@@ -101,7 +101,7 @@
 
                 <Button
                     Margin="20,50,0,0"
-                    BackgroundColor="red"
+                    BackgroundColor="#EC4D37"
                     Command="{Binding DisplayPopupCommand}"
                     FontAttributes="Bold"
                     HorizontalOptions="End"

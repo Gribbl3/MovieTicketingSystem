@@ -26,7 +26,7 @@
         <VerticalStackLayout Spacing="5">
             <Image Source="logowwblur.png" HorizontalOptions="Start"    WidthRequest="350"/>
             <Label FontSize="20" Text="BOOKINGS" />
-            <Frame BackgroundColor="black" BorderColor="Gray">
+            <Frame BackgroundColor="#101820" BorderColor="#101820">
                 <CollectionView ItemsSource="{Binding MovieCollection}">
                     <CollectionView.EmptyView>
                         <ContentView HeightRequest="500">
@@ -85,7 +85,7 @@
                                             TargetType="Label"
                                             Value="False">
                                             <Setter Property="Text" Value="UPCOMING" />
-                                            <Setter Property="TextColor" Value="red" />
+                                            <Setter Property="TextColor" Value="#EC4D37" />
                                         </DataTrigger>
                                     </Label.Triggers>
                                 </Label>
@@ -97,17 +97,17 @@
         </VerticalStackLayout>
         <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center">
             <HorizontalStackLayout Spacing="-50">
-                <ImageButton Command="{Binding AddMovieCommand}" Source="addicon.png" BackgroundColor="Transparent" Scale="0.5" />
-                <Button Command="{Binding AddMovieCommand}" Text="Add" FontAttributes="Bold" TextColor="#43A047" BackgroundColor="Transparent"/>
+                <ImageButton Command="{Binding AddMovieCommand}" Source="addicon.png" BackgroundColor="Transparent" Scale="0.5"  />
+                <Button Command="{Binding AddMovieCommand}" Text="Add" FontAttributes="Bold" TextColor="#43A047" BackgroundColor="Transparent" BorderColor="Transparent"/>
             </HorizontalStackLayout>
             <HorizontalStackLayout Spacing="-50">
                 <ImageButton Command="{Binding EditMovieCommand}" Source="editicon.png" BackgroundColor="Transparent" Scale="0.7"/>
-                <Button Command="{Binding EditMovieCommand}" Text="Edit" FontAttributes="Bold" TextColor="White" BackgroundColor="Transparent"/>
+                <Button Command="{Binding EditMovieCommand}" Text="Edit" FontAttributes="Bold" TextColor="White" BackgroundColor="Transparent" BorderColor="Transparent"/>
             </HorizontalStackLayout>
 
             <HorizontalStackLayout Spacing="-40">
                 <ImageButton Command="{Binding DeleteMovieCommand}" Source="deleteicon.png" BackgroundColor="Transparent" Scale="0.8"/>
-                <Button Command="{Binding DeleteMovieCommand}" FontAttributes="Bold" Text="Delete" TextColor="Red" BackgroundColor="Transparent" />
+                <Button Command="{Binding DeleteMovieCommand}" FontAttributes="Bold" Text="Delete" TextColor="#EC4D37" BackgroundColor="Transparent" BorderColor="Transparent"/>
             </HorizontalStackLayout>
 
         </HorizontalStackLayout>
