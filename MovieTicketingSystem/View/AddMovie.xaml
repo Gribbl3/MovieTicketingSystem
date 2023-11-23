@@ -9,7 +9,7 @@
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
     x:DataType="vm:AddMovieViewModel"
     BackgroundImageSource="backgroundblur.png">
-    
+
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -42,18 +42,23 @@
     <!--  Main Layout  -->
     <!--  Make entries wrap with border for Movie Properties  -->
     <ScrollView>
-        <HorizontalStackLayout >
-            <VerticalStackLayout >
+        <VerticalStackLayout>
+            <VerticalStackLayout>
                 <Image
                     Grid.Row="0"
                     Grid.ColumnSpan="2"
                     HorizontalOptions="Start"
-                    VerticalOptions="Start"
-                    Source="logowwblur.png" />
-                <VerticalStackLayout >
-                    <Frame BackgroundColor="#101820"  BorderColor="#101820" WidthRequest="1000" HeightRequest="200" Margin="150,0,0,0">
+                    Source="logowwblur.png"
+                    VerticalOptions="Start" />
+                <VerticalStackLayout>
+                    <Frame
+                        Margin="150,0,0,0"
+                        BackgroundColor="#101820"
+                        BorderColor="#101820"
+                        HeightRequest="200"
+                        WidthRequest="1000">
                         <HorizontalStackLayout Spacing="50">
-                            <VerticalStackLayout    >
+                            <VerticalStackLayout>
                                 <Label Text="Title" />
                                 <Border Margin="0,5,0,0">
                                     <Border.StrokeShape>
@@ -61,7 +66,7 @@
                                     </Border.StrokeShape>
                                     <Entry Text="{Binding Movie.Name}" />
                                 </Border>
-                                <Label Text="Company Source" Margin="0,10,0,0"/>
+                                <Label Margin="0,10,0,0" Text="Company Source" />
                                 <Border Margin="0,5,0,0">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10,10,10,10" />
@@ -77,7 +82,7 @@
                                     </Border.StrokeShape>
                                     <Entry Text="{Binding Movie.Price}" />
                                 </Border>
-                                <Label Text="Description" Margin="0,10,0,0"/>
+                                <Label Margin="0,10,0,0" Text="Description" />
                                 <Border Margin="0,5,0,0">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10,10,10,10" />
@@ -93,7 +98,7 @@
                                     </Border.StrokeShape>
                                     <DatePicker Date="{Binding Movie.YearReleased}" />
                                 </Border>
-                                <Label Text="Start Date"  Margin="0,10,0,0"/>
+                                <Label Margin="0,10,0,0" Text="Start Date" />
                                 <Border Margin="0,5,0,0">
                                     <Border.StrokeShape>
                                         <RoundRectangle CornerRadius="10,10,10,10" />
@@ -109,9 +114,12 @@
                                     </Border.StrokeShape>
                                     <DatePicker Date="{Binding Movie.EndDate}" />
                                 </Border>
-                                <Label Text="Status" Margin="0,10,0,0"/>
+                                <Label Margin="0,10,0,0" Text="Status" />
                                 <HorizontalStackLayout Margin="70,10,0,0">
-                                    <RadioButton Margin="-100,0,0,0" Content="Upcoming"  IsChecked="{Binding Movie.IsUpcoming}" />
+                                    <RadioButton
+                                        Margin="-100,0,0,0"
+                                        Content="Upcoming"
+                                        IsChecked="{Binding Movie.IsUpcoming}" />
                                     <RadioButton Content="Now Showing" IsChecked="{Binding Movie.IsNowShowing}" />
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
@@ -119,26 +127,44 @@
                     </Frame>
                 </VerticalStackLayout>
                 <VerticalStackLayout Margin="150,10,0,0">
-                    <Frame  Grid.Row="3"  Grid.ColumnSpan="2"  BackgroundColor="#101820"  BorderColor="#101820"  WidthRequest="1000" HeightRequest="500">
-                        <Grid  ColumnDefinitions="*,auto"  RowDefinitions="auto,*"  RowSpacing="10">
+                    <Frame
+                        Grid.Row="3"
+                        Grid.ColumnSpan="2"
+                        BackgroundColor="#101820"
+                        BorderColor="#101820"
+                        HeightRequest="500"
+                        WidthRequest="1000">
+                        <Grid
+                            ColumnDefinitions="*,auto"
+                            RowDefinitions="auto,*"
+                            RowSpacing="10">
                             <Label
-                                 Margin="50,10,0,50"
-                                 HorizontalOptions="Start"
-                                 Text="Number of showing" />
-                            <Border Grid.Column="1" Margin="-750,10,0,50" HorizontalOptions="Start">
+                                Margin="50,10,0,50"
+                                HorizontalOptions="Start"
+                                Text="Number of showing" />
+                            <Border
+                                Grid.Column="1"
+                                Margin="-750,10,0,50"
+                                HorizontalOptions="Start">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="10" />
                                 </Border.StrokeShape>
                                 <Entry Text="{Binding NumsOfDate}" />
                             </Border>
-                            <BoxView BackgroundColor="DarkGray" HeightRequest="1" Margin="0,56,0,0"/>
-                            <CollectionView  Grid.Row="1"  Grid.ColumnSpan="2"   ItemsSource="{Binding Movie.Showtimes}">
+                            <BoxView
+                                Margin="0,56,0,0"
+                                BackgroundColor="DarkGray"
+                                HeightRequest="1" />
+                            <CollectionView
+                                Grid.Row="1"
+                                Grid.ColumnSpan="2"
+                                ItemsSource="{Binding Movie.Showtimes}">
                                 <CollectionView.ItemsLayout>
                                     <GridItemsLayout
-                                Orientation="Vertical"
-                                Span="2"
-                                VerticalItemSpacing="10"
-                                HorizontalItemSpacing="10"/>
+                                        HorizontalItemSpacing="10"
+                                        Orientation="Vertical"
+                                        Span="2"
+                                        VerticalItemSpacing="10" />
                                 </CollectionView.ItemsLayout>
                                 <CollectionView.EmptyView>
                                     <Label Text="No Showtimes" />
@@ -148,28 +174,39 @@
                                         <VerticalStackLayout>
 
                                             <Grid ColumnDefinitions="*,auto" RowDefinitions="*,*">
-                                                <Label Text="Start time" Margin="-500,0,0,0"/>
+                                                <Label Margin="-500,0,0,0" Text="Start time" />
                                                 <TimePicker
-                                            Grid.Column="1"
-                                            Format="T"
-                                            Time="{Binding StartTime}" 
-                                                    Margin="-500,0,0,0"/>
-                                                <Label Grid.Row="1" Text="End time" Margin="-500,0,0,0"/>
+                                                    Grid.Column="1"
+                                                    Margin="-500,0,0,0"
+                                                    Format="T"
+                                                    Time="{Binding StartTime}" />
+                                                <Label
+                                                    Grid.Row="1"
+                                                    Margin="-500,0,0,0"
+                                                    Text="End time" />
                                                 <TimePicker
-                                            Grid.Row="1"
-                                            Grid.Column="1"
-                                            Format="T"
-                                            Time="{Binding EndTime}" Margin="-500,0,0,0"/>
+                                                    Grid.Row="1"
+                                                    Grid.Column="1"
+                                                    Margin="-500,0,0,0"
+                                                    Format="T"
+                                                    Time="{Binding EndTime}" />
                                             </Grid>
-                                            <BoxView BackgroundColor="DarkGray" HeightRequest="1"/>
+                                            <BoxView BackgroundColor="DarkGray" HeightRequest="1" />
                                         </VerticalStackLayout>
                                     </DataTemplate>
                                 </CollectionView.ItemTemplate>
                             </CollectionView>
                         </Grid>
                     </Frame>
-                    <VerticalStackLayout >
-                        <Frame Grid.Row="2" Grid.Column="1" BackgroundColor="#101820"  BorderColor="#101820"  WidthRequest="1000" HeightRequest="390" Margin="10,10,0,0">
+                    <VerticalStackLayout>
+                        <Frame
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Margin="10,10,0,0"
+                            BackgroundColor="#101820"
+                            BorderColor="#101820"
+                            HeightRequest="390"
+                            WidthRequest="1000">
                             <Grid RowDefinitions="auto,*" RowSpacing="5">
                                 <Label Text="Available Cinemas" />
                                 <CollectionView Grid.Row="1" ItemsSource="{Binding CinemaCollection}">
@@ -200,7 +237,12 @@
                 </VerticalStackLayout>
             </VerticalStackLayout>
             <VerticalStackLayout>
-                <Frame BackgroundColor="#101820"  BorderColor="#101820" Margin="10,55,0,0" WidthRequest="600" HeightRequest="550">
+                <Frame
+                    Margin="10,55,0,0"
+                    BackgroundColor="#101820"
+                    BorderColor="#101820"
+                    HeightRequest="550"
+                    WidthRequest="600">
                     <VerticalStackLayout>
                         <HorizontalStackLayout HorizontalOptions="Center">
                             <Label Margin="80,0,50,10" Text="Genre" />
@@ -235,54 +277,74 @@
                         </HorizontalStackLayout>
                         <HorizontalStackLayout HorizontalOptions="Center" Spacing="5">
                             <HorizontalStackLayout Spacing="-58">
-                                <ImageButton  Command="{Binding SaveCommand}" BackgroundColor="Transparent" Source="check.png" Scale="0.5"/>
+                                <ImageButton
+                                    BackgroundColor="Transparent"
+                                    Command="{Binding SaveCommand}"
+                                    Scale="0.5"
+                                    Source="check.png" />
                                 <Button
-                               Command="{Binding SaveCommand}"
-                               BackgroundColor="Transparent"
-                                BorderColor="Transparent"
-                               CornerRadius="25"
-                               Text="Save Details"
-                                TextColor="#43A047"
-                                WidthRequest="180" />
+                                    BackgroundColor="Transparent"
+                                    BorderColor="Transparent"
+                                    Command="{Binding SaveCommand}"
+                                    CornerRadius="25"
+                                    Text="Save Details"
+                                    TextColor="#43A047"
+                                    WidthRequest="180" />
                             </HorizontalStackLayout>
 
                             <HorizontalStackLayout Spacing="-80">
-                                <ImageButton Command="{Binding ResetCommand}" Source="reseticon.png" BackgroundColor="Transparent" Scale="0.4"/>
+                                <ImageButton
+                                    BackgroundColor="Transparent"
+                                    Command="{Binding ResetCommand}"
+                                    Scale="0.4"
+                                    Source="reseticon.png" />
                                 <Button
-                                  Command="{Binding ResetCommand}"
-                                  CornerRadius="25"
-                                  BackgroundColor="Transparent"
-                                  BorderColor="Transparent"
-                                  TextColor="#EC4D37"
-                                  Text="Reset"
-                                  WidthRequest="180" />
+                                    BackgroundColor="Transparent"
+                                    BorderColor="Transparent"
+                                    Command="{Binding ResetCommand}"
+                                    CornerRadius="25"
+                                    Text="Reset"
+                                    TextColor="#EC4D37"
+                                    WidthRequest="180" />
                             </HorizontalStackLayout>
                         </HorizontalStackLayout>
                     </VerticalStackLayout>
                 </Frame>
-                
-                <VerticalStackLayout Margin="0,10,0,0" HorizontalOptions="End">
-                    <Frame  Grid.Row="2" BackgroundColor="#101820" BorderColor="#101820" WidthRequest="600" HeightRequest="550">
-                        <StackLayout >
+
+                <VerticalStackLayout Margin="0,10,0,0" HorizontalOptions="Center">
+                    <Frame
+                        Grid.Row="2"
+                        BackgroundColor="#101820"
+                        BorderColor="#101820"
+                        HeightRequest="550"
+                        WidthRequest="600">
+                        <StackLayout>
                             <!--  Change UI  -->
                             <Image Aspect="AspectFit" Source="{Binding Image}" />
-                            <HorizontalStackLayout HorizontalOptions="Center" Spacing="-40" Margin="0,50,0,0">
-                                <ImageButton Command="{Binding UploadImageCommand}" Source="addicon.png" BackgroundColor="Transparent" Scale="0.5" Margin="0,-10,0,0"/>
+                            <HorizontalStackLayout
+                                Margin="0,50,0,0"
+                                HorizontalOptions="Center"
+                                Spacing="-40">
+                                <ImageButton
+                                    Margin="0,-10,0,0"
+                                    BackgroundColor="Transparent"
+                                    Command="{Binding UploadImageCommand}"
+                                    Scale="0.5"
+                                    Source="addicon.png" />
                                 <Button
                                     Margin="0,-10,0,0"
-                                    Command="{Binding UploadImageCommand}"
                                     BackgroundColor="Transparent"
+                                    BorderColor="Transparent"
+                                    Command="{Binding UploadImageCommand}"
+                                    FontAttributes="Bold"
                                     Text="Add Movie Image"
                                     TextColor="#43A047"
-                                    FontAttributes="Bold"
-                                    WidthRequest="180" 
-                                    BorderColor="Transparent"
-                                    />
+                                    WidthRequest="180" />
                             </HorizontalStackLayout>
                         </StackLayout>
                     </Frame>
                 </VerticalStackLayout>
             </VerticalStackLayout>
-        </HorizontalStackLayout>
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>
