@@ -5,59 +5,93 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:model="clr-namespace:MovieTicketingSystem.Model"
     xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+    xmlns:view="clr-namespace:MovieTicketingSystem.View"
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
     x:DataType="vm:SeatReservationPopupViewModel">
     <toolkit:Popup.Resources>
+        <Style TargetType="{x:Type view:SeatReservationPopup}">
+            <Setter Property="Size" Value="1000,800" />
+            <Setter Property="Color" Value="Black" />
+            <Setter Property="CanBeDismissedByTappingOutsideOfPopup" Value="False" />
+        </Style>
         <Style TargetType="Label">
-            <Setter Property="Text" Value="white" />
+            <Setter Property="TextColor" Value="White" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="HeightRequest" Value="50" />
+            <Setter Property="WidthRequest" Value="150" />
+            <Setter Property="TextColor" Value="White" />
         </Style>
     </toolkit:Popup.Resources>
-    <ScrollView HeightRequest="700" WidthRequest="1000" BackgroundColor="#1D1B1B">
-        <VerticalStackLayout>
-       
-            <CollectionView ItemsSource="{Binding Cinema.Seats}">
-                <CollectionView.ItemsLayout>
-                    <GridItemsLayout
-                        HorizontalItemSpacing="2"
-                        Orientation="Vertical"
-                        Span="8"
-                        VerticalItemSpacing="2" />
-                </CollectionView.ItemsLayout>
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:Seat">
-                        <StackLayout>
-                            <Frame BackgroundColor="#1D1B1B">
-                                <VerticalStackLayout>
-                                    <Image
-                                        Margin="0,0,0,5"
-                                        Aspect="AspectFill"
-                                        BackgroundColor="Transparent"
-                                        HeightRequest="40"
-                                        Source="available_seat.png"
-                                        WidthRequest="55">
-                                        <Image.Triggers>
-                                            <DataTrigger
-                                                Binding="{Binding IsAvailableSeat}"
-                                                TargetType="Image"
-                                                Value="False">
-                                                <Setter Property="Source" Value="unavailable_seat.png" />
-                                            </DataTrigger>
-                                        </Image.Triggers>
-                                    </Image>
-                                    <Label
-                                        FontSize="11"
-                                        Text="{Binding SeatRow, StringFormat='Row {0}'}"
-                                        WidthRequest="50" />
-                                    <Label
-                                        FontSize="11"
-                                        Text="{Binding SeatColumn, StringFormat='Column {0}'}"
-                                        WidthRequest="80" />
-                                </VerticalStackLayout>
-                            </Frame>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-        </VerticalStackLayout>
-    </ScrollView>
+
+    <Grid RowDefinitions="*,0.20*">
+        <CollectionView
+            x:Name="collectionView"
+            ItemsSource="{Binding Cinema.Seats}"
+            SelectionMode="Multiple">
+            <CollectionView.ItemsLayout>
+                <GridItemsLayout
+                    HorizontalItemSpacing="2"
+                    Orientation="Vertical"
+                    Span="8"
+                    VerticalItemSpacing="2" />
+            </CollectionView.ItemsLayout>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Seat">
+                    <StackLayout>
+                        <Frame>
+                            <VerticalStackLayout>
+                                <Image
+                                    Margin="0,0,0,5"
+                                    Aspect="AspectFill"
+                                    HeightRequest="40"
+                                    Source="add_photo_alternate.png"
+                                    WidthRequest="55">
+                                    <Image.Triggers>
+                                        <DataTrigger TargetType="Image" Binding="{Binding IsAvailableSeat}" Value="true">
+                                            <Setter Property="Behaviors">
+                                                <toolkit:IconTintColorBehavior TintColor="Green" />
+                                            </Setter>
+                                        </DataTrigger>
+                                        <DataTrigger TargetType="Image" Binding="{Binding IsAvailableSeat}" Value="false">
+                                            <Setter Property="Behaviors">
+                                                <toolkit:IconTintColorBehavior TintColor="Red" />
+                                            </Setter>
+                                        </DataTrigger>
+                                    </Image.Triggers>
+                                </Image>
+                                <Label
+                                    FontSize="11"
+                                    Text="{Binding SeatRow, StringFormat='Row {0}'}"
+                                    WidthRequest="50" />
+                                <Label
+                                    FontSize="11"
+                                    Text="{Binding SeatColumn, StringFormat='Column {0}'}"
+                                    WidthRequest="80" />
+                            </VerticalStackLayout>
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BindingContext.UpdateSeatAvailabilityCommand, Source={x:Reference collectionView}}" CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <HorizontalStackLayout
+            Grid.Row="1"
+            Margin="0,10,0,0"
+            Padding="10"
+            HorizontalOptions="Center"
+            Spacing="10">
+            <Button
+                BackgroundColor="#ec4d37"
+                Clicked="GoBack"
+                Text="Go Back" />
+            <Button
+                BackgroundColor="#92e492"
+                Clicked="Confirm"
+                Text="Confirm Seat" />
+        </HorizontalStackLayout>
+    </Grid>
 </toolkit:Popup>

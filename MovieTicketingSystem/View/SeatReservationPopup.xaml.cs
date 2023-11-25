@@ -10,4 +10,11 @@ public partial class SeatReservationPopup : Popup
         InitializeComponent();
         BindingContext = viewModel;
     }
+
+    private void GoBack(object sender, EventArgs e) => Close();
+    private void Confirm(object sender, EventArgs e)
+    {
+        Shell.Current.DisplayAlert("Success", "Your reservation has been confirmed", "OK");
+        Close();
+    }
 }

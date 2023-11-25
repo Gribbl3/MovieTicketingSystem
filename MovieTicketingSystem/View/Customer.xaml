@@ -3,9 +3,9 @@
     x:Class="MovieTicketingSystem.View.Customer"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:sys="clr-namespace:System;assembly=netstandard"
     xmlns:converter="clr-namespace:MovieTicketingSystem.Converters"
     xmlns:model="clr-namespace:MovieTicketingSystem.Model"
+    xmlns:sys="clr-namespace:System;assembly=netstandard"
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
     Title="Customer"
     x:DataType="vm:CustomerViewModel">
@@ -124,7 +124,7 @@
                     Text="NOW SHOWING" />
                 <Frame BackgroundColor="#1D1B1B" HeightRequest="300">
 
-                    <CarouselView ItemsSource="{Binding MovieCollection}">
+                    <CarouselView EmptyView="Now Showing Movies not Available!" ItemsSource="{Binding MovieCollection}">
                         <CarouselView.ItemsLayout>
                             <LinearItemsLayout ItemSpacing="10" Orientation="Horizontal" />
                         </CarouselView.ItemsLayout>
@@ -141,7 +141,7 @@
                                         </DataTrigger>
                                     </Image.Triggers>
                                     <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CustomerViewModel}},Path=GoToTicketPageCommand}" CommandParameter="{Binding .}" />
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CustomerViewModel}}, Path=GoToTicketPageCommand}" CommandParameter="{Binding .}" />
                                     </Image.GestureRecognizers>
                                 </Image>
                             </DataTemplate>
@@ -156,7 +156,9 @@
                     FontSize="Large"
                     Text="COMING SOON" />
                 <Frame BackgroundColor="#1D1B1B" HeightRequest="300">
-                    <CarouselView ItemsSource="{Binding MovieCollection}">
+                    <CarouselView EmptyView="Up Coming Movies not Available!" 
+                                  RemainingItemsThreshold="2"
+                                  ItemsSource="{Binding MovieCollection}">
                         <CarouselView.ItemsLayout>
                             <LinearItemsLayout ItemSpacing="10" Orientation="Horizontal" />
                         </CarouselView.ItemsLayout>
@@ -173,7 +175,7 @@
                                         </DataTrigger>
                                     </Image.Triggers>
                                     <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CustomerViewModel}},Path=GoToTicketPageCommand}" CommandParameter="{Binding .}" />
+                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CustomerViewModel}}, Path=GoToTicketPageCommand}" CommandParameter="{Binding .}" />
                                     </Image.GestureRecognizers>
                                 </Image>
                             </DataTemplate>

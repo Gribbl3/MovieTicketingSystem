@@ -7,6 +7,7 @@ using System.Windows.Input;
 namespace MovieTicketingSystem.ViewModel;
 
 [QueryProperty(nameof(Movie), nameof(Movie))]
+[QueryProperty(nameof(User), nameof(User))]
 public class TicketPageViewModel : BaseViewModel
 {
     private readonly string mallFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Malls.json");
@@ -31,6 +32,17 @@ public class TicketPageViewModel : BaseViewModel
         set
         {
             _cinema = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private User _user;
+    public User User
+    {
+        get => _user;
+        set
+        {
+            _user = value;
             OnPropertyChanged();
         }
     }
@@ -117,7 +129,7 @@ public class TicketPageViewModel : BaseViewModel
 
     private void DisplayPopup()
     {
-        this.popupService.ShowPopup<SeatReservationPopupViewModel>(onPresenting: viewModel => viewModel.PerformUpdates(Cinema));
+        this.popupService.ShowPopup<SeatReservationPopupViewModel>(onPresenting: viewModel => viewModel.PerformUpdates(Cinema, User));
     }
 }
 

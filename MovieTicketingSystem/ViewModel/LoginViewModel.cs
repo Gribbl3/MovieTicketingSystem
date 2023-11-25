@@ -19,12 +19,12 @@ public class LoginViewModel : BaseViewModel
     {
         _userService = userService;
     }
-    private void Register()
+    private async void Register()
     {
-        Shell.Current.GoToAsync("Register");
+        await Shell.Current.GoToAsync("Register");
     }
 
-    private void SignIn(string userType)
+    private async void SignIn(string userType)
     {
         User.IsAdmin = userType == "Admin";
 
@@ -32,10 +32,10 @@ public class LoginViewModel : BaseViewModel
         switch (userType)
         {
             case "Admin":
-                userCollection = _userService.GetUsers(User.IsAdmin).Result;
+                userCollection = await _userService.GetUsers(User.IsAdmin);
                 break;
             case "Customer":
-                userCollection = _userService.GetUsers(User.IsAdmin).Result;
+                userCollection = await _userService.GetUsers(User.IsAdmin);
                 break;
         }
 
@@ -46,13 +46,14 @@ public class LoginViewModel : BaseViewModel
             {
                 { nameof(User), User }
             };
+
             if (User.IsAdmin)
             {
-                Shell.Current.GoToAsync($"//{nameof(Admin)}?name={_firstName}");
+                await Shell.Current.GoToAsync($"//{nameof(Admin)}?name={_firstName}");
             }
             else
             {
-                Shell.Current.GoToAsync($"//{nameof(Customer)}",navigationParameter);
+                await Shell.Current.GoToAsync($"//{nameof(Customer)}", navigationParameter);
             }
             User = new User();
             OnPropertyChanged(nameof(User));

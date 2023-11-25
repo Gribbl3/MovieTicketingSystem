@@ -7,11 +7,12 @@ using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
 
-[QueryProperty(nameof(Customer), nameof(Customer))]
+[QueryProperty(nameof(User), nameof(User))]
 public class CustomerViewModel : BaseViewModel
 {
     private JsonFileService _service;
     private readonly string movieFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Movies.json");
+
 
     public DateTime DateNow { get; set; } = DateTime.Now;
 
@@ -26,6 +27,18 @@ public class CustomerViewModel : BaseViewModel
         }
     }
 
+    private User _user;
+    public User User
+    {
+        get => _user;
+        set
+        {
+            _user = value;
+            OnPropertyChanged();
+        }
+    }
+
+
     public CustomerViewModel(JsonFileService service)
     {
         _service = service;
@@ -38,8 +51,9 @@ public class CustomerViewModel : BaseViewModel
     {
         var navigationParameter = new Dictionary<string, object>
         {
-            { nameof(Movie), Movie }
+            { nameof(Movie), Movie },
+            { nameof(User), User }
         };
-        await Shell.Current.GoToAsync($"{nameof(TicketPage)}",navigationParameter);
+        await Shell.Current.GoToAsync($"{nameof(TicketPage)}", navigationParameter);
     }
 }
