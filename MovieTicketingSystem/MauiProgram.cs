@@ -74,6 +74,7 @@ public static class MauiProgram
         //popup
 
         builder.Services.AddTransientPopup<SeatReservationPopup, SeatReservationPopupViewModel>();
+        builder.Services.AddTransientPopup<TicketSummaryPopup, TicketSummaryPopupViewModel>();
 
 
 #if DEBUG

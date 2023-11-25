@@ -17,17 +17,34 @@
         <Style TargetType="Label">
             <Setter Property="TextColor" Value="White" />
         </Style>
+        <Style x:Key="labelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="labelFooterStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+        </Style>
         <Style TargetType="Button">
             <Setter Property="HeightRequest" Value="50" />
             <Setter Property="WidthRequest" Value="150" />
             <Setter Property="TextColor" Value="White" />
+        </Style>
+        <Style TargetType="Image">
+            <Setter Property="WidthRequest" Value="55" />
+            <Setter Property="HeightRequest" Value="40" />
+            <Setter Property="Aspect" Value="AspectFill" />
         </Style>
     </toolkit:Popup.Resources>
 
     <Grid RowDefinitions="*,0.20*">
         <CollectionView
             x:Name="collectionView"
+            Margin="10"
             ItemsSource="{Binding Cinema.Seats}"
+            SelectedItems="{Binding SelectedSeats}"
             SelectionMode="Multiple">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout
@@ -36,62 +53,107 @@
                     Span="8"
                     VerticalItemSpacing="2" />
             </CollectionView.ItemsLayout>
+
+            <CollectionView.Footer>
+                <Grid ColumnDefinitions="*,*,*,*,*,*,*,*">
+                    <Label Style="{StaticResource labelFooterStyle}" Text="1" />
+                    <Label
+                        Grid.Column="1"
+                        Style="{StaticResource labelFooterStyle}"
+                        Text="2" />
+                    <Label
+                        Grid.Column="2"
+                        Style="{StaticResource labelFooterStyle}"
+                        Text="3" />
+                    <Label
+                        Grid.Column="3"
+                        Style="{StaticResource labelFooterStyle}"
+                        Text="4" />
+                    <Label
+                        Grid.Column="4"
+                        Style="{StaticResource labelFooterStyle}"
+                        Text="5" />
+                    <Label
+                        Grid.Column="5"
+                        Style="{StaticResource labelFooterStyle}"
+                        Text="6" />
+                    <Label
+                        Grid.Column="6"
+                        Style="{StaticResource labelFooterStyle}"
+                        Text="7" />
+                    <Label
+                        Grid.Column="7"
+                        Style="{StaticResource labelFooterStyle}"
+                        Text="8" />
+                </Grid>
+            </CollectionView.Footer>
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Seat">
-                    <StackLayout>
-                        <Frame>
-                            <VerticalStackLayout>
-                                <Image
-                                    Margin="0,0,0,5"
-                                    Aspect="AspectFill"
-                                    HeightRequest="40"
-                                    Source="add_photo_alternate.png"
-                                    WidthRequest="55">
-                                    <Image.Triggers>
-                                        <DataTrigger TargetType="Image" Binding="{Binding IsAvailableSeat}" Value="true">
-                                            <Setter Property="Behaviors">
-                                                <toolkit:IconTintColorBehavior TintColor="Green" />
-                                            </Setter>
-                                        </DataTrigger>
-                                        <DataTrigger TargetType="Image" Binding="{Binding IsAvailableSeat}" Value="false">
-                                            <Setter Property="Behaviors">
-                                                <toolkit:IconTintColorBehavior TintColor="Red" />
-                                            </Setter>
-                                        </DataTrigger>
-                                    </Image.Triggers>
-                                </Image>
-                                <Label
-                                    FontSize="11"
-                                    Text="{Binding SeatRow, StringFormat='Row {0}'}"
-                                    WidthRequest="50" />
-                                <Label
-                                    FontSize="11"
-                                    Text="{Binding SeatColumn, StringFormat='Column {0}'}"
-                                    WidthRequest="80" />
-                            </VerticalStackLayout>
-                            <Frame.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding BindingContext.UpdateSeatAvailabilityCommand, Source={x:Reference collectionView}}" CommandParameter="{Binding .}" />
-                            </Frame.GestureRecognizers>
-                        </Frame>
-                    </StackLayout>
+                    <Frame>
+                        <Image Margin="0,0,0,5">
+                            <Image.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsAvailableSeat}"
+                                    TargetType="Image"
+                                    Value="true">
+                                    <Setter Property="Source" Value="vacant_seat.png" />
+                                </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding IsAvailableSeat}"
+                                    TargetType="Image"
+                                    Value="false">
+                                    <Setter Property="Source" Value="available_seat.png" />
+                                </DataTrigger>
+                            </Image.Triggers>
+                        </Image>
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BindingContext.UpdateSeatAvailabilityCommand, Source={x:Reference collectionView}}" CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+                    </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <HorizontalStackLayout
+
+        <Grid
             Grid.Row="1"
-            Margin="0,10,0,0"
-            Padding="10"
-            HorizontalOptions="Center"
-            Spacing="10">
-            <Button
-                BackgroundColor="#ec4d37"
-                Clicked="GoBack"
-                Text="Go Back" />
-            <Button
-                BackgroundColor="#92e492"
-                Clicked="Confirm"
-                Text="Confirm Seat" />
-        </HorizontalStackLayout>
+            Margin="10"
+            ColumnDefinitions="*,auto"
+            ColumnSpacing="10"
+            HorizontalOptions="StartAndExpand">
+            <HorizontalStackLayout HorizontalOptions="StartAndExpand" Spacing="10">
+                <Image Source="vacant_seat.png" />
+                <Label
+                    Style="{StaticResource labelStyle}"
+                    Text="VACANT"
+                    TextColor="gray" />
+
+                <Image Source="unavailable_seat.png" />
+                <Label
+                    Style="{StaticResource labelStyle}"
+                    Text="TAKEN"
+                    TextColor="red" />
+
+                <Image Source="available_seat.png" />
+                <Label
+                    Style="{StaticResource labelStyle}"
+                    Text="YOUR SEAT"
+                    TextColor="Green" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout
+                Grid.Column="1"
+                Margin="50,0,0,0"
+                Spacing="5">
+                <Button
+                    BackgroundColor="#ec4d37"
+                    Clicked="GoBack"
+                    Text="Go Back" />
+                <Button
+                    BackgroundColor="#92e492"
+                    Clicked="Confirm"
+                    Text="Confirm Seat" />
+            </HorizontalStackLayout>
+        </Grid>
     </Grid>
 </toolkit:Popup>

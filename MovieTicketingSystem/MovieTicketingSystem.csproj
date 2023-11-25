@@ -57,7 +57,6 @@
 	  <None Remove="Resources\Images\available_seat.png" />
 	  <None Remove="Resources\Images\background.jpg" />
 	  <None Remove="Resources\Images\backgroundblur.png" />
-	  <None Remove="Resources\Images\chair.svg" />
 	  <None Remove="Resources\Images\check.png" />
 	  <None Remove="Resources\Images\customer.png" />
 	  <None Remove="Resources\Images\delete.png" />
@@ -125,6 +124,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="View\TicketPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="View\TicketSummaryPopup.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

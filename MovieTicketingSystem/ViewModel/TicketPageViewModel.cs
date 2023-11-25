@@ -129,7 +129,8 @@ public class TicketPageViewModel : BaseViewModel
 
     private void DisplayPopup()
     {
-        this.popupService.ShowPopup<SeatReservationPopupViewModel>(onPresenting: viewModel => viewModel.PerformUpdates(Cinema, User));
+
+        this.popupService.ShowPopup<SeatReservationPopupViewModel>(onPresenting: viewModel => viewModel.PerformUpdates(Cinema, User, Movie));
     }
 }
 

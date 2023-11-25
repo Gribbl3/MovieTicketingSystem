@@ -1,4 +1,6 @@
-﻿using MovieTicketingSystem.Model;
+﻿using CommunityToolkit.Maui.Core;
+using MovieTicketingSystem.Model;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
@@ -6,7 +8,20 @@ namespace MovieTicketingSystem.ViewModel;
 
 public class SeatReservationPopupViewModel : BaseViewModel
 {
-    private bool _isInitialized = false;
+    private readonly IPopupService popupService;
+
+
+    private ObservableCollection<Seat> _selectedSeats = new();
+    public ObservableCollection<Seat> SelectedSeats
+    {
+        get => _selectedSeats;
+        set
+        {
+            _selectedSeats = value;
+            OnPropertyChanged();
+        }
+    }
+
     private Cinema _cinema;
     public Cinema Cinema
     {
@@ -29,18 +44,24 @@ public class SeatReservationPopupViewModel : BaseViewModel
         }
     }
 
-    public void PerformUpdates(Cinema Cinema, User User)
+    public Movie Movie { get; set; }
+
+    public SeatReservationPopupViewModel(IPopupService popupService)
+    {
+        this.popupService = popupService;
+    }
+
+    public void PerformUpdates(Cinema Cinema, User User, Movie Movie)
     {
         this.Cinema = Cinema;
         this.User = User;
+        this.Movie = Movie;
     }
 
     public ICommand UpdateSeatAvailabilityCommand => new Command<Seat>(UpdateSeatAvailability);
 
     private void UpdateSeatAvailability(Seat Seat)
     {
-        //get selected seats from collection view
-        //update seat availability
         if (Seat == null)
         {
             return;
@@ -53,5 +74,11 @@ public class SeatReservationPopupViewModel : BaseViewModel
         }
 
         Seat.IsAvailableSeat = true;
+
+    }
+
+    public async void DisplayPopup()
+    {
+        await this.popupService.ShowPopupAsync<TicketSummaryPopupViewModel>(onPresenting: viewModel => viewModel.PerformUpdates(Cinema, User, Movie));
     }
 }
