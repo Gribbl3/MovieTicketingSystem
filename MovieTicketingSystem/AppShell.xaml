@@ -10,8 +10,8 @@
 
     <ShellContent
         Title="Home"
-        ContentTemplate="{DataTemplate local:Login}"
-        Route="Login" />
+        ContentTemplate="{DataTemplate local:Customer}"
+        Route="Customer" />
 
     <TabBar>
         <Tab Title="Home">

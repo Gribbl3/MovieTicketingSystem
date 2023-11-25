@@ -8,7 +8,8 @@
     xmlns:model="clr-namespace:MovieTicketingSystem.Model"
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
     Title="TicketPage"
-    x:DataType="vm:TicketPageViewModel">
+    x:DataType="vm:TicketPageViewModel"
+    BackgroundImageSource="backgroundblur.png">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -18,14 +19,13 @@
                     BorderColor="White"
                     CornerRadius="0"
                 -->
-                <Setter Property="BackgroundColor" Value="Transparent" />
                 <Setter Property="TextColor" Value="White" />
-                <Setter Property="BorderColor" Value="White" />
+                
                 <Setter Property="CornerRadius" Value="0" />
                 <Setter Property="WidthRequest" Value="150" />
             </Style>
             <Style TargetType="Label">
-                <Setter Property="TextColor" Value="#EC4D37" />
+                <Setter Property="TextColor" Value="#DBE0E6" />
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="FontSize" Value="15" />
             </Style>
@@ -33,81 +33,90 @@
     </ContentPage.Resources>
 
     <ScrollView>
-
-        <Grid ColumnDefinitions="auto,*" RowDefinitions="auto,*">
-            <HorizontalStackLayout Grid.ColumnSpan="2" Spacing="20">
-                <Image Source="logoww.png" />
-                <HorizontalStackLayout Spacing="5">
-                    <Image Source="ticketb.png" />
-                    <Image Source="user.png" />
+        <Frame BackgroundColor="Transparent" BorderColor="Transparent">
+            <VerticalStackLayout>
+                <HorizontalStackLayout>
+                    <HorizontalStackLayout>
+                        <Image   Source="logowwblur.png" WidthRequest="250" />
+                        <Label   FontSize="20" Text="|" Margin="0,3,0,0"/>
+                        <Label   FontSize="20" Text="date here" TextColor="LightGray" Margin="0,4,0,0"/>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Spacing="20">
+                        <ImageButton  Margin="1359,-10,0,0" Source="ticketa.png" WidthRequest="20"  BackgroundColor="Transparent"/>
+                        <ImageButton  Margin="0,-10,0,0"  BackgroundColor="Transparent"  Source="user.png" WidthRequest="20" />
+                    </HorizontalStackLayout>
                 </HorizontalStackLayout>
-            </HorizontalStackLayout>
-            <Image
-                Grid.Row="1"
-                Aspect="AspectFill"
-                Source="{Binding Movie.Image, Converter={StaticResource ImageConverter}}"
-                WidthRequest="300" />
-            <StackLayout
-                Grid.Row="1"
-                Grid.Column="1"
-                HorizontalOptions="Center"
-                Spacing="5"
-                WidthRequest="500">
-                <Label Text="BOOKING DETAILS" />
-                <Label Text="CHOOSE CINEMA BRANCH: " />
+                <HorizontalStackLayout Margin="50,50,0,0" HorizontalOptions="Start">
+                    <Frame BackgroundColor="Transparent" BorderColor="Transparent" WidthRequest="650" HeightRequest="850">
+                        <Border StrokeShape="RoundRectangle 16" Stroke="Transparent">
+                            <Image Aspect="AspectFill" Source="{Binding Movie.Image, Converter={StaticResource ImageConverter}}"/>
+                        </Border>
+                    </Frame>
 
-                <CollectionView ItemsSource="{Binding MallCollection}">
-                    <CollectionView.ItemsLayout>
-                        <GridItemsLayout
-                            HorizontalItemSpacing="5"
-                            Orientation="Vertical"
-                            Span="3"
-                            VerticalItemSpacing="5" />
-                    </CollectionView.ItemsLayout>
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate x:DataType="model:Mall">
+                    <Frame BackgroundColor="#101820" BorderColor="#101820" CornerRadius="16" HeightRequest="500" Margin="200,0,0,0" WidthRequest="700" HorizontalOptions="Center">
+                        <StackLayout>
+                            <Label Text="Booking Details"  TextColor="#EC4D37" FontSize="Header" Margin="10,0,0,0"/>
+                            <Label Text="Choose Cinema Branch: " TextColor="#DBE0E6"  FontSize="Small"  Margin="10,50,0,0"/>
+                            <CollectionView ItemsSource="{Binding MallCollection}" Margin="0,20,0,0">
+                                <CollectionView.ItemsLayout>
+                                    <GridItemsLayout
+                                         HorizontalItemSpacing="5"
+                                         Orientation="Vertical"
+                                         Span="3"
+                                         VerticalItemSpacing="5" />
+                                </CollectionView.ItemsLayout>
+                                <CollectionView.ItemTemplate>
+                                    <DataTemplate x:DataType="model:Mall">
+                                        <Button  BackgroundColor="#1C2C3C" BorderColor="White" CornerRadius="16" Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TicketPageViewModel}}, Path=GetCinemaCommand}" CommandParameter="{Binding .}" Text="{Binding Name}" />
+                                    </DataTemplate>
+                                </CollectionView.ItemTemplate>
+                            </CollectionView>
+
+                            <StackLayout
+                                Margin="0,10,0,0"
+                                IsVisible="{Binding IsCinemaSelectionEnabled}"
+                                Spacing="10">
+                                <Label Text="CHOOSE CINEMA: " Margin="10,20,0,10"/>
+                                <CollectionView
+                                    EmptyView="No cinema yet in this mall."
+                                    ItemsSource="{Binding CinemaCollection}"
+                                    SelectionMode="Single">
+
+                                    <CollectionView.ItemsLayout>
+                                        <LinearItemsLayout ItemSpacing="10" Orientation="Horizontal" />
+                                    </CollectionView.ItemsLayout>
+                                    <CollectionView.ItemTemplate>
+                                        <DataTemplate x:DataType="model:Cinema">
+                                            <Button
+                                                Margin="25,0,0,0"
+                                                CornerRadius="16"
+                                                BackgroundColor="#1C2C3C" 
+                                                BorderColor="White"
+                                                Text="{Binding Name}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TicketPageViewModel}}, Path=GetSeatCommand}"
+                                                CommandParameter="{Binding .}"
+                                                WidthRequest="200"/>
+                                        </DataTemplate>
+                                    </CollectionView.ItemTemplate>
+                                </CollectionView>
+                            </StackLayout>
+
                             <Button
-                                Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TicketPageViewModel}}, Path=GetCinemaCommand}"
-                                CommandParameter="{Binding .}"
-                                Text="{Binding Name}" />
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
+                                Margin="10,50,0,0"
+                                CornerRadius="16"
+                                HorizontalOptions="End"
+                                BackgroundColor="#EC4D37"
+                                BorderColor="White"
+                                Command="{Binding DisplayPopupCommand}"
+                                FontAttributes="Bold"
+                                IsVisible="{Binding IsCinemaSelected}"
+                                Text="Choose Seat" 
+                                WidthRequest="120"/>
 
-                <StackLayout
-                    Margin="0,10,0,0"
-                    IsVisible="{Binding IsCinemaSelectionEnabled}"
-                    Spacing="10">
-                    <Label Text="CHOOSE CINEMA: " />
-                    <CollectionView
-                        EmptyView="No cinema yet in this mall."
-                        ItemsSource="{Binding CinemaCollection}"
-                        SelectionMode="Single">
-
-                        <CollectionView.ItemsLayout>
-                            <LinearItemsLayout ItemSpacing="10" Orientation="Horizontal" />
-                        </CollectionView.ItemsLayout>
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate x:DataType="model:Cinema">
-                                <Button
-                                    Text="{Binding Name}"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type vm:TicketPageViewModel}}, Path=GetSeatCommand}"
-                                    CommandParameter="{Binding .}"
-                                    WidthRequest="200"/>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </StackLayout>
-
-                <Button
-                    Margin="20,50,0,0"
-                    BackgroundColor="#EC4D37"
-                    Command="{Binding DisplayPopupCommand}"
-                    FontAttributes="Bold"
-                    HorizontalOptions="End"
-                    IsVisible="{Binding IsCinemaSelected}"
-                    Text="Choose Seat" />
-            </StackLayout>
-        </Grid>
+                        </StackLayout>
+                    </Frame>
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Frame>
     </ScrollView>
 </ContentPage>
