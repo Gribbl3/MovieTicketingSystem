@@ -1,5 +1,6 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
+using Mopups.Hosting;
 using MovieTicketingSystem.Converters;
 using MovieTicketingSystem.Service;
 using MovieTicketingSystem.View;
@@ -14,6 +15,7 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
+            .ConfigureMopups()
             .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {
@@ -45,6 +47,7 @@ public static class MauiProgram
 
         //viewmodel for ticket page
         builder.Services.AddTransient<TicketPageViewModel>();
+        builder.Services.AddTransient<TicketSummaryViewModel>();
 
 
         // Registering View
@@ -74,7 +77,6 @@ public static class MauiProgram
         //popup
 
         builder.Services.AddTransientPopup<SeatReservationPopup, SeatReservationPopupViewModel>();
-        builder.Services.AddTransientPopup<TicketSummaryPopup, TicketSummaryPopupViewModel>();
 
 
 #if DEBUG

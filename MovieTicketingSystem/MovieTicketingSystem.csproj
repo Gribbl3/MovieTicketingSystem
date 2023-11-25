@@ -78,6 +78,7 @@
 	<ItemGroup>
 		<PackageReference Include="CommunityToolkit.Maui" Version="6.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
+		<PackageReference Include="Mopups" Version="1.2.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -126,7 +127,7 @@
 	  <MauiXaml Update="View\TicketPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	  <MauiXaml Update="View\TicketSummaryPopup.xaml">
+	  <MauiXaml Update="View\TicketSummary.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

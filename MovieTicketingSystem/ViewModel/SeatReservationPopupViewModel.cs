@@ -1,5 +1,7 @@
 ﻿using CommunityToolkit.Maui.Core;
+using Mopups.Services;
 using MovieTicketingSystem.Model;
+using MovieTicketingSystem.View;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -74,11 +76,11 @@ public class SeatReservationPopupViewModel : BaseViewModel
         }
 
         Seat.IsAvailableSeat = true;
-
     }
 
-    public async void DisplayPopup()
+    public async void GoToTicketSummary()
     {
-        await this.popupService.ShowPopupAsync<TicketSummaryPopupViewModel>(onPresenting: viewModel => viewModel.PerformUpdates(Cinema, User, Movie));
+        await MopupService.Instance.PushAsync(new TicketSummary(Cinema, User, Movie));
     }
+
 }

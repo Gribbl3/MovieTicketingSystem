@@ -2,43 +2,43 @@
 
 namespace MovieTicketingSystem.ViewModel;
 
-public class TicketSummaryPopupViewModel : BaseViewModel
+public class TicketSummaryViewModel : BaseViewModel
 {
-    private Cinema cinema;
-    private User user;
-    private Movie movie;
-
+    private Cinema _cinema;
     public Cinema Cinema
     {
-        get => cinema;
+        get => _cinema;
         set
         {
-            cinema = value;
+            _cinema = value;
             OnPropertyChanged();
         }
     }
 
+    private User _user;
     public User User
     {
-        get => user;
+        get => _user;
         set
         {
-            user = value;
+            _user = value;
             OnPropertyChanged();
         }
     }
 
+    private Movie _movie;
     public Movie Movie
     {
-        get => movie;
+        get => _movie;
         set
         {
-            movie = value;
+            _movie = value;
             OnPropertyChanged();
         }
     }
 
-    public void PerformUpdates(Cinema Cinema, User User, Movie Movie)
+
+    public TicketSummaryViewModel(Cinema Cinema, User User, Movie Movie)
     {
         this.Cinema = Cinema;
         this.User = User;

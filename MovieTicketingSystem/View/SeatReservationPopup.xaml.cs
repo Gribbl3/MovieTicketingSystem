@@ -6,16 +6,17 @@ namespace MovieTicketingSystem.View;
 public partial class SeatReservationPopup : Popup
 {
     SeatReservationPopupViewModel viewModel;
-    public SeatReservationPopup()
+    public SeatReservationPopup(SeatReservationPopupViewModel viewModel)
     {
         InitializeComponent();
-        BindingContext = viewModel;
+        this.viewModel = viewModel;
+        BindingContext = this.viewModel;
     }
 
     private void GoBack(object sender, EventArgs e) => Close();
     private async void Confirm(object sender, EventArgs e)
     {
-        viewModel.DisplayPopup();
+        viewModel.GoToTicketSummary();
         await CloseAsync();
     }
 }
