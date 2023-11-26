@@ -1,7 +1,7 @@
 ﻿using MovieTicketingSystem.Model;
+using MovieTicketingSystem.Service;
 using MovieTicketingSystem.View;
 using System.Collections.ObjectModel;
-using System.Text.Json;
 using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
@@ -9,7 +9,7 @@ namespace MovieTicketingSystem.ViewModel;
 [QueryProperty(nameof(MovieCollection), nameof(MovieCollection))]
 public class MoviePageViewModel : BaseViewModel
 {
-    private readonly string movieFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Movies.json");
+    private readonly MovieService movieService;
 
 
     private bool _isVisible = false;
@@ -30,40 +30,37 @@ public class MoviePageViewModel : BaseViewModel
         set
         {
             _movieCollection = value;
+            IsVisible = MovieCollection.Count > 0;
             OnPropertyChanged();
         }
     }
 
 
-    public MoviePageViewModel()
+    public MoviePageViewModel(MovieService movieService)
     {
-        GetMoviesFromJson();
+        this.movieService = movieService;
+        PopulateMovies();
     }
 
 
     public ICommand AddMovieCommand => new Command(AddMovieAsync);
     public ICommand DeleteMovieCommand => new Command(DeleteMovie);
     public ICommand EditMovieCommand => new Command(EditMovie);
+    public ICommand ShowDeletedMoviesCommand => new Command(ShowDeletedMovies);
+    public ICommand HideDeletedMoviesCommand => new Command(PopulateMovies);
 
-
-    /// <summary>
-    /// Get movies from json file
-    /// </summary>
-    private async void GetMoviesFromJson()
+    private async void ShowDeletedMovies()
     {
-        //check if file exists, return if not
-        if (!File.Exists(movieFilePath))
-        {
-            return;
-        }
-        //if file exists, read all text from file
-        var json = await File.ReadAllTextAsync(movieFilePath);
-        MovieCollection = JsonSerializer.Deserialize<ObservableCollection<Movie>>(json);
+        MovieCollection = await movieService.GetMoviesAsync();
     }
 
-    /// <summary>
-    /// Add movie to json file
-    /// </summary>
+    private async void PopulateMovies()
+    {
+        MovieCollection = await movieService.GetMoviesAsync();
+        //filter out deleted movies
+        MovieCollection = new ObservableCollection<Movie>(MovieCollection.Where(movie => !movie.IsDeleted));
+    }
+
     private async void AddMovieAsync()
     {
         var navigationParameter = new Dictionary<string, object>
@@ -73,9 +70,6 @@ public class MoviePageViewModel : BaseViewModel
         await Shell.Current.GoToAsync($"{nameof(AddMovie)}", navigationParameter);
     }
 
-    /// <summary>
-    /// Delete movie from json file
-    /// </summary>
     private async void DeleteMovie()
     {
         string result = await Shell.Current.DisplayPromptAsync("Delete Movie", "Enter movie id to delete", placeholder: "Enter movie id", keyboard: Keyboard.Numeric);
@@ -88,9 +82,10 @@ public class MoviePageViewModel : BaseViewModel
         {
             if (movie.Id == id)
             {
+                movie.IsDeleted = !movie.IsDeleted;
+                await movieService.AddUpdateMovieAsync(MovieCollection);
                 MovieCollection.Remove(movie);
-                string movieJson = JsonSerializer.Serialize(MovieCollection);
-                await File.WriteAllTextAsync(movieFilePath, movieJson);
+
                 await Shell.Current.DisplayAlert("Success", "Movie deleted successfully", "OK");
                 return;
             }

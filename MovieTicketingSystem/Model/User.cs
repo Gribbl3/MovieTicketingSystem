@@ -83,9 +83,5 @@ public class User : BaseModel
         get { return _isDeleted; }
         set { _isDeleted = value; OnPropertyChanged(); }
     }
-    //create a public method that will return the fullname of the person
-    public string GetFullName()
-    {
-        return $"{FirstName} {MiddleName} {LastName}";
-    }
+
 }

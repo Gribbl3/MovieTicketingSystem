@@ -70,6 +70,7 @@ public static class MauiProgram
         //different GUID's cannot be possible if service is singleton
         builder.Services.AddTransient<MovieService>();
         builder.Services.AddTransient<MallService>();
+        builder.Services.AddTransient<CinemaService>();
 
         //converter
         builder.Services.AddSingleton<ByteArrayToImageSourceConverter>();

@@ -6,9 +6,10 @@ namespace MovieTicketingSystem.Model;
 public class Cinema : BaseModel
 {
     public int Id { get; set; }
-    public int MallId { get; set; }
     public string Name { get; set; }
+
     public ObservableCollection<Seat> Seats { get; set; } = new();
+    public Mall Mall { get; set; } = new();
     private int seatCapacity; //Seat - 100
     private bool _isSelected, _isDeleted; //IsDeleted - hide or show
     public int SeatCapacity

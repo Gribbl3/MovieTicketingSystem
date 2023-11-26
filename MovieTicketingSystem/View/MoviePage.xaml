@@ -24,9 +24,15 @@
         RowDefinitions="*,auto"
         RowSpacing="10">
         <VerticalStackLayout Spacing="5">
-            <Image Source="logowwblur.png" HorizontalOptions="Start"    WidthRequest="350"/>
+            <Image
+                HorizontalOptions="Start"
+                Source="logowwblur.png"
+                WidthRequest="350" />
             <Label FontSize="20" Text="BOOKINGS" />
-            <Frame BackgroundColor="#101820" BorderColor="#101820">
+            <Frame
+                BackgroundColor="#101820"
+                BorderColor="#101820"
+                HeightRequest="450">
                 <CollectionView ItemsSource="{Binding MovieCollection}">
                     <CollectionView.EmptyView>
                         <ContentView HeightRequest="500">
@@ -43,13 +49,14 @@
                     <CollectionView.Header>
                         <ContentView IsVisible="{Binding IsVisible}">
                             <VerticalStackLayout Spacing="3">
-                                <Grid ColumnDefinitions="*,*,*,*,*,*">
+                                <Grid ColumnDefinitions="*,*,*,*,*,*,*">
                                     <Label Grid.Column="0" Text="ID" />
                                     <Label Grid.Column="1" Text="MOVIE" />
                                     <Label Grid.Column="2" Text="TICKET PRICE" />
                                     <Label Grid.Column="3" Text="SHOW TIME" />
                                     <Label Grid.Column="4" Text="DURATION" />
                                     <Label Grid.Column="5" Text="STATUS" />
+                                    <Label Grid.Column="6" Text="DELETED" />
                                 </Grid>
                                 <BoxView Background="gray" HeightRequest="2" />
                             </VerticalStackLayout>
@@ -57,7 +64,7 @@
                     </CollectionView.Header>
                     <CollectionView.ItemTemplate>
                         <DataTemplate x:DataType="model:Movie">
-                            <Grid ColumnDefinitions="*,*,*,*,*,*">
+                            <Grid ColumnDefinitions="*,*,*,*,*,*,*">
                                 <Label Grid.Column="0" Text="{Binding Id}" />
                                 <Label Grid.Column="1" Text="{Binding Name}" />
                                 <Label Grid.Column="2" Text="{Binding Price, StringFormat='₱{0:F2}'}" />
@@ -89,6 +96,7 @@
                                         </DataTrigger>
                                     </Label.Triggers>
                                 </Label>
+                                <Label Grid.Column="6" Text="{Binding IsDeleted}" />
                             </Grid>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>
@@ -97,18 +105,57 @@
         </VerticalStackLayout>
         <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center">
             <HorizontalStackLayout Spacing="-50">
-                <ImageButton Command="{Binding AddMovieCommand}" Source="addicon.png" BackgroundColor="Transparent" Scale="0.5"  />
-                <Button Command="{Binding AddMovieCommand}" Text="Add" FontAttributes="Bold" TextColor="#43A047" BackgroundColor="Transparent" BorderColor="Transparent"/>
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding AddMovieCommand}"
+                    Scale="0.5"
+                    Source="addicon.png" />
+                <Button
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    Command="{Binding AddMovieCommand}"
+                    FontAttributes="Bold"
+                    Text="Add"
+                    TextColor="#43A047" />
             </HorizontalStackLayout>
             <HorizontalStackLayout Spacing="-50">
-                <ImageButton Command="{Binding EditMovieCommand}" Source="editicon.png" BackgroundColor="Transparent" Scale="0.7"/>
-                <Button Command="{Binding EditMovieCommand}" Text="Edit" FontAttributes="Bold" TextColor="White" BackgroundColor="Transparent" BorderColor="Transparent"/>
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding EditMovieCommand}"
+                    Scale="0.7"
+                    Source="editicon.png" />
+                <Button
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    Command="{Binding EditMovieCommand}"
+                    FontAttributes="Bold"
+                    Text="Edit"
+                    TextColor="White" />
             </HorizontalStackLayout>
 
             <HorizontalStackLayout Spacing="-40">
-                <ImageButton Command="{Binding DeleteMovieCommand}" Source="deleteicon.png" BackgroundColor="Transparent" Scale="0.8"/>
-                <Button Command="{Binding DeleteMovieCommand}" FontAttributes="Bold" Text="Delete" TextColor="#EC4D37" BackgroundColor="Transparent" BorderColor="Transparent"/>
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding DeleteMovieCommand}"
+                    Scale="0.8"
+                    Source="deleteicon.png" />
+                <Button
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    Command="{Binding DeleteMovieCommand}"
+                    FontAttributes="Bold"
+                    Text="Delete"
+                    TextColor="#EC4D37" />
             </HorizontalStackLayout>
+
+            <Button
+                Command="{Binding ShowDeletedMoviesCommand}"
+                Text="Show Deleted Movies"
+                WidthRequest="180" />
+            <Button
+                Command="{Binding HideDeletedMoviesCommand}"
+                Text="Hide Deleted Movies"
+                WidthRequest="180" />
 
         </HorizontalStackLayout>
     </Grid>

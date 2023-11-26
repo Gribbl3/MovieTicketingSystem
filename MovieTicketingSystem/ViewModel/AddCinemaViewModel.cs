@@ -1,6 +1,6 @@
 ﻿using MovieTicketingSystem.Model;
+using MovieTicketingSystem.Service;
 using System.Collections.ObjectModel;
-using System.Text.Json;
 using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
@@ -8,10 +8,14 @@ namespace MovieTicketingSystem.ViewModel;
 [QueryProperty(nameof(CinemaCollection), nameof(CinemaCollection))]
 public class AddCinemaViewModel : BaseViewModel
 {
-    private readonly string mallFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Malls.json");
-    private readonly string cinemaFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Cinemas.json");
+    private readonly CinemaService cinemaService;
+    private readonly MallService mallService;
     public Cinema Cinema { get; set; } = new();
+    public ObservableCollection<Cinema> CinemaCollection { get; set; } = new();
     private ObservableCollection<Mall> _mallCollection = new();
+    private Mall _selectedMallItem;
+    private int _seatCapacity;
+
     public ObservableCollection<Mall> MallCollection
     {
         get => _mallCollection;
@@ -21,8 +25,6 @@ public class AddCinemaViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
-    public ObservableCollection<Cinema> CinemaCollection { get; set; } = new();
-    private Mall _selectedMallItem;
     public Mall SelectedMallItem
     {
         get => _selectedMallItem;
@@ -32,7 +34,6 @@ public class AddCinemaViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
-    private int _seatCapacity;
     public int SeatCapacity
     {
         get => _seatCapacity;
@@ -44,15 +45,16 @@ public class AddCinemaViewModel : BaseViewModel
         }
     }
 
+    public AddCinemaViewModel(MallService mallService, CinemaService cinemaService)
+    {
+        this.mallService = mallService;
+        this.cinemaService = cinemaService;
+        PopulateMall();
+    }
 
     public ICommand SaveCommand => new Command(async () => await AddCinema());
     public ICommand ResetCommand => new Command(ResetCinema);
 
-
-    /// <summary>
-    /// Add or creates cinema json file
-    /// </summary>
-    /// <returns></returns>
     private async Task AddCinema()
     {
         bool isValidCinema = ValidateCinema();
@@ -62,8 +64,7 @@ public class AddCinemaViewModel : BaseViewModel
         GenerateId();
         GenerateName();
         CinemaCollection.Add(Cinema);
-        string json = JsonSerializer.Serialize<ObservableCollection<Cinema>>(CinemaCollection);
-        await File.WriteAllTextAsync(cinemaFilePath, json);
+        await cinemaService.AddUpdateCinemaAsync(CinemaCollection);
 
         await Shell.Current.DisplayAlert("Success", "Cinema added successfully", "OK");
 
@@ -75,57 +76,18 @@ public class AddCinemaViewModel : BaseViewModel
         await Shell.Current.GoToAsync($"..", navigationParameter);
     }
 
-    /// <summary>
-    /// Generates cinema id 
-    /// </summary>
     private void GenerateId()
     {
-        int newId = 1;
-        bool isFound = false;
-
-        //or i can also store all the ids in a list and get the max id and add 1 to it
-
-
-        while (!isFound)
-        {
-            bool isMatchFound = false;
-            foreach (Cinema cinema in CinemaCollection)
-            {
-                int id = cinema.Id;
-                if (id == newId)
-                {
-                    isMatchFound = true;
-                    newId++;
-                    break;
-                }
-            }
-
-            if (!isMatchFound)
-            {
-                isFound = true;
-            }
-
-        }
-
-        Cinema.Id = newId;
-
+        Cinema.Id = CinemaCollection.Count + 1;
     }
 
-    /// <summary>
-    /// Generates cinema name based on mall name and cinema count on that mall
-    /// </summary>
+
     private void GenerateName()
     {
         const string NAME = "CINEMA";
-
-        //check the current cinema collection number of cinemas in the mall
-        //int cinemaCount = CinemaCollection.Where(c => c.Mall.Id == SelectedMallItem.Id).Count();
-        //Cinema.Name = $"{SelectedMallItem.Name}- {NAME} - {cinemaCount + 1}";
+        Cinema.Name = $"{NAME}-{SelectedMallItem.Name}-{Cinema.Id}";
     }
 
-    /// <summary>
-    /// Resets all cinema properties to default
-    /// </summary>
     private void ResetCinema()
     {
         Cinema = new Cinema();
@@ -136,10 +98,7 @@ public class AddCinemaViewModel : BaseViewModel
         SelectedMallItem = null;
     }
 
-    /// <summary>
-    /// Validates user input for cinema
-    /// </summary>
-    /// <returns>bool</returns>
+
     private bool ValidateCinema()
     {
         if (SelectedMallItem == null)
@@ -152,33 +111,20 @@ public class AddCinemaViewModel : BaseViewModel
             Shell.Current.DisplayAlert("Error", "Please enter cinema seat capacity", "OK");
             return false;
         }
-        Cinema.MallId = SelectedMallItem.Id;
+
+        Cinema.Mall = SelectedMallItem;
         return true;
     }
 
-    /// <summary>
-    ///  Get Malls from json files
-    /// </summary>
-    public async void GetMallsFromJson()
+    public async void PopulateMall()
     {
-        if (!File.Exists(mallFilePath))
-        {
-            //if file does not exist, display error message and let user go back to previous page
-            await Shell.Current.DisplayAlert("Error", "Mall file not found, Add a Mall to proceed", "OK");
-            await Shell.Current.GoToAsync("..");
-            return;
-        }
-        string json = await File.ReadAllTextAsync(mallFilePath);
-        MallCollection = JsonSerializer.Deserialize<ObservableCollection<Mall>>(json);
+        MallCollection = await mallService.GetMallsAsync();
     }
 
-    /// <summary>
-    /// Generate cinema seats after user input seat capacity
-    /// </summary>
     private void GenerateCinemaSeats()
     {
         Cinema.Seats.Clear();
-
+        int id = 1;
         const int columns = 8;
         int rows = (int)Math.Ceiling((double)Cinema.SeatCapacity / columns);
         for (int row = 1; row <= rows; row++)
@@ -187,10 +133,13 @@ public class AddCinemaViewModel : BaseViewModel
             {
                 if ((row - 1) * columns + column <= Cinema.SeatCapacity)
                 {
+                    char seatRow = (char)('A' + (row - 1));
                     Cinema.Seats.Add(new Seat
                     {
-                        SeatRow = row,
-                        SeatColumn = column,
+                        Id = id++,
+                        Row = seatRow,
+                        Column = column,
+                        CinemaId = Cinema.Id,
                         IsAvailableSeat = true
                     });
                 }

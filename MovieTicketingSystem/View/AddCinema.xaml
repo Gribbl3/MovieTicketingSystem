@@ -21,7 +21,7 @@
 
             <Style TargetType="Button">
                 <Setter Property="WidthRequest" Value="200" />
-               
+
                 <Setter Property="FontAttributes" Value="Bold" />
             </Style>
             <Style TargetType="Picker">
@@ -85,57 +85,54 @@
                                 <Entry
                                     Keyboard="Numeric"
                                     Placeholder="Enter Cinema Seat Capacity"
-                                    Text="{Binding SeatCapacity}"
-                                    />
+                                    Text="{Binding SeatCapacity}" />
                             </Border>
                         </HorizontalStackLayout>
                     </HorizontalStackLayout>
 
                     <HorizontalStackLayout Margin="0,20,0,0" HorizontalOptions="Center">
                         <HorizontalStackLayout Spacing="10">
-                            
-                            
+
+
 
                             <HorizontalStackLayout HorizontalOptions="End" Spacing="5">
                                 <HorizontalStackLayout Spacing="-25">
                                     <ImageButton
-
-                                       BackgroundColor="Transparent"
-                                       Command="{Binding SaveCommand}"
-                                       Scale="0.4"
-                                       Source="check.png" />
+                                        BackgroundColor="Transparent"
+                                        Command="{Binding SaveCommand}"
+                                        Scale="0.4"
+                                        Source="check.png" />
                                     <Button
-                                       BackgroundColor="Transparent"
-                                       BorderColor="Transparent"
-                                       Command="{Binding SaveCommand}"
-                                       TextColor="#43A047"
-                                       CornerRadius="20"
-                                       FontSize="12"
-                                       Text="Save Details"
-                                       WidthRequest="100" />
-                                    
+                                        BackgroundColor="Transparent"
+                                        BorderColor="Transparent"
+                                        Command="{Binding SaveCommand}"
+                                        CornerRadius="20"
+                                        FontSize="12"
+                                        Text="Save Details"
+                                        TextColor="#43A047"
+                                        WidthRequest="100" />
+
                                 </HorizontalStackLayout>
 
                                 <HorizontalStackLayout Spacing="-45">
                                     <ImageButton
-                                       
                                         BackgroundColor="Transparent"
                                         Command="{Binding ResetCommand}"
                                         Scale="0.3"
                                         Source="reseticon.png" />
                                     <Button
-                                        Command="{Binding ResetCommand}"
                                         BackgroundColor="Transparent"
-                                         BorderColor="Transparent"
+                                        BorderColor="Transparent"
+                                        Command="{Binding ResetCommand}"
                                         CornerRadius="20"
                                         FontSize="12"
                                         Text="Reset"
                                         TextColor="#EC4D37"
                                         WidthRequest="100" />
-                                    
+
                                 </HorizontalStackLayout>
-                                
-                                
+
+
                             </HorizontalStackLayout>
 
 
@@ -181,14 +178,14 @@
                                                     </DataTrigger>
                                                 </Image.Triggers>
                                             </Image>
-                                            <Label
-                                                FontSize="11"
-                                                Text="{Binding SeatRow, StringFormat='Row {0}'}"
-                                                WidthRequest="50" />
-                                            <Label
-                                                FontSize="11"
-                                                Text="{Binding SeatColumn, StringFormat='Column {0}'}"
-                                                WidthRequest="80" />
+                                            <Label>
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Row,StringFormat='{0}-'}" />
+                                                        <Span Text="{Binding Column}" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
                                         </VerticalStackLayout>
                                     </Frame>
                                 </StackLayout>

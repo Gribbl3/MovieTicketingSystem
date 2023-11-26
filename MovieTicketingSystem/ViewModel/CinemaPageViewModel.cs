@@ -1,7 +1,7 @@
 ﻿using MovieTicketingSystem.Model;
+using MovieTicketingSystem.Service;
 using MovieTicketingSystem.View;
 using System.Collections.ObjectModel;
-using System.Text.Json;
 using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
@@ -9,7 +9,7 @@ namespace MovieTicketingSystem.ViewModel;
 [QueryProperty(nameof(CinemaCollection), nameof(CinemaCollection))]
 public class CinemaPageViewModel : BaseViewModel
 {
-    private readonly string cinemaFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Cinemas.json");
+    private readonly CinemaService cinemaService;
     private ObservableCollection<Cinema> _cinemaCollection = new();
     public ObservableCollection<Cinema> CinemaCollection
     {
@@ -21,18 +21,21 @@ public class CinemaPageViewModel : BaseViewModel
         }
     }
 
-    public CinemaPageViewModel()
+    public CinemaPageViewModel(CinemaService cinemaService)
     {
-        GetCinemasFromJson();
+        this.cinemaService = cinemaService;
+        PopulateCinemas();
     }
 
     public ICommand AddCinemaCommand => new Command(GoToAddCinemaPage);
     public ICommand DeleteCinemaCommand => new Command(DeleteCinema);
     public ICommand EditCinemaCommand => new Command(GoToEditCinemaPage);
 
-    /// <summary>
-    /// Goes to AddCinemaPage with CinemaCollection as navigation parameter
-    /// </summary>
+    private async void PopulateCinemas()
+    {
+        CinemaCollection = await cinemaService.GetCinemasAsync();
+    }
+
     private async void GoToAddCinemaPage()
     {
         var navigationParameter = new Dictionary<string, object>
@@ -42,9 +45,6 @@ public class CinemaPageViewModel : BaseViewModel
         await Shell.Current.GoToAsync($"{nameof(AddCinema)}", navigationParameter);
     }
 
-    /// <summary>
-    /// deletes cinema json file and removes it from CinemaCollection
-    /// </summary>
     private async void DeleteCinema()
     {
         string result = await Shell.Current.DisplayPromptAsync("Delete Cinema", "Enter cinema id to delete");
@@ -55,9 +55,9 @@ public class CinemaPageViewModel : BaseViewModel
         {
             if (cinema.Id == id)
             {
+                cinema.IsDeleted = !cinema.IsDeleted;
+                await cinemaService.AddUpdateCinemaAsync(CinemaCollection);
                 CinemaCollection.Remove(cinema);
-                string cinemaJson = JsonSerializer.Serialize(CinemaCollection);
-                await File.WriteAllTextAsync(cinemaFilePath, cinemaJson);
                 await Shell.Current.DisplayAlert("Success", "Cinema deleted successfully", "OK");
                 return;
             }
@@ -85,18 +85,5 @@ public class CinemaPageViewModel : BaseViewModel
                 return;
             }
         }
-    }
-
-
-    private async void GetCinemasFromJson()
-    {
-        if (!File.Exists(cinemaFilePath))
-        {
-            CinemaCollection = new ObservableCollection<Cinema>();
-            return;
-        }
-
-        string json = await File.ReadAllTextAsync(cinemaFilePath);
-        CinemaCollection = JsonSerializer.Deserialize<ObservableCollection<Cinema>>(json);
     }
 }

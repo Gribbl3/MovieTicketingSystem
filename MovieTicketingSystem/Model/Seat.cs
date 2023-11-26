@@ -2,30 +2,30 @@
 
 public class Seat : BaseModel
 {
-    private int _seatRow; //SeatRows - 10
-    private int _seatColumn; //SeatColumns - 10
+    private char _row;
+    private int _column;
     private bool _isAvailableSeat; //IsAvailableSeat - true or false
-
-    public int Id { get; set; }
     public int CinemaId { get; set; }
-    public int SeatRow
+    public int Id { get; set; }
+    public char Row
     {
-        get => _seatRow;
+        get => _row;
         set
         {
-            _seatRow = value;
+            _row = value;
             OnPropertyChanged();
         }
     }
-    public int SeatColumn
+    public int Column
     {
-        get => _seatColumn;
+        get => _column;
         set
         {
-            _seatColumn = value;
+            _column = value;
             OnPropertyChanged();
         }
     }
+
     public bool IsAvailableSeat
     {
         get => _isAvailableSeat;
@@ -35,5 +35,6 @@ public class Seat : BaseModel
             OnPropertyChanged();
         }
     }
+
 }
 

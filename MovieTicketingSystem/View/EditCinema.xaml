@@ -147,14 +147,14 @@
                                                     </DataTrigger>
                                                 </Image.Triggers>
                                             </Image>
-                                            <Label
-                                                FontSize="11"
-                                                Text="{Binding SeatRow, StringFormat='Row {0}'}"
-                                                WidthRequest="50" />
-                                            <Label
-                                                FontSize="11"
-                                                Text="{Binding SeatColumn, StringFormat='Column {0}'}"
-                                                WidthRequest="80" />
+                                            <Label>
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Row, StringFormat='{0 - }'}" />
+                                                        <Span Text="{Binding Column}" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
                                         </VerticalStackLayout>
                                     </Frame>
                                 </StackLayout>

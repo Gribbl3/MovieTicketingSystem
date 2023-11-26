@@ -6,23 +6,16 @@ namespace MovieTicketingSystem.Service;
 
 public class MovieService
 {
-    private readonly string folderPath;
-    private readonly string filePath;
-    private ObservableCollection<Movie> _movies = new();
+    private readonly string filePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Movies.json");
 
-    public MovieService()
+    public async Task<bool> AddUpdateMovieAsync(ObservableCollection<Movie> MovieCollection)
     {
-        folderPath = Path.Combine(FileSystem.Current.AppDataDirectory, "Movies");
-    }
-
-    public async Task<bool> AddMovieAsync(Movie movie)
-    {
-        if (movie == null)
+        if (MovieCollection == null)
         {
             return false;
         }
 
-        var json = JsonSerializer.Serialize<Movie>(movie);
+        var json = JsonSerializer.Serialize<ObservableCollection<Movie>>(MovieCollection);
         await File.WriteAllTextAsync(filePath, json);
 
         return true;
@@ -30,22 +23,15 @@ public class MovieService
 
     public async Task<ObservableCollection<Movie>> GetMoviesAsync()
     {
-        //check if directory exists
-        if (!Directory.Exists(folderPath))
+        //check if file pathexists
+        if (!File.Exists(filePath))
         {
-            Directory.CreateDirectory(folderPath);
             return new ObservableCollection<Movie>();
         }
 
-        //directory is existing, continue logic
-        //get json files from folder path then deserialize
-        var files = Directory.EnumerateFiles(folderPath, "*.json");
-        foreach (var file in files)
-        {
-            var json = await File.ReadAllTextAsync(file);
-            var _movie = JsonSerializer.Deserialize<Movie>(json);
-            _movies.Add(_movie);
-        }
-        return _movies;
+        //get json file from file path then deserialize
+        var json = await File.ReadAllTextAsync(filePath);
+        var movieCollection = JsonSerializer.Deserialize<ObservableCollection<Movie>>(json);
+        return movieCollection;
     }
 }

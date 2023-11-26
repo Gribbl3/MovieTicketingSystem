@@ -113,10 +113,9 @@ public class TicketSummaryViewModel : BaseViewModel
         {
             Ticket.Add(new Ticket
             {
-                MovieId = Movie.Id,
-                UserId = User.Id,
-                SeatId = seat.Id
-            });
+                User = User,
+                Movie = Movie
+            }); ;
         }
         var json = JsonSerializer.Serialize(Ticket);
         await File.WriteAllTextAsync(ticketFilePath, json);
@@ -137,7 +136,7 @@ public class TicketSummaryViewModel : BaseViewModel
 
     private void SetSelectedSeatsDisplay()
     {
-        SelectedSeatsDisplay = string.Join(", ", SelectedSeats.Select(seat => $"{seat.SeatRow}-{seat.SeatColumn}"));
+        SelectedSeatsDisplay = string.Join(", ", SelectedSeats.Select(seat => $"{seat.Row}-{seat.Column}"));
     }
 
     private void SetMovieGenreDisplay()

@@ -103,18 +103,11 @@ public class EditCinemaViewModel : BaseViewModel
         Cinema = new Cinema();
     }
 
-    /// <summary>
-    /// Validates cinema name, address and seat capacity
-    /// </summary>
-    /// <returns>bool</returns>
     private bool ValidateEdit()
     {
-        return (Cinema.MallId == 0 || Cinema?.MallId == null);
+        return (Cinema.Mall == null);
     }
 
-    /// <summary>
-    /// Gets mall collection from json file
-    /// </summary>
     private async void GetMallsFromJson()
     {
         string json = await File.ReadAllTextAsync(mallFilePath);
@@ -136,8 +129,9 @@ public class EditCinemaViewModel : BaseViewModel
                 {
                     Cinema.Seats.Add(new Seat
                     {
-                        SeatRow = row,
-                        SeatColumn = column,
+                        Row = (char)('A' + row - 1),
+                        Column = column,
+                        CinemaId = Cinema.Id,
                         IsAvailableSeat = true
                     });
                 }

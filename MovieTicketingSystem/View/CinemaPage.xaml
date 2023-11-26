@@ -14,7 +14,7 @@
             <Style TargetType="Button">
                 <Setter Property="WidthRequest" Value="150" />
                 <Setter Property="CornerRadius" Value="20" />
-                
+
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -60,8 +60,8 @@
                                 <Grid ColumnDefinitions="*,*,*,*,*">
                                     <Label Text="{Binding Id}" />
                                     <Label Grid.Column="1" Text="{Binding Name}" />
-                                    <!--<Label Grid.Column="2" Text="{Binding Mall.Name}" />
-                                    <Label Grid.Column="3" Text="{Binding Mall.Address}" />-->
+                                    <Label Grid.Column="2" Text="{Binding Mall.Name}" />
+                                    <Label Grid.Column="3" Text="{Binding Mall.Address}" />
                                     <Label Grid.Column="4" Text="{Binding SeatCapacity}" />
                                 </Grid>
                             </VerticalStackLayout>
@@ -75,19 +75,49 @@
             Margin="0,20,0,10"
             HorizontalOptions="Center"
             Spacing="5">
-           
+
             <HorizontalStackLayout Spacing="-40">
-                <ImageButton Command="{Binding AddCinemaCommand}" Source="addicon.png" BackgroundColor="Transparent" Scale="0.5" />
-                <Button Command="{Binding AddCinemaCommand}" Text="Add Cinema" FontAttributes="Bold" TextColor="#43A047" BackgroundColor="Transparent" BorderColor="Transparent"/>
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding AddCinemaCommand}"
+                    Scale="0.5"
+                    Source="addicon.png" />
+                <Button
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    Command="{Binding AddCinemaCommand}"
+                    FontAttributes="Bold"
+                    Text="Add Cinema"
+                    TextColor="#43A047" />
             </HorizontalStackLayout>
             <HorizontalStackLayout Spacing="-70">
-                <ImageButton Command="{Binding EditCinemaCommand}" Source="editicon.png" BackgroundColor="Transparent" Scale="0.7"/>
-                <Button Command="{Binding EditCinemaCommand}"  Text="Edit" FontAttributes="Bold" TextColor="White" BackgroundColor="Transparent" BorderColor="Transparent"/>
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding EditCinemaCommand}"
+                    Scale="0.7"
+                    Source="editicon.png" />
+                <Button
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    Command="{Binding EditCinemaCommand}"
+                    FontAttributes="Bold"
+                    Text="Edit"
+                    TextColor="White" />
             </HorizontalStackLayout>
 
             <HorizontalStackLayout Spacing="-60">
-                <ImageButton Command="{Binding DeleteCinemaCommand}" Source="deleteicon.png" BackgroundColor="Transparent" Scale="0.8"/>
-                <Button Command="{Binding DeleteCinemaCommand}" FontAttributes="Bold" Text="Delete" TextColor="#EC4D37" BackgroundColor="Transparent" BorderColor="Transparent"/>
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding DeleteCinemaCommand}"
+                    Scale="0.8"
+                    Source="deleteicon.png" />
+                <Button
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    Command="{Binding DeleteCinemaCommand}"
+                    FontAttributes="Bold"
+                    Text="Delete"
+                    TextColor="#EC4D37" />
             </HorizontalStackLayout>
         </HorizontalStackLayout>
     </Grid>
