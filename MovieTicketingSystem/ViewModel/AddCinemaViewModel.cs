@@ -16,6 +16,7 @@ public class AddCinemaViewModel : BaseViewModel
     private Mall _selectedMallItem;
     private int _seatCapacity;
 
+
     public ObservableCollection<Mall> MallCollection
     {
         get => _mallCollection;
@@ -45,6 +46,7 @@ public class AddCinemaViewModel : BaseViewModel
         }
     }
 
+
     public AddCinemaViewModel(MallService mallService, CinemaService cinemaService)
     {
         this.mallService = mallService;
@@ -52,8 +54,10 @@ public class AddCinemaViewModel : BaseViewModel
         PopulateMall();
     }
 
+
     public ICommand SaveCommand => new Command(async () => await AddCinema());
     public ICommand ResetCommand => new Command(ResetCinema);
+
 
     private async Task AddCinema()
     {
@@ -75,19 +79,15 @@ public class AddCinemaViewModel : BaseViewModel
         };
         await Shell.Current.GoToAsync($"..", navigationParameter);
     }
-
     private void GenerateId()
     {
         Cinema.Id = CinemaCollection.Count + 1;
     }
-
-
     private void GenerateName()
     {
         const string NAME = "CINEMA";
         Cinema.Name = $"{NAME}-{SelectedMallItem.Name}-{Cinema.Id}";
     }
-
     private void ResetCinema()
     {
         Cinema = new Cinema();
@@ -97,8 +97,6 @@ public class AddCinemaViewModel : BaseViewModel
         SeatCapacity = 0;
         SelectedMallItem = null;
     }
-
-
     private bool ValidateCinema()
     {
         if (SelectedMallItem == null)
@@ -115,12 +113,10 @@ public class AddCinemaViewModel : BaseViewModel
         Cinema.Mall = SelectedMallItem;
         return true;
     }
-
     public async void PopulateMall()
     {
         MallCollection = await mallService.GetMallsAsync();
     }
-
     private void GenerateCinemaSeats()
     {
         Cinema.Seats.Clear();
@@ -140,7 +136,8 @@ public class AddCinemaViewModel : BaseViewModel
                         Row = seatRow,
                         Column = column,
                         CinemaId = Cinema.Id,
-                        IsAvailableSeat = true
+                        IsAvailableSeat = true,
+                        IsReserved = false
                     });
                 }
                 else

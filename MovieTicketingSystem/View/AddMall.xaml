@@ -134,9 +134,13 @@
                 BackgroundColor="#101820"
                 BorderColor="#101820"
                 WidthRequest="700">
-                <CollectionView ItemsSource="{Binding MallCollection}" >
+                <CollectionView ItemsSource="{Binding MallCollection}">
                     <CollectionView.EmptyView>
-                        <Label Text="No malls added yet" VerticalOptions="Center" WidthRequest="200" HeightRequest="300"/>
+                        <Label
+                            HeightRequest="300"
+                            Text="No malls added yet"
+                            VerticalOptions="Center"
+                            WidthRequest="200" />
                     </CollectionView.EmptyView>
                     <CollectionView.Header>
                         <Grid
@@ -213,14 +217,21 @@
                 </CollectionView>
             </Frame>
         </HorizontalStackLayout>
-        <HorizontalStackLayout Spacing="10" HorizontalOptions="Center" Margin="10">
+        <HorizontalStackLayout
+            Margin="10"
+            HorizontalOptions="Center"
+            Spacing="10">
             <Button
-                Command="{Binding HideDeletedMallsCommand}"
-                Text="HIDE DELETED MALLS"
+                Command="{Binding ShowActiveMallsCommand}"
+                Text="Show ACTIVE MALLS"
                 WidthRequest="200" />
             <Button
                 Command="{Binding ShowDeletedMallsCommand}"
                 Text="SHOW DELETED MALLS"
+                WidthRequest="200" />
+            <Button
+                Command="{Binding ShowAllMallsCommand}"
+                Text="SHOW ALL MALLS"
                 WidthRequest="200" />
         </HorizontalStackLayout>
     </VerticalStackLayout>

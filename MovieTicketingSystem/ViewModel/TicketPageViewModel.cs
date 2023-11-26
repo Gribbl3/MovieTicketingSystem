@@ -1,7 +1,7 @@
 ﻿using CommunityToolkit.Maui.Core;
 using MovieTicketingSystem.Model;
+using MovieTicketingSystem.Service;
 using System.Collections.ObjectModel;
-using System.Text.Json;
 using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
@@ -10,11 +10,22 @@ namespace MovieTicketingSystem.ViewModel;
 [QueryProperty(nameof(User), nameof(User))]
 public class TicketPageViewModel : BaseViewModel
 {
-    private readonly string mallFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Malls.json");
-    private readonly string cinemaFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Cinemas.json");
+    //private readonly string mallFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Malls.json");
+    //private readonly string cinemaFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Cinemas.json");
+    private readonly MallService mallService;
+    private readonly CinemaService cinemaService;
     private readonly IPopupService popupService;
 
+
     private Movie _movie;
+    private Cinema _cinema;
+    private User _user;
+    private ObservableCollection<Mall> _mallCollection = new();
+    private ObservableCollection<Cinema> _cinemaCollection = new();
+    private bool _isCinemaSelectionEnabled = false;
+    private bool _isCinemaSelected = false;
+
+
     public Movie Movie
     {
         get => _movie;
@@ -24,8 +35,6 @@ public class TicketPageViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
-
-    private Cinema _cinema;
     public Cinema Cinema
     {
         get => _cinema;
@@ -35,8 +44,6 @@ public class TicketPageViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
-
-    private User _user;
     public User User
     {
         get => _user;
@@ -46,8 +53,6 @@ public class TicketPageViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
-
-    private ObservableCollection<Mall> _mallCollection = new();
     public ObservableCollection<Mall> MallCollection
     {
         get => _mallCollection;
@@ -57,8 +62,6 @@ public class TicketPageViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
-
-    private bool _isCinemaSelectionEnabled = false;
     public bool IsCinemaSelectionEnabled
     {
         get => _isCinemaSelectionEnabled;
@@ -68,8 +71,6 @@ public class TicketPageViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
-
-    private bool _isCinemaSelected = false;
     public bool IsCinemaSelected
     {
         get => _isCinemaSelected;
@@ -79,8 +80,6 @@ public class TicketPageViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
-
-    private ObservableCollection<Cinema> _cinemaCollection = new();
     public ObservableCollection<Cinema> CinemaCollection
     {
         get => _cinemaCollection;
@@ -91,22 +90,29 @@ public class TicketPageViewModel : BaseViewModel
         }
     }
 
-    public TicketPageViewModel(IPopupService popupService)
+
+    public TicketPageViewModel(IPopupService popupService, MallService mallService, CinemaService cinemaService)
     {
-        MallCollection = JsonSerializer.Deserialize<ObservableCollection<Mall>>(File.ReadAllText(mallFilePath));
+        this.mallService = mallService;
+        this.cinemaService = cinemaService;
         this.popupService = popupService;
+        PopulateMallCollection();
     }
 
     public ICommand GetCinemaCommand => new Command<Mall>(GetCinemaCollectionFromJson);
     public ICommand GetSeatCommand => new Command<Cinema>(GetSeatCollectionFromCinema);
     public ICommand DisplayPopupCommand => new Command(DisplayPopup);
 
-    private void GetCinemaCollectionFromJson(Mall Mall)
+    private async void PopulateMallCollection()
     {
-        //get cinema collection from mall
-        string json = File.ReadAllText(cinemaFilePath);
-        CinemaCollection = JsonSerializer.Deserialize<ObservableCollection<Cinema>>(json);
+        MallCollection = await mallService.GetMallsAsync();
+        //filter deleted malls
+        MallCollection = new ObservableCollection<Mall>(MallCollection.Where(m => !m.IsDeleted));
+    }
 
+    private async void GetCinemaCollectionFromJson(Mall Mall)
+    {
+        CinemaCollection = await cinemaService.GetCinemasAsync();
         //filter cinema collection by mall
         //CinemaCollection = new ObservableCollection<Cinema>(CinemaCollection.Where(c => c.Mall.Id == Mall.Id));
 

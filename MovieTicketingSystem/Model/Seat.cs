@@ -2,11 +2,14 @@
 
 public class Seat : BaseModel
 {
-    private char _row;
-    private int _column;
-    private bool _isAvailableSeat; //IsAvailableSeat - true or false
-    public int CinemaId { get; set; }
     public int Id { get; set; }
+    public int CinemaId { get; set; }
+    private int _column;
+    private char _row;
+    private bool _isAvailableSeat;
+    private bool _isReserved;
+
+
     public char Row
     {
         get => _row;
@@ -32,6 +35,16 @@ public class Seat : BaseModel
         set
         {
             _isAvailableSeat = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsReserved
+    {
+        get => _isReserved;
+        set
+        {
+            _isReserved = value;
             OnPropertyChanged();
         }
     }

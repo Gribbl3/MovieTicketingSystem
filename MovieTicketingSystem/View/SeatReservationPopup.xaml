@@ -103,6 +103,12 @@
                                     Value="false">
                                     <Setter Property="Source" Value="available_seat.png" />
                                 </DataTrigger>
+                                <DataTrigger
+                                    Binding="{Binding IsReserved}"
+                                    TargetType="Image"
+                                    Value="true">
+                                    <Setter Property="Source" Value="unavailable_seat.png" />
+                                </DataTrigger>
                             </Image.Triggers>
                         </Image>
                         <Frame.GestureRecognizers>

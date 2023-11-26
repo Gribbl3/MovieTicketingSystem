@@ -9,7 +9,6 @@ public class AddMallViewModel : BaseViewModel
 {
     private readonly MallService mallService;
     private bool isEditing = false;
-
     private ObservableCollection<Mall> _mallCollection = new();
     private Mall _mall = new(), _selectedMallForEdit;
 
@@ -48,7 +47,7 @@ public class AddMallViewModel : BaseViewModel
     public AddMallViewModel(MallService mallService)
     {
         this.mallService = mallService;
-        PopulateMalls();
+        ShowAllMalls();
     }
 
     public ICommand AddCommand => new Command(async () => await AddMall());
@@ -57,7 +56,8 @@ public class AddMallViewModel : BaseViewModel
     public ICommand SaveCommand => new Command(SaveEditedMall);
     public ICommand ResetCommand => new Command<Mall>(ResetMall);
     public ICommand ShowDeletedMallsCommand => new Command(ShowDeletedMalls);
-    public ICommand HideDeletedMallsCommand => new Command(PopulateMalls);
+    public ICommand ShowAllMallsCommand => new Command(ShowAllMalls);
+    public ICommand ShowActiveMallsCommand => new Command(ShowActiveMalls);
 
     private async Task AddMall()
     {
@@ -83,22 +83,7 @@ public class AddMallViewModel : BaseViewModel
 
     private async void DeleteMall(int id)
     {
-        foreach (Mall mall in MallCollection)
-        {
-            if (mall.Id == id)
-            {
-                if (mall.IsDeleted)
-                {
-                    await Shell.Current.DisplayAlert("Error", "Mall already deleted", "OK");
-                    return;
-                }
-                mall.IsDeleted = !mall.IsDeleted;
-                await mallService.AddUpdateMallAsync(MallCollection);
-                MallCollection.Remove(mall);
-                await Shell.Current.DisplayAlert("Success", "Mall deleted successfully", "OK");
-                return;
-            }
-        }
+        MallCollection = await mallService.DeleteMallAsync(id, MallCollection);
     }
 
     private void EditMall(Mall mall)
@@ -132,23 +117,26 @@ public class AddMallViewModel : BaseViewModel
         //if user is editing, validate mall name and address
         bool isValidMall = await ValidateMall(SelectedMallForEdit);
         if (!isValidMall)
-            return;
-
-        //loop through mall collection and replace selected mall with edited mall
-        for (int index = 0; index < MallCollection.Count; index++)
         {
-            if (MallCollection[index].Id == SelectedMallForEdit.Id)
-            {
-                MallCollection[index] = SelectedMallForEdit;
-                await mallService.AddUpdateMallAsync(MallCollection);
-                await Shell.Current.DisplayAlert("Success", "Mall edited successfully", "OK");
-
-                //reset flag and selected mall
-                isEditing = false;
-                ResetMall(SelectedMallForEdit);
-                return;
-            }
+            return;
         }
+
+        MallCollection = await mallService.UpdateMallAsync(SelectedMallForEdit, MallCollection);
+        ////loop through mall collection and replace selected mall with edited mall
+        //for (int index = 0; index < MallCollection.Count; index++)
+        //{
+        //    if (MallCollection[index].Id == SelectedMallForEdit.Id)
+        //    {
+        //        MallCollection[index] = SelectedMallForEdit;
+        //        await mallService.AddUpdateMallAsync(MallCollection);
+        //        await Shell.Current.DisplayAlert("Success", "Mall edited successfully", "OK");
+
+        //        //reset flag and selected mall
+        //        isEditing = false;
+        //        ResetMall(SelectedMallForEdit);
+        //        return;
+        //    }
+        //}
         await Shell.Current.DisplayAlert("Error", "Mall not found", "OK");
     }
 
@@ -188,14 +176,16 @@ public class AddMallViewModel : BaseViewModel
         return true;
     }
 
-    private async void PopulateMalls()
+    private async void ShowAllMalls()
     {
         MallCollection = await mallService.GetMallsAsync();
-        //filter 
-        MallCollection = new ObservableCollection<Mall>(MallCollection.Where(m => !m.IsDeleted));
     }
     private async void ShowDeletedMalls()
     {
-        MallCollection = await mallService.GetMallsAsync();
+        MallCollection = await mallService.GetDeletedMallsAsync();
+    }
+    private async void ShowActiveMalls()
+    {
+        MallCollection = await mallService.GetActiveMallsAsync();
     }
 }

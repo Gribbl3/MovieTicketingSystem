@@ -1,5 +1,4 @@
-﻿using CommunityToolkit.Maui.Core;
-using MovieTicketingSystem.Model;
+﻿using MovieTicketingSystem.Model;
 using MovieTicketingSystem.View;
 using System.Windows.Input;
 
@@ -8,7 +7,6 @@ namespace MovieTicketingSystem.ViewModel;
 
 public class SeatReservationPopupViewModel : BaseViewModel
 {
-    private readonly IPopupService popupService;
 
     private Cinema _cinema;
     public Cinema Cinema
@@ -34,10 +32,6 @@ public class SeatReservationPopupViewModel : BaseViewModel
 
     public Movie Movie { get; set; }
 
-    public SeatReservationPopupViewModel(IPopupService popupService)
-    {
-        this.popupService = popupService;
-    }
 
     public void PerformUpdates(Cinema Cinema, User User, Movie Movie)
     {
@@ -50,7 +44,7 @@ public class SeatReservationPopupViewModel : BaseViewModel
 
     private void UpdateSeatAvailability(Seat Seat)
     {
-        if (Seat == null)
+        if (Seat == null || Seat.IsReserved)
         {
             return;
         }

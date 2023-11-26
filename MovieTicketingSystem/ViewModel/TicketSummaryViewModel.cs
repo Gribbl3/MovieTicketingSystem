@@ -114,7 +114,9 @@ public class TicketSummaryViewModel : BaseViewModel
             Ticket.Add(new Ticket
             {
                 User = User,
-                Movie = Movie
+                Movie = Movie,
+                DateBooked = DateTime.Now,
+                IsCancelled = false
             }); ;
         }
         var json = JsonSerializer.Serialize(Ticket);
