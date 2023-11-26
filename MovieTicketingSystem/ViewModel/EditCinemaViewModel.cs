@@ -71,7 +71,7 @@ public class EditCinemaViewModel : BaseViewModel
     /// </summary>
     private async void SaveEdit()
     {
-        bool isValidEdit = await ValidateEdit();
+        bool isValidEdit = ValidateEdit();
         if (!isValidEdit)
             return;
 
@@ -107,15 +107,9 @@ public class EditCinemaViewModel : BaseViewModel
     /// Validates cinema name, address and seat capacity
     /// </summary>
     /// <returns>bool</returns>
-    private async Task<bool> ValidateEdit()
+    private bool ValidateEdit()
     {
-        if (string.IsNullOrEmpty(Cinema.Mall.Name) || string.IsNullOrEmpty(Cinema.Mall.Address) || Cinema.SeatCapacity == 0)
-        {
-            await Shell.Current.DisplayAlert("Error", "Please fill up all fields", "OK");
-            return false;
-        }
-
-        return true;
+        return (Cinema.MallId == 0 || Cinema?.MallId == null);
     }
 
     /// <summary>

@@ -60,8 +60,8 @@
                                 <Grid ColumnDefinitions="*,*,*,*,*">
                                     <Label Text="{Binding Id}" />
                                     <Label Grid.Column="1" Text="{Binding Name}" />
-                                    <Label Grid.Column="2" Text="{Binding Mall.Name}" />
-                                    <Label Grid.Column="3" Text="{Binding Mall.Address}" />
+                                    <!--<Label Grid.Column="2" Text="{Binding Mall.Name}" />
+                                    <Label Grid.Column="3" Text="{Binding Mall.Address}" />-->
                                     <Label Grid.Column="4" Text="{Binding SeatCapacity}" />
                                 </Grid>
                             </VerticalStackLayout>

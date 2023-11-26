@@ -119,8 +119,8 @@ public class AddCinemaViewModel : BaseViewModel
         const string NAME = "CINEMA";
 
         //check the current cinema collection number of cinemas in the mall
-        int cinemaCount = CinemaCollection.Where(c => c.Mall.Id == SelectedMallItem.Id).Count();
-        Cinema.Name = $"{SelectedMallItem.Name}- {NAME} - {cinemaCount + 1}";
+        //int cinemaCount = CinemaCollection.Where(c => c.Mall.Id == SelectedMallItem.Id).Count();
+        //Cinema.Name = $"{SelectedMallItem.Name}- {NAME} - {cinemaCount + 1}";
     }
 
     /// <summary>
@@ -152,7 +152,7 @@ public class AddCinemaViewModel : BaseViewModel
             Shell.Current.DisplayAlert("Error", "Please enter cinema seat capacity", "OK");
             return false;
         }
-        Cinema.Mall = SelectedMallItem;
+        Cinema.MallId = SelectedMallItem.Id;
         return true;
     }
 

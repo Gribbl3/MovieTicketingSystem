@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Maui;
 using Microsoft.Extensions.Logging;
-using Mopups.Hosting;
 using MovieTicketingSystem.Converters;
 using MovieTicketingSystem.Service;
 using MovieTicketingSystem.View;
@@ -15,7 +14,6 @@ public static class MauiProgram
         var builder = MauiApp.CreateBuilder();
         builder
             .UseMauiApp<App>()
-            .ConfigureMopups()
             .UseMauiCommunityToolkit()
             .ConfigureFonts(fonts =>
             {
@@ -64,12 +62,14 @@ public static class MauiProgram
         builder.Services.AddTransient<MoviePage>();
         builder.Services.AddTransient<EditMovie>();
         builder.Services.AddTransient<TicketPage>();
+        builder.Services.AddTransient<TicketSummary>();
+        builder.Services.AddTransient<GeneratedTicket>();
 
         // Registering Services
         builder.Services.AddSingleton<IUserService, UserService>();
         //different GUID's cannot be possible if service is singleton
         builder.Services.AddTransient<MovieService>();
-        builder.Services.AddSingleton<JsonFileService>();
+        builder.Services.AddTransient<MallService>();
 
         //converter
         builder.Services.AddSingleton<ByteArrayToImageSourceConverter>();

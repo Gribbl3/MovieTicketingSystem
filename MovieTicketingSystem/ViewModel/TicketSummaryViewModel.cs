@@ -1,9 +1,29 @@
 ﻿using MovieTicketingSystem.Model;
+using MovieTicketingSystem.View;
+using System.Collections.ObjectModel;
+using System.Text.Json;
+using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
 
+[QueryProperty(nameof(Cinema), nameof(Cinema))]
+[QueryProperty(nameof(User), nameof(User))]
+[QueryProperty(nameof(Movie), nameof(Movie))]
 public class TicketSummaryViewModel : BaseViewModel
 {
+    private readonly string ticketFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Ticket.json");
+
+    private ObservableCollection<Ticket> _ticket;
+    public ObservableCollection<Ticket> Ticket
+    {
+        get => _ticket;
+        set
+        {
+            _ticket = value;
+            OnPropertyChanged();
+        }
+    }
+
     private Cinema _cinema;
     public Cinema Cinema
     {
@@ -11,6 +31,8 @@ public class TicketSummaryViewModel : BaseViewModel
         set
         {
             _cinema = value;
+            GetSelectedSeats();
+            SetSelectedSeatsDisplay();
             OnPropertyChanged();
         }
     }
@@ -33,15 +55,96 @@ public class TicketSummaryViewModel : BaseViewModel
         set
         {
             _movie = value;
+            SetMovieGenreDisplay();
+            OnPropertyChanged();
+        }
+    }
+
+    private string _movieGenreDisplay;
+    public string MovieGenreDisplay
+    {
+        get => _movieGenreDisplay;
+        set
+        {
+            _movieGenreDisplay = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private ObservableCollection<Seat> selectedSeats = new();
+    public ObservableCollection<Seat> SelectedSeats
+    {
+        get => selectedSeats;
+        set
+        {
+            selectedSeats = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private string selectedSeatsDisplay;
+    public string SelectedSeatsDisplay
+    {
+        get => selectedSeatsDisplay;
+        set
+        {
+            selectedSeatsDisplay = value;
             OnPropertyChanged();
         }
     }
 
 
-    public TicketSummaryViewModel(Cinema Cinema, User User, Movie Movie)
+    public ICommand BuyTicketCommand => new Command(BuyTicket);
+
+    private async void BuyTicket()
     {
-        this.Cinema = Cinema;
-        this.User = User;
-        this.Movie = Movie;
+        var navigationParameter = new Dictionary<string, object>
+        {
+            {nameof(Ticket), Ticket }
+        };
+
+        SaveToJson();
+        await Shell.Current.GoToAsync($"//{nameof(GeneratedTicket)}", navigationParameter);
     }
+
+    private async void SaveToJson()
+    {
+        foreach (var seat in SelectedSeats)
+        {
+            Ticket.Add(new Ticket
+            {
+                MovieId = Movie.Id,
+                UserId = User.Id,
+                SeatId = seat.Id
+            });
+        }
+        var json = JsonSerializer.Serialize(Ticket);
+        await File.WriteAllTextAsync(ticketFilePath, json);
+        await Shell.Current.DisplayAlert("Ticket", "Ticket has been saved", "OK");
+    }
+
+    private void GetSelectedSeats()
+    {
+        foreach (var seat in Cinema.Seats)
+        {
+            if (!seat.IsAvailableSeat)
+            {
+                SelectedSeats.Add(seat);
+            }
+        }
+    }
+
+
+    private void SetSelectedSeatsDisplay()
+    {
+        SelectedSeatsDisplay = string.Join(", ", SelectedSeats.Select(seat => $"{seat.SeatRow}-{seat.SeatColumn}"));
+    }
+
+    private void SetMovieGenreDisplay()
+    {
+        MovieGenreDisplay = string.Join("| ", Movie.SelectedGenre);
+    }
+
+
+
 }

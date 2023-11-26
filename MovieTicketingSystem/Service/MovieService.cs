@@ -13,7 +13,6 @@ public class MovieService
     public MovieService()
     {
         folderPath = Path.Combine(FileSystem.Current.AppDataDirectory, "Movies");
-        filePath = Path.Combine(folderPath, $"{Guid.NewGuid()}.json");
     }
 
     public async Task<bool> AddMovieAsync(Movie movie)

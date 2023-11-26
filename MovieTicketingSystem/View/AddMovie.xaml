@@ -223,7 +223,6 @@
                                             <ContentView>
                                                 <Grid ColumnDefinitions="auto,*,*">
                                                     <Label Grid.Column="0" Text="{Binding Name}" />
-                                                    <Label Grid.Column="1" Text="{Binding Mall.Name}" />
                                                     <CheckBox Grid.Column="2" IsChecked="{Binding IsSelected}" />
                                                 </Grid>
                                             </ContentView>

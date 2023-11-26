@@ -8,15 +8,11 @@
     Shell.NavBarIsVisible="False"
     Shell.TabBarBackgroundColor="#cc4f46">
 
-    <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:Customer}"
-        Route="Customer" />
+    <ShellContent ContentTemplate="{DataTemplate local:Login}" Route="Login" />
 
     <TabBar>
         <Tab Title="Home">
             <ShellContent ContentTemplate="{DataTemplate local:Admin}" Route="Admin" />
-
         </Tab>
         <Tab Title="Movie">
             <ShellContent ContentTemplate="{DataTemplate local:MoviePage}" Route="MoviePage" />
@@ -30,16 +26,17 @@
         <Tab Title="Logout">
             <ShellContent ContentTemplate="{DataTemplate local:Logout}" Route="Logout" />
         </Tab>
-
-
     </TabBar>
 
     <TabBar>
-        <Tab>
+        <Tab Title="Home" IsVisible="True">
             <ShellContent ContentTemplate="{DataTemplate local:Customer}" Route="Customer" />
         </Tab>
-        <Tab>
+        <Tab IsVisible="False">
             <ShellContent ContentTemplate="{DataTemplate local:TicketPage}" Route="TicketPage" />
+        </Tab>
+        <Tab IsVisible="False">
+            <ShellContent ContentTemplate="{DataTemplate local:TicketSummary}" Route="TicketSummary" />
         </Tab>
         <Tab Title="Logout">
             <ShellContent ContentTemplate="{DataTemplate local:Logout}" Route="Logout" />

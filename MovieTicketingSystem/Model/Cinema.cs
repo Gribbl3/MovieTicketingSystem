@@ -6,18 +6,35 @@ namespace MovieTicketingSystem.Model;
 public class Cinema : BaseModel
 {
     public int Id { get; set; }
+    public int MallId { get; set; }
     public string Name { get; set; }
-    public Mall Mall { get; set; } = new(); //Mall - SM
     public ObservableCollection<Seat> Seats { get; set; } = new();
-    public bool IsSelected { get; set; } //used when adding movies, to know if the cinema is already selected
     private int seatCapacity; //Seat - 100
-
+    private bool _isSelected, _isDeleted; //IsDeleted - hide or show
     public int SeatCapacity
     {
         get => seatCapacity;
         set
         {
             seatCapacity = value;
+            OnPropertyChanged();
+        }
+    }
+    public bool IsSelected
+    {
+        get => _isSelected;
+        set
+        {
+            _isSelected = value;
+            OnPropertyChanged();
+        }
+    }
+    public bool IsDeleted
+    {
+        get => _isDeleted;
+        set
+        {
+            _isDeleted = value;
             OnPropertyChanged();
         }
     }

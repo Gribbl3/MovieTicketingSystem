@@ -1,15 +1,12 @@
-using MovieTicketingSystem.Model;
 using MovieTicketingSystem.ViewModel;
 
 namespace MovieTicketingSystem.View;
 
-public partial class TicketSummary
+public partial class TicketSummary : ContentPage
 {
-    TicketSummaryViewModel viewModel;
-    public TicketSummary(Cinema Cinema, User User, Movie Movie)
+    public TicketSummary(TicketSummaryViewModel viewModel)
     {
         InitializeComponent();
-        viewModel = new TicketSummaryViewModel(Cinema, User, Movie);
         BindingContext = viewModel;
     }
 }

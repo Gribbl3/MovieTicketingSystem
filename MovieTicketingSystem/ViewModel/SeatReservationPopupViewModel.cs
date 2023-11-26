@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Maui.Core;
-using Mopups.Services;
 using MovieTicketingSystem.Model;
 using MovieTicketingSystem.View;
-using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
@@ -11,18 +9,6 @@ namespace MovieTicketingSystem.ViewModel;
 public class SeatReservationPopupViewModel : BaseViewModel
 {
     private readonly IPopupService popupService;
-
-
-    private ObservableCollection<Seat> _selectedSeats = new();
-    public ObservableCollection<Seat> SelectedSeats
-    {
-        get => _selectedSeats;
-        set
-        {
-            _selectedSeats = value;
-            OnPropertyChanged();
-        }
-    }
 
     private Cinema _cinema;
     public Cinema Cinema
@@ -80,7 +66,12 @@ public class SeatReservationPopupViewModel : BaseViewModel
 
     public async void GoToTicketSummary()
     {
-        await MopupService.Instance.PushAsync(new TicketSummary(Cinema, User, Movie));
+        var navigationParameter = new Dictionary<string, object>
+        {
+            { nameof(Cinema), Cinema },
+            { nameof(User), User },
+            { nameof(Movie), Movie },
+        };
+        await Shell.Current.GoToAsync($"{nameof(TicketSummary)}", navigationParameter);
     }
-
 }

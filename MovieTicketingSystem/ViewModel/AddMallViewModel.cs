@@ -1,17 +1,20 @@
 ﻿using MovieTicketingSystem.Model;
+using MovieTicketingSystem.Service;
 using System.Collections.ObjectModel;
-using System.Text.Json;
 using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
 
-[QueryProperty(nameof(MallCollection), nameof(MallCollection))]
 public class AddMallViewModel : BaseViewModel
 {
-    private readonly string mallFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Malls.json");
+    private readonly MallService mallService;
     private bool isEditing = false;
 
     private ObservableCollection<Mall> _mallCollection = new();
+    private Mall _mall = new(), _selectedMallForEdit;
+
+
+
     public ObservableCollection<Mall> MallCollection
     {
         get => _mallCollection;
@@ -22,7 +25,6 @@ public class AddMallViewModel : BaseViewModel
         }
     }
 
-    private Mall _mall = new();
     public Mall Mall
     {
         get => _mall;
@@ -33,7 +35,6 @@ public class AddMallViewModel : BaseViewModel
         }
     }
 
-    private Mall _selectedMallForEdit;
     public Mall SelectedMallForEdit
     {
         get => _selectedMallForEdit;
@@ -44,9 +45,10 @@ public class AddMallViewModel : BaseViewModel
         }
     }
 
-    public AddMallViewModel()
+    public AddMallViewModel(MallService mallService)
     {
-        GetMallsFromJson();
+        this.mallService = mallService;
+        PopulateMalls();
     }
 
     public ICommand AddCommand => new Command(async () => await AddMall());
@@ -54,11 +56,9 @@ public class AddMallViewModel : BaseViewModel
     public ICommand EditCommand => new Command<Mall>(EditMall);
     public ICommand SaveCommand => new Command(SaveEditedMall);
     public ICommand ResetCommand => new Command<Mall>(ResetMall);
+    public ICommand ShowDeletedMallsCommand => new Command(ShowDeletedMalls);
+    public ICommand HideDeletedMallsCommand => new Command(PopulateMalls);
 
-    /// <summary>
-    /// Add mall to json file
-    /// </summary>
-    /// <returns>void</returns>
     private async Task AddMall()
     {
         bool isValidMall = await ValidateMall(Mall);
@@ -67,58 +67,40 @@ public class AddMallViewModel : BaseViewModel
 
         GenerateId();
         MallCollection.Add(Mall);
-        string json = JsonSerializer.Serialize<ObservableCollection<Mall>>(MallCollection);
-        await File.WriteAllTextAsync(mallFilePath, json);
+        bool isAdded = await mallService.AddUpdateMallAsync(MallCollection);
 
-        await Shell.Current.DisplayAlert("Success", "Mall added successfully", "OK");
-        ResetMall(Mall);
+        if (isAdded)
+        {
+            await Shell.Current.DisplayAlert("Success", "Mall added successfully", "OK");
+            ResetMall(Mall);
+        }
+        else
+        {
+            await Shell.Current.DisplayAlert("Error", "Mall not added", "OK");
+        }
+
     }
 
-    /// <summary>
-    /// Delete mall from json file, gets id from user input
-    /// </summary>
-    /// <param name="id"></param>
     private async void DeleteMall(int id)
     {
         foreach (Mall mall in MallCollection)
         {
             if (mall.Id == id)
             {
+                if (mall.IsDeleted)
+                {
+                    await Shell.Current.DisplayAlert("Error", "Mall already deleted", "OK");
+                    return;
+                }
+                mall.IsDeleted = !mall.IsDeleted;
+                await mallService.AddUpdateMallAsync(MallCollection);
                 MallCollection.Remove(mall);
-                string mallJson = JsonSerializer.Serialize(MallCollection);
-                await File.WriteAllTextAsync(mallFilePath, mallJson);
                 await Shell.Current.DisplayAlert("Success", "Mall deleted successfully", "OK");
                 return;
             }
         }
-
-        //string result = await Shell.Current.DisplayPromptAsync("Delete Mall", "Enter mall id to delete");
-        //if (string.IsNullOrEmpty(result) || !int.TryParse(result, out int id))
-        //{
-        //    await Shell.Current.DisplayAlert("Error", "Please enter valid mall id", "OK");
-        //    return;
-        //}
-
-        //foreach (Mall mall in MallCollection)
-        //{
-        //    if (mall.Id == id)
-        //    {
-        //        MallCollection.Remove(mall);
-        //        string mallJson = JsonSerializer.Serialize(MallCollection);
-        //        await File.WriteAllTextAsync(mallFilePath, mallJson);
-        //        await Shell.Current.DisplayAlert("Success", "Mall deleted successfully", "OK");
-        //        return;
-        //    }
-        //}
-
-        //await Shell.Current.DisplayAlert("Error", "Mall not found", "OK");
     }
 
-    /// <summary>
-    /// Edits mall, gets mall from user input and sets it as selected mall for edit
-    /// Mall gets passed as a parameter from command parameter 
-    /// </summary>
-    /// <param name="mall"></param>
     private void EditMall(Mall mall)
     {
         //if we use this, it will modify the mall in the collection
@@ -138,9 +120,6 @@ public class AddMallViewModel : BaseViewModel
         isEditing = true;
     }
 
-    /// <summary>
-    /// Saves edited mall to json file
-    /// </summary>
     private async void SaveEditedMall()
     {
         //if user is not editing, display error message
@@ -161,8 +140,7 @@ public class AddMallViewModel : BaseViewModel
             if (MallCollection[index].Id == SelectedMallForEdit.Id)
             {
                 MallCollection[index] = SelectedMallForEdit;
-                string mallJson = JsonSerializer.Serialize(MallCollection);
-                await File.WriteAllTextAsync(mallFilePath, mallJson);
+                await mallService.AddUpdateMallAsync(MallCollection);
                 await Shell.Current.DisplayAlert("Success", "Mall edited successfully", "OK");
 
                 //reset flag and selected mall
@@ -171,22 +149,14 @@ public class AddMallViewModel : BaseViewModel
                 return;
             }
         }
-
         await Shell.Current.DisplayAlert("Error", "Mall not found", "OK");
     }
 
-    /// <summary>
-    /// Generates mall id
-    /// </summary>
     private void GenerateId()
     {
-
         Mall.Id = MallCollection.Count + 1;
     }
 
-    /// <summary>
-    /// Reset mall name and address
-    /// </summary>
     private void ResetMall(Mall mall)
     {
         //if user is editing, reset selected mall else reset mall
@@ -200,10 +170,6 @@ public class AddMallViewModel : BaseViewModel
 
     }
 
-    /// <summary>
-    /// Validates mall name and address
-    /// </summary>
-    /// <returns>boolean</returns>
     private async Task<bool> ValidateMall(Mall mall)
     {
 
@@ -222,18 +188,14 @@ public class AddMallViewModel : BaseViewModel
         return true;
     }
 
-    /// <summary>
-    /// Get malls from json file
-    /// </summary>
-    public async void GetMallsFromJson()
+    private async void PopulateMalls()
     {
-        if (!File.Exists(mallFilePath))
-        {
-            MallCollection = new ObservableCollection<Mall>();
-            return;
-        }
-
-        string json = await File.ReadAllTextAsync(mallFilePath);
-        MallCollection = JsonSerializer.Deserialize<ObservableCollection<Mall>>(json);
+        MallCollection = await mallService.GetMallsAsync();
+        //filter 
+        MallCollection = new ObservableCollection<Mall>(MallCollection.Where(m => !m.IsDeleted));
+    }
+    private async void ShowDeletedMalls()
+    {
+        MallCollection = await mallService.GetMallsAsync();
     }
 }

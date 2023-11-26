@@ -108,7 +108,7 @@ public class TicketPageViewModel : BaseViewModel
         CinemaCollection = JsonSerializer.Deserialize<ObservableCollection<Cinema>>(json);
 
         //filter cinema collection by mall
-        CinemaCollection = new ObservableCollection<Cinema>(CinemaCollection.Where(c => c.Mall.Id == Mall.Id));
+        //CinemaCollection = new ObservableCollection<Cinema>(CinemaCollection.Where(c => c.Mall.Id == Mall.Id));
 
         List<int> movieCinemaIds = Movie.Cinemas.Select(c => c.Id).ToList();
         CinemaCollection = new ObservableCollection<Cinema>(CinemaCollection.Where(c => movieCinemaIds.Contains(c.Id)));

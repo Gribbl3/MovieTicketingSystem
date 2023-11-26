@@ -6,6 +6,7 @@ public class Mall : BaseModel //Mall - SM North Edsa, MallAddress - Quezon City
 
     private string _name;
     private string _address;
+    private bool _isDeleted; //IsDeleted - hide or show
 
     public string Name
     {
@@ -22,6 +23,15 @@ public class Mall : BaseModel //Mall - SM North Edsa, MallAddress - Quezon City
         set
         {
             _address = value;
+            OnPropertyChanged();
+        }
+    }
+    public bool IsDeleted
+    {
+        get => _isDeleted;
+        set
+        {
+            _isDeleted = value;
             OnPropertyChanged();
         }
     }

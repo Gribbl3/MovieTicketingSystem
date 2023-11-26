@@ -2,18 +2,11 @@
 
 public class Ticket : BaseModel
 {
-    private int _id;
-    public int Id
-    {
-        get => _id;
-        set
-        {
-            _id = value;
-            OnPropertyChanged();
-        }
-    }
+    public int Id { get; set; }
 
-    private int _userId;
+    private int _userId, _movieId, _seatId;
+    private bool _isCancelled;
+    private DateTime _dateBooked;
     public int UserId
     {
         get => _userId;
@@ -23,19 +16,6 @@ public class Ticket : BaseModel
             OnPropertyChanged();
         }
     }
-
-    private int _cinemaId;
-    public int CinemaId
-    {
-        get => _cinemaId;
-        set
-        {
-            _cinemaId = value;
-            OnPropertyChanged();
-        }
-    }
-
-    private int _movieId;
     public int MovieId
     {
         get => _movieId;
@@ -45,7 +25,33 @@ public class Ticket : BaseModel
             OnPropertyChanged();
         }
     }
-
+    public int SeatId
+    {
+        get => _seatId;
+        set
+        {
+            _seatId = value;
+            OnPropertyChanged();
+        }
+    }
+    public DateTime DateBooked
+    {
+        get => _dateBooked;
+        set
+        {
+            _dateBooked = value;
+            OnPropertyChanged();
+        }
+    }
+    public bool IsCancelled
+    {
+        get => _isCancelled;
+        set
+        {
+            _isCancelled = value;
+            OnPropertyChanged();
+        }
+    }
 
 }
 

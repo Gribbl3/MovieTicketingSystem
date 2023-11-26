@@ -8,7 +8,7 @@ public class User : BaseModel
 
 
     //Parent class for Customer and Admin
-    private string _id;
+    private int _id;
     private string _firstName;
     private string _middleName;
     private string _lastName;
@@ -16,12 +16,12 @@ public class User : BaseModel
     private string _birthDate;
     private string _homeAddress;
     private string _gender;
-    private bool _isAdmin;
+    private bool _isAdmin, _isDeleted;
 
     private string _username;
     private string _password;
 
-    public string Id
+    public int Id
     {
         get { return _id; }
         set { _id = value; OnPropertyChanged(); }
@@ -78,6 +78,11 @@ public class User : BaseModel
         set { _isAdmin = value; OnPropertyChanged(); }
     }
 
+    public bool IsDeleted
+    {
+        get { return _isDeleted; }
+        set { _isDeleted = value; OnPropertyChanged(); }
+    }
     //create a public method that will return the fullname of the person
     public string GetFullName()
     {

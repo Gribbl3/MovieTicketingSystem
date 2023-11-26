@@ -44,7 +44,6 @@
             x:Name="collectionView"
             Margin="10"
             ItemsSource="{Binding Cinema.Seats}"
-            SelectedItems="{Binding SelectedSeats}"
             SelectionMode="Multiple">
             <CollectionView.ItemsLayout>
                 <GridItemsLayout

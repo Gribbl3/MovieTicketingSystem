@@ -9,7 +9,7 @@ public class Movie : BaseModel
     #region Fields and Properties
     //generate field and properties
     private string _name, _description, _companySource;
-    private bool _isUpcoming, _isNowShowing;
+    private bool _isUpcoming, _isNowShowing, _isDeleted;
     private decimal _price;
     private Byte[] _image;
     //showtime start and end date
@@ -153,6 +153,16 @@ public class Movie : BaseModel
         set
         {
             _cinemas = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsDeleted
+    {
+        get => _isDeleted;
+        set
+        {
+            _isDeleted = value;
             OnPropertyChanged();
         }
     }

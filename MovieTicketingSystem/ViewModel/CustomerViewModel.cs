@@ -1,5 +1,4 @@
 ﻿using MovieTicketingSystem.Model;
-using MovieTicketingSystem.Service;
 using MovieTicketingSystem.View;
 using System.Collections.ObjectModel;
 using System.Text.Json;
@@ -10,7 +9,6 @@ namespace MovieTicketingSystem.ViewModel;
 [QueryProperty(nameof(User), nameof(User))]
 public class CustomerViewModel : BaseViewModel
 {
-    private JsonFileService _service;
     private readonly string movieFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Movies.json");
 
 
@@ -39,9 +37,8 @@ public class CustomerViewModel : BaseViewModel
     }
 
 
-    public CustomerViewModel(JsonFileService service)
+    public CustomerViewModel()
     {
-        _service = service;
         MovieCollection = JsonSerializer.Deserialize<ObservableCollection<Movie>>(File.ReadAllText(movieFilePath));
     }
 

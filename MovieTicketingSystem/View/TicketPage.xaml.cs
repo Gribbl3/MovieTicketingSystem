@@ -9,4 +9,11 @@ public partial class TicketPage : ContentPage
         InitializeComponent();
         BindingContext = viewModel;
     }
+
+    protected override void OnAppearing()
+    {
+        base.OnAppearing();
+
+        Shell.SetTabBarIsVisible(Application.Current.MainPage, false);// set false in second page, set true in first page
+    }
 }

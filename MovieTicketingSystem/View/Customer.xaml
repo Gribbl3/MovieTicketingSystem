@@ -17,7 +17,7 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ScrollView>
+    <ScrollView WidthRequest="1980" >
         <Frame BackgroundColor="Transparent" BorderColor="Transparent">
             <VerticalStackLayout>
                 <Frame BackgroundColor="Transparent" BorderColor="Transparent">
