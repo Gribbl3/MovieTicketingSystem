@@ -23,12 +23,6 @@ public class MallService : BaseService<Mall>
         return new ObservableCollection<Mall>(mallCollection.Where(m => m.IsDeleted));
     }
 
-    public async Task<Mall> GetMallByIdAsync(int id)
-    {
-        var mallCollection = await GetMallsAsync();
-        return mallCollection.FirstOrDefault(m => m.Id == id);
-    }
-
     public async Task<(bool, ObservableCollection<Mall>)> AddMallAsync(Mall newMall, ObservableCollection<Mall> MallCollection)
     {
         if (newMall == null || MallCollection == null)
@@ -43,8 +37,9 @@ public class MallService : BaseService<Mall>
         return (isSaved, MallCollection);
     }
 
-    public async Task<ObservableCollection<Mall>> DeleteMallAsync(int id, ObservableCollection<Mall> MallCollection)
+    public async Task<ObservableCollection<Mall>> DeleteMallAsync(int id)
     {
+        var MallCollection = await GetMallsAsync();
         var mallToBeDeleted = MallCollection.FirstOrDefault(m => m.Id == id);
         if (mallToBeDeleted == null)
         {
@@ -78,6 +73,27 @@ public class MallService : BaseService<Mall>
         MallCollection[index] = SelectedMallForEdit;
         await SaveToJsonAsync(MallCollection);
         await Shell.Current.DisplayAlert("Success", "Mall updated", "OK");
+        return MallCollection;
+    }
+
+    public async Task<ObservableCollection<Mall>> RestoreDeletedMallAsync(int id)
+    {
+        var MallCollection = await GetMallsAsync();
+        var mallToBeRestored = MallCollection.FirstOrDefault(m => m.Id == id);
+        if (mallToBeRestored == null)
+        {
+            await Shell.Current.DisplayAlert("Error", "Mall not found", "OK");
+            return MallCollection;
+        }
+
+        if (!mallToBeRestored.IsDeleted)
+        {
+            await Shell.Current.DisplayAlert("Error", "Mall not deleted", "OK");
+            return MallCollection;
+        }
+
+        mallToBeRestored.IsDeleted = false;
+        await SaveToJsonAsync(MallCollection);
         return MallCollection;
     }
 

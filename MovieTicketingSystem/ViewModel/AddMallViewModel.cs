@@ -67,6 +67,7 @@ public class AddMallViewModel : BaseViewModel
     public ICommand ShowDeletedMallsCommand => new Command(ShowDeletedMalls);
     public ICommand ShowAllMallsCommand => new Command(ShowAllMalls);
     public ICommand ShowActiveMallsCommand => new Command(ShowActiveMalls);
+    public ICommand RestoreDeletedMallCommand => new Command(RestoreDeletedMall);
 
     private async Task AddMall()
     {
@@ -91,7 +92,7 @@ public class AddMallViewModel : BaseViewModel
 
     private async void DeleteMall(int id)
     {
-        MallCollection = await mallService.DeleteMallAsync(id, MallCollection);
+        MallCollection = await mallService.DeleteMallAsync(id);
     }
 
     private void EditMall(Mall mall)
@@ -169,12 +170,25 @@ public class AddMallViewModel : BaseViewModel
     {
         MallCollection = await mallService.GetMallsAsync();
     }
+
     private async void ShowDeletedMalls()
     {
         MallCollection = await mallService.GetDeletedMallsAsync();
     }
+
     private async void ShowActiveMalls()
     {
         MallCollection = await mallService.GetActiveMallsAsync();
+    }
+
+    private async void RestoreDeletedMall()
+    {
+        string result = await Shell.Current.DisplayPromptAsync("Restore Mall", "Enter mall id to restore");
+        if (!int.TryParse(result, out int id))
+        {
+            await Shell.Current.DisplayAlert("Error", "Please enter valid mall id", "OK");
+            return;
+        }
+        MallCollection = await mallService.RestoreDeletedMallAsync(id);
     }
 }

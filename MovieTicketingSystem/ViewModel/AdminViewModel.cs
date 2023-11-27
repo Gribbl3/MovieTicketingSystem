@@ -4,42 +4,55 @@ using System.Collections.ObjectModel;
 
 namespace MovieTicketingSystem.ViewModel;
 
-[QueryProperty(nameof(FirstName), "name")]
 public class AdminViewModel : BaseViewModel
 {
-    private MovieService _movieService;
-    private ObservableCollection<Movie> _movieCollection;
-    private string _firstName;
-    public AdminViewModel(MovieService movieService)
-    {
-        _movieService = movieService;
-    }
+    private readonly UserService userService;
 
-    public string FirstName
+
+    private ObservableCollection<User> _customerCollection = new();
+    private bool _isVisible = false;
+    private bool _isVisibleCollection = false;
+
+    public ObservableCollection<User> CustomerCollection
     {
-        get => _firstName;
+        get => _customerCollection;
         set
         {
-            _firstName = value;
-            OnPropertyChanged();
-            LoadMovies();
-        }
-    }
-
-    public ObservableCollection<Movie> MovieCollection
-    {
-        get => _movieCollection;
-        set
-        {
-            _movieCollection = value;
+            _customerCollection = value;
             OnPropertyChanged();
         }
     }
 
-    private async void LoadMovies()
+    public bool IsVisible
     {
-        MovieCollection = await _movieService.GetMoviesAsync();
+        get => _isVisible;
+        set
+        {
+            _isVisible = value;
+            OnPropertyChanged();
+        }
     }
 
+    public bool IsVisibleCollection
+    {
+        get => _isVisibleCollection;
+        set
+        {
+            _isVisibleCollection = value;
+            OnPropertyChanged();
+        }
+    }
 
+    public AdminViewModel(UserService userService)
+    {
+        this.userService = userService;
+        ShowAllUser();
+    }
+
+    private async void ShowAllUser()
+    {
+        CustomerCollection = await userService.GetUsersAsync(false);
+        IsVisible = CustomerCollection.Count <= 0;
+        IsVisibleCollection = !IsVisible;
+    }
 }

@@ -33,6 +33,7 @@ public class CinemaPageViewModel : BaseViewModel
     public ICommand ShowActiveCinemasCommand => new Command(ShowActiveCinemas);
     public ICommand ShowDeletedCinemasCommand => new Command(ShowDeletedCinemas);
     public ICommand ShowAllCinemasCommand => new Command(ShowAllCinemas);
+    public ICommand RestoreDeletedCinemaCommand => new Command(RestoreDeletedCinema);
 
     private async void ShowAllCinemas()
     {
@@ -47,6 +48,17 @@ public class CinemaPageViewModel : BaseViewModel
     private async void ShowDeletedCinemas()
     {
         CinemaCollection = await cinemaService.GetDeletedCinemasAsync();
+    }
+
+    private async void RestoreDeletedCinema()
+    {
+        string result = await Shell.Current.DisplayPromptAsync("Restore Cinema", "Enter cinema id to restore");
+        if (!int.TryParse(result, out int id))
+        {
+            await Shell.Current.DisplayAlert("Error", "Please enter valid cinema id", "OK");
+            return;
+        }
+        await cinemaService.RestoreDeletedCinemaAsync(id);
     }
 
     private async void GoToAddCinemaPage()
@@ -64,9 +76,7 @@ public class CinemaPageViewModel : BaseViewModel
         if (string.IsNullOrEmpty(result) || !int.TryParse(result, out int id))
             return;
 
-        CinemaCollection = await cinemaService.DeleteCinemaAsync(id, CinemaCollection);
-
-        await Shell.Current.DisplayAlert("Error", "Cinema not found", "OK");
+        CinemaCollection = await cinemaService.DeleteCinemaAsync(id);
     }
 
     private async void GoToEditCinemaPage()

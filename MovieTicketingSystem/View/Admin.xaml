@@ -3,14 +3,13 @@
     x:Class="MovieTicketingSystem.View.Admin"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:converter="clr-namespace:MovieTicketingSystem.Converters"
     xmlns:model="clr-namespace:MovieTicketingSystem.Model"
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
     Title="Admin"
-    x:DataType="vm:AdminViewModel">
+    x:DataType="vm:AdminViewModel"
+    BackgroundImageSource="backgroundblur.png">
     <ContentPage.Resources>
         <ResourceDictionary>
-            <converter:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />
             <Style TargetType="Image">
                 <Setter Property="WidthRequest" Value="300" />
                 <Setter Property="HeightRequest" Value="200" />
@@ -23,20 +22,44 @@
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
-    
 
-    
-    <CollectionView ItemsSource="{Binding MovieCollection}" EmptyView="No Movie Added">
-        <CollectionView.ItemTemplate>
-            <DataTemplate x:DataType="model:Movie">
-                <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                    <Label Text="{Binding Name}"/>
-                    <Image Source="{Binding Image,Converter={StaticResource ByteArrayToImageSourceConverter}}"/>
-                    <Label Text="{Binding Description}"/>
-                    <Label Text="{Binding StartDate}"/>
-                    <Label Text="{Binding EndDate}"/>
-                </StackLayout>
-            </DataTemplate>
-        </CollectionView.ItemTemplate>
-    </CollectionView>
+
+    <Grid Margin="10" RowDefinitions="auto,*">
+        <Label FontSize="Large" Text="Customer List" />
+        <Label
+            Grid.Row="1"
+            Margin="0,50"
+            FontSize="Header"
+            HorizontalOptions="Center"
+            IsVisible="{Binding IsVisible}"
+            Text="No Customers Registered Yet" />
+        <CollectionView Grid.Row="1" ItemsSource="{Binding CustomerCollection}" IsVisible="{Binding IsVisibleCollection }">
+            <CollectionView.Header>
+                <Grid ColumnDefinitions="*,*,*,*,*">
+                    <Label Grid.Column="0" Text="First Name" />
+                    <Label Grid.Column="1" Text="Last Name" />
+                    <Label Grid.Column="2" Text="Email Address" />
+                    <Label Grid.Column="3" Text="Birthdate" />
+                    <Label Grid.Column="4" Text="Gender" />
+                </Grid>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:User">
+                    <StackLayout>
+                        <BoxView
+                            Margin="0,-10,0,0"
+                            BackgroundColor="Gray"
+                            HeightRequest="1" />
+                        <Grid ColumnDefinitions="*,*,*,*,*">
+                            <Label Grid.Column="0" Text="{Binding FirstName}" />
+                            <Label Grid.Column="1" Text="{Binding LastName}" />
+                            <Label Grid.Column="2" Text="{Binding EmailAddress}" />
+                            <Label Grid.Column="3" Text="{Binding BirthDate, StringFormat='{0:MMMM'}" />
+                            <Label Grid.Column="4" Text="{Binding Gender}" />
+                        </Grid>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

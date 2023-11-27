@@ -24,20 +24,15 @@ public class CinemaService : BaseService<Cinema>
         return new ObservableCollection<Cinema>(cinemaCollection.Where(c => c.IsDeleted));
     }
 
-    public async Task<Cinema> GetCinemaByIdAsync(int id)
+    public async Task<(bool, ObservableCollection<Cinema>)> AddCinemaAsync(Cinema newCinema)
     {
         var cinemaCollection = await GetCinemasAsync();
-        return cinemaCollection.FirstOrDefault(c => c.Id == id);
-    }
-
-    public async Task<(bool, ObservableCollection<Cinema>)> AddCinemaAsync(Cinema newCinema, ObservableCollection<Cinema> cinemaCollection)
-    {
-        if (newCinema == null || cinemaCollection == null)
+        if (newCinema == null)
         {
+            await Shell.Current.DisplayAlert("Error", "Please enter valid cinema", "OK");
             return (false, cinemaCollection);
         }
 
-        cinemaCollection = await GetCinemasAsync();
         int cinemaCount = cinemaCollection.Count(c => c.Mall.Id == newCinema.Mall.Id);
         newCinema.Id = cinemaCollection.Count + 1;
         newCinema.Name = $"CINEMA-{newCinema.Mall.Name}-{cinemaCount + 1}";
@@ -47,8 +42,9 @@ public class CinemaService : BaseService<Cinema>
         return (isSaved, cinemaCollection);
     }
 
-    public async Task<ObservableCollection<Cinema>> DeleteCinemaAsync(int id, ObservableCollection<Cinema> cinemaCollection)
+    public async Task<ObservableCollection<Cinema>> DeleteCinemaAsync(int id)
     {
+        var cinemaCollection = await GetCinemasAsync();
         var cinemaToBeDeleted = cinemaCollection.FirstOrDefault(c => c.Id == id);
         if (cinemaToBeDeleted == null)
         {
@@ -74,10 +70,12 @@ public class CinemaService : BaseService<Cinema>
         return cinemaCollection;
     }
 
-    public async Task<(bool, ObservableCollection<Cinema>)> UpdateCinemaAsync(Cinema cinema, ObservableCollection<Cinema> cinemaCollection)
+    public async Task<(bool, ObservableCollection<Cinema>)> UpdateCinemaAsync(Cinema cinema)
     {
-        if (cinema == null || cinemaCollection == null)
+        var cinemaCollection = await GetCinemasAsync();
+        if (cinema == null)
         {
+            await Shell.Current.DisplayAlert("Error", "Please enter valid cinema", "OK");
             return (false, cinemaCollection);
         }
 
@@ -100,5 +98,32 @@ public class CinemaService : BaseService<Cinema>
         }
 
         return (true, cinemaCollection);
+    }
+
+    public async Task<ObservableCollection<Cinema>> RestoreDeletedCinemaAsync(int id)
+    {
+        var cinemaCollection = await GetCinemasAsync();
+        var cinemaToBeRestored = cinemaCollection.FirstOrDefault(c => c.Id == id);
+        if (cinemaToBeRestored == null)
+        {
+            await Shell.Current.DisplayAlert("Error", "Cinema not found", "OK");
+            return cinemaCollection;
+        }
+
+        if (!cinemaToBeRestored.IsDeleted)
+        {
+            await Shell.Current.DisplayAlert("Error", "Cinema not deleted", "OK");
+            return cinemaCollection;
+        }
+
+        cinemaToBeRestored.IsDeleted = false;
+        bool isSaved = await SaveToJsonAsync(cinemaCollection);
+        if (!isSaved)
+        {
+            await Shell.Current.DisplayAlert("Error", "Failed to restore cinema", "OK");
+            return cinemaCollection;
+        }
+
+        return cinemaCollection;
     }
 }

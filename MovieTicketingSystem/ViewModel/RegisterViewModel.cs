@@ -7,12 +7,9 @@ namespace MovieTicketingSystem.ViewModel;
 
 public class RegisterViewModel : BaseViewModel
 {
+    private readonly UserService userService;
+
     public User User { get; set; } = new();
-
-    public ICommand RegisterCommand => new Command(RegisterUser);
-    public ICommand ClearCommand => new Command(Clear);
-
-    private readonly IUserService _userService;
     private bool _isMale;
     private bool _isFemale;
     private bool _isAdmin;
@@ -22,7 +19,7 @@ public class RegisterViewModel : BaseViewModel
     public DateTime BirthDate
     {
         get { return _birthdate; }
-        set { _birthdate = value; OnPropertyChanged(); User.BirthDate = value.ToString("MM/dd/yyyy"); }
+        set { _birthdate = value; OnPropertyChanged(); }
     }
 
     public bool IsMale
@@ -50,32 +47,33 @@ public class RegisterViewModel : BaseViewModel
     }
 
 
-    public RegisterViewModel(IUserService userService)
+    public RegisterViewModel(UserService userService)
     {
-        _userService = userService;
+        this.userService = userService;
     }
 
-    private void RegisterUser()
+    public ICommand RegisterCommand => new Command(RegisterUser);
+    public ICommand ClearCommand => new Command(Clear);
+
+
+    private async void RegisterUser()
     {
         bool isValidUser = ValidateUser();
         if (!isValidUser)
         {
-            Shell.Current.DisplayAlert("Register", "Please enter all fields", "OK");
+            await Shell.Current.DisplayAlert("Register", "Please enter all fields", "OK");
             return;
         }
 
-        Shell.Current.DisplayAlert("Register", "User successfully registered", "OK");
+        await Shell.Current.DisplayAlert("Register", "User successfully registered", "OK");
 
-        //adding user to local appdata
-        _userService.AddUser(User);
+        await userService.AddUserAsync(User);
         if (User.IsAdmin)
         {
-            Shell.Current.GoToAsync($"//{nameof(Admin)}");
+            await Shell.Current.GoToAsync($"//{nameof(Admin)}");
+            return;
         }
-        else
-        {
-            Shell.Current.GoToAsync($"//{nameof(Customer)}");
-        }
+        await Shell.Current.GoToAsync($"//{nameof(Customer)}");
 
 
     }
@@ -86,7 +84,7 @@ public class RegisterViewModel : BaseViewModel
         if (IsEmptyOrNull(User.MiddleName, "Middle Name")) return false;
         if (IsEmptyOrNull(User.LastName, "Last Name")) return false;
         if (IsEmptyOrNull(User.EmailAddress, "Email Address")) return false;
-        if (IsEmptyOrNull(User.BirthDate, "Birth Date")) return false;
+        if (BirthDate == DateTime.Today) return false;
         if (IsEmptyOrNull(User.HomeAddress, "Home Address")) return false;
         if (IsEmptyOrNull(User.Password, "Username")) return false;
         if (IsEmptyOrNull(User.Password, "Password")) return false;
@@ -100,7 +98,7 @@ public class RegisterViewModel : BaseViewModel
     private void Clear()
     {
         //set all fields to empty
-        User.FirstName = User.MiddleName = User.LastName = User.EmailAddress = User.BirthDate = User.HomeAddress = User.Username = User.Password = string.Empty;
+        User.FirstName = User.MiddleName = User.LastName = User.EmailAddress = User.HomeAddress = User.Username = User.Password = string.Empty;
         BirthDate = DateTime.Now;
         IsMale = IsFemale = IsAdmin = IsCustomer = false;
     }

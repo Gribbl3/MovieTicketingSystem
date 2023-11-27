@@ -96,7 +96,7 @@ public class EditCinemaViewModel : BaseViewModel
         Cinema.Mall = SelectedMallItem;
         Cinema.SeatCapacity = SeatCapacity;
 
-        var (isSaved, updatedCollection) = await cinemaService.UpdateCinemaAsync(Cinema, CinemaCollection);
+        var (isSaved, updatedCollection) = await cinemaService.UpdateCinemaAsync(Cinema);
         if (isSaved)
         {
             await Shell.Current.DisplayAlert("Success", "Cinema edited successfully", "OK");

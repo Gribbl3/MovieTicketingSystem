@@ -125,6 +125,7 @@
                 <Button Text="Show All" Command="{Binding ShowAllCinemasCommand}"/>
                 <Button Text="Show Active" Command="{Binding ShowActiveCinemasCommand}"/>
                 <Button Text="Show Deleted" Command="{Binding ShowDeletedCinemasCommand}"/>
+                <Button Text="Restore Mall" Command="{Binding RestoreDeletedCinemaCommand}"/>
             </HorizontalStackLayout>
         </HorizontalStackLayout>
     </Grid>

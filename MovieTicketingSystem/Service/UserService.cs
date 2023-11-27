@@ -4,38 +4,37 @@ using System.Text.Json;
 
 namespace MovieTicketingSystem.Service;
 
-public class UserService : IUserService
+public class UserService
 {
-    private readonly string mainDir = FileSystem.Current.AppDataDirectory;
-    private readonly string adminFileName = "MovieAdmin.json";
-    private readonly string customerFileName = "MovieCustomer.json";
-    public Task<bool> AddUser(User user)
+    private readonly string adminFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "MovieAdmin.json");
+    private readonly string customerFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "MovieCustomer.json");
+    public async Task<bool> AddUserAsync(User user)
     {
-        if (user == null) return Task.FromResult(false);
+        if (user == null)
+        {
+            return false;
+        }
 
-        //determines the filepath based on the user type
-        string filePath = Path.Combine(mainDir, user.IsAdmin ? adminFileName : customerFileName);
-
-        //if the file exists, read the json and deserialize it to a collection of users
-        ObservableCollection<User> users = GetUsers(user.IsAdmin).Result;
+        string filePath = user.IsAdmin ? adminFilePath : customerFilePath;
+        ObservableCollection<User> users = await GetUsersAsync(user.IsAdmin);
         users.Add(user);
 
         var json = JsonSerializer.Serialize<ObservableCollection<User>>(users);
-        File.WriteAllText(filePath, json);
-        return Task.FromResult(true);
+        await File.WriteAllTextAsync(filePath, json);
+        return true;
     }
 
-    public Task<ObservableCollection<User>> GetUsers(bool isAdmin)
+    public async Task<ObservableCollection<User>> GetUsersAsync(bool isAdmin)
     {
-        //determines the filepath based on the user type
-        string filePath = Path.Combine(mainDir, isAdmin ? adminFileName : customerFileName);
+        string filePath = isAdmin ? adminFilePath : customerFilePath;
 
-        //if the file doesn't exist, return an empty collection
-        if (!File.Exists(filePath)) return Task.FromResult(new ObservableCollection<User>());
+        if (!File.Exists(filePath))
+        {
+            return new ObservableCollection<User>();
+        }
 
-        //if the file exists, read the json and deserialize it to a collection of users
-        var json = File.ReadAllText(filePath);
+        var json = await File.ReadAllTextAsync(filePath);
         var userCollection = JsonSerializer.Deserialize<ObservableCollection<User>>(json);
-        return Task.FromResult(userCollection);
+        return userCollection;
     }
 }

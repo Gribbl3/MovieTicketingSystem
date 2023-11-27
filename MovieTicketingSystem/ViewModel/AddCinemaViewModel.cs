@@ -51,7 +51,7 @@ public class AddCinemaViewModel : BaseViewModel
     {
         this.mallService = mallService;
         this.cinemaService = cinemaService;
-        PopulateMall();
+        GetActiveMalls();
     }
 
 
@@ -67,7 +67,7 @@ public class AddCinemaViewModel : BaseViewModel
             return;
         }
 
-        var (isSaved, updatedCollection) = await cinemaService.AddCinemaAsync(Cinema, CinemaCollection);
+        var (isSaved, updatedCollection) = await cinemaService.AddCinemaAsync(Cinema);
         CinemaCollection = updatedCollection;
 
         if (isSaved)
@@ -95,6 +95,7 @@ public class AddCinemaViewModel : BaseViewModel
         SeatCapacity = 0;
         SelectedMallItem = null;
     }
+
     private bool ValidateCinema()
     {
         if (SelectedMallItem == null)
@@ -111,10 +112,12 @@ public class AddCinemaViewModel : BaseViewModel
         Cinema.Mall = SelectedMallItem;
         return true;
     }
-    public async void PopulateMall()
+
+    public async void GetActiveMalls()
     {
         MallCollection = await mallService.GetActiveMallsAsync();
     }
+
     private void GenerateCinemaSeats()
     {
         Cinema.Seats.Clear();

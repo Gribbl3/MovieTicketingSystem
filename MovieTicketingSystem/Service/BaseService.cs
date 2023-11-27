@@ -36,4 +36,5 @@ public abstract class BaseService<T>
         var itemCollection = JsonSerializer.Deserialize<ObservableCollection<T>>(json);
         return itemCollection;
     }
+
 }

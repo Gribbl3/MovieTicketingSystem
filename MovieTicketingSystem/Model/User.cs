@@ -13,13 +13,14 @@ public class User : BaseModel
     private string _middleName;
     private string _lastName;
     private string _emailAddress;
-    private string _birthDate;
     private string _homeAddress;
     private string _gender;
     private bool _isAdmin, _isDeleted;
 
     private string _username;
     private string _password;
+
+    private DateTime _birthDate;
 
     public int Id
     {
@@ -46,7 +47,7 @@ public class User : BaseModel
         get { return _emailAddress; }
         set { _emailAddress = value; OnPropertyChanged(); }
     }
-    public string BirthDate
+    public DateTime BirthDate
     {
         get { return _birthDate; }
         set { _birthDate = value; OnPropertyChanged(); }

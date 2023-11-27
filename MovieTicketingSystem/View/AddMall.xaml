@@ -233,6 +233,10 @@
                 Command="{Binding ShowAllMallsCommand}"
                 Text="SHOW ALL MALLS"
                 WidthRequest="200" />
+            <Button
+                Command="{Binding RestoreDeletedMallCommand}"
+                Text="RESTORE MALL"
+                WidthRequest="200" />
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

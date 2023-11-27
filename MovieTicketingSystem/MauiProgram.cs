@@ -65,9 +65,9 @@ public static class MauiProgram
         builder.Services.AddTransient<TicketSummary>();
         builder.Services.AddTransient<GeneratedTicket>();
 
+
         // Registering Services
-        builder.Services.AddSingleton<IUserService, UserService>();
-        //different GUID's cannot be possible if service is singleton
+        builder.Services.AddTransient<UserService>();
         builder.Services.AddTransient<MovieService>();
         builder.Services.AddTransient<MallService>();
         builder.Services.AddTransient<CinemaService>();
