@@ -63,7 +63,9 @@ public class AddCinemaViewModel : BaseViewModel
     {
         bool isValidCinema = ValidateCinema();
         if (!isValidCinema)
+        {
             return;
+        }
 
         var (isSaved, updatedCollection) = await cinemaService.AddCinemaAsync(Cinema, CinemaCollection);
         CinemaCollection = updatedCollection;

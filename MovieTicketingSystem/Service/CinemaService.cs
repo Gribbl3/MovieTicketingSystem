@@ -36,6 +36,8 @@ public class CinemaService : BaseService<Cinema>
         {
             return (false, cinemaCollection);
         }
+
+        cinemaCollection = await GetCinemasAsync();
         int cinemaCount = cinemaCollection.Count(c => c.Mall.Id == newCinema.Mall.Id);
         newCinema.Id = cinemaCollection.Count + 1;
         newCinema.Name = $"CINEMA-{newCinema.Mall.Name}-{cinemaCount + 1}";
@@ -72,5 +74,31 @@ public class CinemaService : BaseService<Cinema>
         return cinemaCollection;
     }
 
+    public async Task<(bool, ObservableCollection<Cinema>)> UpdateCinemaAsync(Cinema cinema, ObservableCollection<Cinema> cinemaCollection)
+    {
+        if (cinema == null || cinemaCollection == null)
+        {
+            return (false, cinemaCollection);
+        }
 
+        var cinemaToBeUpdated = cinemaCollection.FirstOrDefault(c => c.Id == cinema.Id);
+        if (cinemaToBeUpdated == null)
+        {
+            await Shell.Current.DisplayAlert("Error", "Cinema not found", "OK");
+            return (false, cinemaCollection);
+        }
+
+        cinemaToBeUpdated.Name = cinema.Name;
+        cinemaToBeUpdated.SeatCapacity = cinema.SeatCapacity;
+        cinemaToBeUpdated.Mall = cinema.Mall;
+
+        bool isSaved = await SaveToJsonAsync(cinemaCollection);
+        if (!isSaved)
+        {
+            await Shell.Current.DisplayAlert("Error", "Failed to update cinema", "OK");
+            return (false, cinemaCollection);
+        }
+
+        return (true, cinemaCollection);
+    }
 }

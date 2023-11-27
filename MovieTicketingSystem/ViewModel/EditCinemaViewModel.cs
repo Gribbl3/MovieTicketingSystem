@@ -93,26 +93,22 @@ public class EditCinemaViewModel : BaseViewModel
         if (!isValidEdit)
             return;
 
-        for (int index = 0; index < CinemaCollection.Count; index++)
+        Cinema.Mall = SelectedMallItem;
+        Cinema.SeatCapacity = SeatCapacity;
+
+        var (isSaved, updatedCollection) = await cinemaService.UpdateCinemaAsync(Cinema, CinemaCollection);
+        if (isSaved)
         {
-            if (CinemaCollection[index].Id == Cinema.Id)
+            await Shell.Current.DisplayAlert("Success", "Cinema edited successfully", "OK");
+            CinemaCollection = updatedCollection;
+            var navigationParameter = new Dictionary<string, object>
             {
-                CinemaCollection[index] = Cinema;
-                await cinemaService.SaveToJsonAsync(CinemaCollection);
-                await Shell.Current.DisplayAlert("Success", "Cinema edited successfully", "OK");
-
-                var navigationParameter = new Dictionary<string, object>
-                {
-                    { nameof(CinemaCollection), CinemaCollection }
-                };
-
-                await Shell.Current.GoToAsync($"..", navigationParameter);
-                return;
-            }
+                { nameof(CinemaCollection), CinemaCollection }
+            };
+            await Shell.Current.GoToAsync($"..", navigationParameter);
         }
 
         await Shell.Current.DisplayAlert("Error", "Cinema not found", "OK");
-
     }
 
     private void Reset()
