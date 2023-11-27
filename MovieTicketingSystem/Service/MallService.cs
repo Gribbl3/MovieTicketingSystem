@@ -1,53 +1,46 @@
 ﻿using MovieTicketingSystem.Model;
 using System.Collections.ObjectModel;
-using System.Text.Json;
 
 namespace MovieTicketingSystem.Service;
 
-public class MallService : BaseModel
+public class MallService : BaseService<Mall>
 {
-    private readonly string filePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Malls.json");
-
+    public MallService() : base("Malls.json") { }
     public async Task<ObservableCollection<Mall>> GetMallsAsync()
     {
-        //check if file pathexists
-        if (!File.Exists(filePath))
-        {
-            return new ObservableCollection<Mall>();
-        }
-
-        //get json file from file path then deserialize
-        var json = await File.ReadAllTextAsync(filePath);
-        var mallCollection = JsonSerializer.Deserialize<ObservableCollection<Mall>>(json);
-        return mallCollection;
+        return await GetItemsAsync();
     }
+
     public async Task<ObservableCollection<Mall>> GetActiveMallsAsync()
     {
-        var mallCollection = await GetMallsAsync();
-        //filter
-        mallCollection = new ObservableCollection<Mall>(mallCollection.Where(m => !m.IsDeleted));
-        return mallCollection;
+        var mallCollection = await GetItemsAsync();
+        return new ObservableCollection<Mall>(mallCollection.Where(m => !m.IsDeleted));
     }
 
     public async Task<ObservableCollection<Mall>> GetDeletedMallsAsync()
     {
-        var mallCollection = await GetMallsAsync();
-
-        //filter
-        mallCollection = new ObservableCollection<Mall>(mallCollection.Where(m => m.IsDeleted));
-        return mallCollection;
+        var mallCollection = await GetItemsAsync();
+        return new ObservableCollection<Mall>(mallCollection.Where(m => m.IsDeleted));
     }
-    public async Task<bool> AddUpdateMallAsync(ObservableCollection<Mall> MallCollection)
+
+    public async Task<Mall> GetMallByIdAsync(int id)
     {
-        if (MallCollection == null)
+        var mallCollection = await GetMallsAsync();
+        return mallCollection.FirstOrDefault(m => m.Id == id);
+    }
+
+    public async Task<(bool, ObservableCollection<Mall>)> AddMallAsync(Mall newMall, ObservableCollection<Mall> MallCollection)
+    {
+        if (newMall == null || MallCollection == null)
         {
-            return false;
+            return (false, MallCollection);
         }
 
-        var json = JsonSerializer.Serialize<ObservableCollection<Mall>>(MallCollection);
-        await File.WriteAllTextAsync(filePath, json);
+        newMall.Id = MallCollection.Count + 1;
+        MallCollection.Add(newMall);
+        bool isSaved = await SaveToJsonAsync(MallCollection);
 
-        return true;
+        return (isSaved, MallCollection);
     }
 
     public async Task<ObservableCollection<Mall>> DeleteMallAsync(int id, ObservableCollection<Mall> MallCollection)
@@ -66,7 +59,7 @@ public class MallService : BaseModel
         }
 
         mallToBeDeleted.IsDeleted = true;
-        await AddUpdateMallAsync(MallCollection);
+        await SaveToJsonAsync(MallCollection);
         MallCollection.Remove(mallToBeDeleted);
         await Shell.Current.DisplayAlert("Success", "Mall deleted", "OK");
 
@@ -75,11 +68,17 @@ public class MallService : BaseModel
 
     public async Task<ObservableCollection<Mall>> UpdateMallAsync(Mall SelectedMallForEdit, ObservableCollection<Mall> MallCollection)
     {
-        var index = MallCollection.IndexOf((Mall)MallCollection.Select(m => m.Id == SelectedMallForEdit.Id));
+        int index = MallCollection.ToList().FindIndex(m => m.Id == SelectedMallForEdit.Id);
+        if (index == -1)
+        {
+            await Shell.Current.DisplayAlert("Error", "Mall not found", "OK");
+            return MallCollection;
+        }
 
+        MallCollection[index] = SelectedMallForEdit;
+        await SaveToJsonAsync(MallCollection);
+        await Shell.Current.DisplayAlert("Success", "Mall updated", "OK");
         return MallCollection;
     }
-
-
 
 }

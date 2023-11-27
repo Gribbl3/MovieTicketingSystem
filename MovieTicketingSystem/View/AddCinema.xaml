@@ -129,13 +129,8 @@
                                         Text="Reset"
                                         TextColor="#EC4D37"
                                         WidthRequest="100" />
-
                                 </HorizontalStackLayout>
-
-
                             </HorizontalStackLayout>
-
-
                         </HorizontalStackLayout>
                     </HorizontalStackLayout>
                 </VerticalStackLayout>

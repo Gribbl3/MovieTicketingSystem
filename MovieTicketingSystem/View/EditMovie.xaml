@@ -8,7 +8,9 @@
     xmlns:model="clr-namespace:MovieTicketingSystem.Model"
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
     Title="EditMovie"
-    x:DataType="vm:EditMovieViewModel">
+    x:DataType="vm:EditMovieViewModel"
+    BackgroundImageSource="backgroundblur.png">
+    
     <ContentPage.Resources>
         <ResourceDictionary>
             <converter:ByteArrayToImageSourceConverter x:Key="ByteArrayToImageSourceConverter" />

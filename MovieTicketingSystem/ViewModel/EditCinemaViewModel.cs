@@ -1,6 +1,6 @@
 ﻿using MovieTicketingSystem.Model;
+using MovieTicketingSystem.Service;
 using System.Collections.ObjectModel;
-using System.Text.Json;
 using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
@@ -9,11 +9,17 @@ namespace MovieTicketingSystem.ViewModel;
 [QueryProperty(nameof(Cinema), nameof(Cinema))]
 public class EditCinemaViewModel : BaseViewModel
 {
-    private readonly string cinemaFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Cinemas.json");
-    private readonly string mallFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Malls.json");
+    private readonly CinemaService cinemaService;
+    private readonly MallService mallService;
 
-    public ObservableCollection<Mall> MallCollection { get; set; } = new();
+    private ObservableCollection<Mall> _mallCollection = new();
     private ObservableCollection<Cinema> _cinemaCollection = new();
+    private Cinema _cinema = new();
+    private Mall _selectedMallItem;
+    private int _seatCapacity;
+
+    private bool isInitialized = false;
+
     public ObservableCollection<Cinema> CinemaCollection
     {
         get => _cinemaCollection;
@@ -24,18 +30,22 @@ public class EditCinemaViewModel : BaseViewModel
         }
     }
 
-    private Cinema _cinema = new();
     public Cinema Cinema
     {
         get => _cinema;
         set
         {
             _cinema = value;
+            if (!isInitialized)
+            {
+                SeatCapacity = Cinema.SeatCapacity;
+                SelectedMallItem = Cinema.Mall;
+                isInitialized = true;
+            }
             OnPropertyChanged();
         }
     }
 
-    private Mall _selectedMallItem;
     public Mall SelectedMallItem
     {
         get => _selectedMallItem;
@@ -46,7 +56,6 @@ public class EditCinemaViewModel : BaseViewModel
         }
     }
 
-    private int _seatCapacity;
     public int SeatCapacity
     {
         get => _seatCapacity;
@@ -58,17 +67,26 @@ public class EditCinemaViewModel : BaseViewModel
         }
     }
 
-    public EditCinemaViewModel()
+    public ObservableCollection<Mall> MallCollection
     {
-        GetMallsFromJson();
+        get => _mallCollection;
+        set
+        {
+            _mallCollection = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public EditCinemaViewModel(MallService mallService, CinemaService cinemaService)
+    {
+        this.mallService = mallService;
+        this.cinemaService = cinemaService;
+        PopulateMall();
     }
 
     public ICommand SaveEditCommand => new Command(SaveEdit);
     public ICommand ResetCommand => new Command(Reset);
 
-    /// <summary>
-    /// Saves edited cinema to json file
-    /// </summary>
     private async void SaveEdit()
     {
         bool isValidEdit = ValidateEdit();
@@ -80,8 +98,7 @@ public class EditCinemaViewModel : BaseViewModel
             if (CinemaCollection[index].Id == Cinema.Id)
             {
                 CinemaCollection[index] = Cinema;
-                string cinemaJson = JsonSerializer.Serialize(CinemaCollection);
-                await File.WriteAllTextAsync(cinemaFilePath, cinemaJson);
+                await cinemaService.SaveToJsonAsync(CinemaCollection);
                 await Shell.Current.DisplayAlert("Success", "Cinema edited successfully", "OK");
 
                 var navigationParameter = new Dictionary<string, object>
@@ -101,6 +118,8 @@ public class EditCinemaViewModel : BaseViewModel
     private void Reset()
     {
         Cinema = new Cinema();
+        SelectedMallItem = null;
+        SeatCapacity = 0;
     }
 
     private bool ValidateEdit()
@@ -108,11 +127,9 @@ public class EditCinemaViewModel : BaseViewModel
         return (Cinema.Mall == null);
     }
 
-    private async void GetMallsFromJson()
+    private async void PopulateMall()
     {
-        string json = await File.ReadAllTextAsync(mallFilePath);
-        MallCollection = JsonSerializer.Deserialize<ObservableCollection<Mall>>(json);
-        OnPropertyChanged(nameof(MallCollection));
+        MallCollection = await mallService.GetActiveMallsAsync();
     }
 
     private void GenerateCinemaSeats()
@@ -132,8 +149,9 @@ public class EditCinemaViewModel : BaseViewModel
                         Row = (char)('A' + row - 1),
                         Column = column,
                         CinemaId = Cinema.Id,
-                        IsAvailableSeat = true
-                    });
+                        IsAvailableSeat = true,
+                        IsReserved = false
+                    }); ;
                 }
                 else
                 {

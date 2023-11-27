@@ -65,29 +65,25 @@ public class AddCinemaViewModel : BaseViewModel
         if (!isValidCinema)
             return;
 
-        GenerateId();
-        GenerateName();
-        CinemaCollection.Add(Cinema);
-        await cinemaService.AddUpdateCinemaAsync(CinemaCollection);
+        var (isSaved, updatedCollection) = await cinemaService.AddCinemaAsync(Cinema, CinemaCollection);
+        CinemaCollection = updatedCollection;
 
-        await Shell.Current.DisplayAlert("Success", "Cinema added successfully", "OK");
-
-        //Go back to cinema page
-        var navigationParameter = new Dictionary<string, object>
+        if (isSaved)
         {
-            { nameof(CinemaCollection), CinemaCollection }
-        };
-        await Shell.Current.GoToAsync($"..", navigationParameter);
+            await Shell.Current.DisplayAlert("Success", "Cinema added successfully", "OK");
+            //Go back to cinema page
+            var navigationParameter = new Dictionary<string, object>
+            {
+                { nameof(CinemaCollection), CinemaCollection }
+            };
+            await Shell.Current.GoToAsync($"..", navigationParameter);
+        }
+        else
+        {
+            await Shell.Current.DisplayAlert("Error", "Failed to add cinema", "OK");
+        }
     }
-    private void GenerateId()
-    {
-        Cinema.Id = CinemaCollection.Count + 1;
-    }
-    private void GenerateName()
-    {
-        const string NAME = "CINEMA";
-        Cinema.Name = $"{NAME}-{SelectedMallItem.Name}-{Cinema.Id}";
-    }
+
     private void ResetCinema()
     {
         Cinema = new Cinema();
@@ -115,7 +111,7 @@ public class AddCinemaViewModel : BaseViewModel
     }
     public async void PopulateMall()
     {
-        MallCollection = await mallService.GetMallsAsync();
+        MallCollection = await mallService.GetActiveMallsAsync();
     }
     private void GenerateCinemaSeats()
     {

@@ -24,16 +24,29 @@ public class CinemaPageViewModel : BaseViewModel
     public CinemaPageViewModel(CinemaService cinemaService)
     {
         this.cinemaService = cinemaService;
-        PopulateCinemas();
+        ShowAllCinemas();
     }
 
     public ICommand AddCinemaCommand => new Command(GoToAddCinemaPage);
     public ICommand DeleteCinemaCommand => new Command(DeleteCinema);
     public ICommand EditCinemaCommand => new Command(GoToEditCinemaPage);
+    public ICommand ShowActiveCinemasCommand => new Command(ShowActiveCinemas);
+    public ICommand ShowDeletedCinemasCommand => new Command(ShowDeletedCinemas);
+    public ICommand ShowAllCinemasCommand => new Command(ShowAllCinemas);
 
-    private async void PopulateCinemas()
+    private async void ShowAllCinemas()
     {
         CinemaCollection = await cinemaService.GetCinemasAsync();
+    }
+
+    private async void ShowActiveCinemas()
+    {
+        CinemaCollection = await cinemaService.GetActiveCinemasAsync();
+    }
+
+    private async void ShowDeletedCinemas()
+    {
+        CinemaCollection = await cinemaService.GetDeletedCinemasAsync();
     }
 
     private async void GoToAddCinemaPage()
@@ -51,17 +64,7 @@ public class CinemaPageViewModel : BaseViewModel
         if (string.IsNullOrEmpty(result) || !int.TryParse(result, out int id))
             return;
 
-        foreach (Cinema cinema in CinemaCollection)
-        {
-            if (cinema.Id == id)
-            {
-                cinema.IsDeleted = !cinema.IsDeleted;
-                await cinemaService.AddUpdateCinemaAsync(CinemaCollection);
-                CinemaCollection.Remove(cinema);
-                await Shell.Current.DisplayAlert("Success", "Cinema deleted successfully", "OK");
-                return;
-            }
-        }
+        CinemaCollection = await cinemaService.DeleteCinemaAsync(id, CinemaCollection);
 
         await Shell.Current.DisplayAlert("Error", "Cinema not found", "OK");
     }

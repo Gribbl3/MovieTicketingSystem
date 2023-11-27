@@ -13,7 +13,6 @@ public class AddMallViewModel : BaseViewModel
     private Mall _mall = new(), _selectedMallForEdit;
 
 
-
     public ObservableCollection<Mall> MallCollection
     {
         get => _mallCollection;
@@ -44,6 +43,16 @@ public class AddMallViewModel : BaseViewModel
         }
     }
 
+    public bool IsEditing
+    {
+        get => isEditing;
+        set
+        {
+            isEditing = value;
+            OnPropertyChanged();
+        }
+    }
+
     public AddMallViewModel(MallService mallService)
     {
         this.mallService = mallService;
@@ -65,12 +74,11 @@ public class AddMallViewModel : BaseViewModel
         if (!isValidMall)
             return;
 
-        GenerateId();
-        MallCollection.Add(Mall);
-        bool isAdded = await mallService.AddUpdateMallAsync(MallCollection);
+        var (isAdded, updatedMallCollection) = await mallService.AddMallAsync(Mall, MallCollection);
 
         if (isAdded)
         {
+            MallCollection = updatedMallCollection;
             await Shell.Current.DisplayAlert("Success", "Mall added successfully", "OK");
             ResetMall(Mall);
         }
@@ -98,7 +106,8 @@ public class AddMallViewModel : BaseViewModel
         {
             Id = mall.Id,
             Name = mall.Name,
-            Address = mall.Address
+            Address = mall.Address,
+            IsDeleted = mall.IsDeleted
         };
 
         //add flag if user is editing
@@ -122,27 +131,7 @@ public class AddMallViewModel : BaseViewModel
         }
 
         MallCollection = await mallService.UpdateMallAsync(SelectedMallForEdit, MallCollection);
-        ////loop through mall collection and replace selected mall with edited mall
-        //for (int index = 0; index < MallCollection.Count; index++)
-        //{
-        //    if (MallCollection[index].Id == SelectedMallForEdit.Id)
-        //    {
-        //        MallCollection[index] = SelectedMallForEdit;
-        //        await mallService.AddUpdateMallAsync(MallCollection);
-        //        await Shell.Current.DisplayAlert("Success", "Mall edited successfully", "OK");
-
-        //        //reset flag and selected mall
-        //        isEditing = false;
-        //        ResetMall(SelectedMallForEdit);
-        //        return;
-        //    }
-        //}
-        await Shell.Current.DisplayAlert("Error", "Mall not found", "OK");
-    }
-
-    private void GenerateId()
-    {
-        Mall.Id = MallCollection.Count + 1;
+        ResetMall(SelectedMallForEdit);
     }
 
     private void ResetMall(Mall mall)

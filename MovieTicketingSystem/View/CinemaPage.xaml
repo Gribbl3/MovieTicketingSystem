@@ -41,12 +41,13 @@
                 </CollectionView.EmptyView>
                 <CollectionView.Header>
                     <Frame BackgroundColor="#101820">
-                        <Grid ColumnDefinitions="*,*,*,*,*">
+                        <Grid ColumnDefinitions="*,*,*,*,*,*">
                             <Label Text="ID" />
                             <Label Grid.Column="1" Text="NAME" />
                             <Label Grid.Column="2" Text="Mall Name" />
                             <Label Grid.Column="3" Text="Address" />
                             <Label Grid.Column="4" Text="Seat Capacity" />
+                            <Label Grid.Column="5" Text="Deleted" />
                         </Grid>
                     </Frame>
                 </CollectionView.Header>
@@ -57,12 +58,13 @@
                             BorderColor="#101820"
                             CornerRadius="5">
                             <VerticalStackLayout>
-                                <Grid ColumnDefinitions="*,*,*,*,*">
+                                <Grid ColumnDefinitions="*,*,*,*,*,*">
                                     <Label Text="{Binding Id}" />
                                     <Label Grid.Column="1" Text="{Binding Name}" />
                                     <Label Grid.Column="2" Text="{Binding Mall.Name}" />
                                     <Label Grid.Column="3" Text="{Binding Mall.Address}" />
                                     <Label Grid.Column="4" Text="{Binding SeatCapacity}" />
+                                    <Label Grid.Column="5" Text="{Binding IsDeleted}" />
                                 </Grid>
                             </VerticalStackLayout>
                         </Frame>
@@ -118,6 +120,11 @@
                     FontAttributes="Bold"
                     Text="Delete"
                     TextColor="#EC4D37" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Spacing="10">
+                <Button Text="Show All" Command="{Binding ShowAllCinemasCommand}"/>
+                <Button Text="Show Active" Command="{Binding ShowActiveCinemasCommand}"/>
+                <Button Text="Show Deleted" Command="{Binding ShowDeletedCinemasCommand}"/>
             </HorizontalStackLayout>
         </HorizontalStackLayout>
     </Grid>
