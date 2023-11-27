@@ -153,8 +153,12 @@
                 Text="Show Deleted Movies"
                 WidthRequest="180" />
             <Button
-                Command="{Binding HideDeletedMoviesCommand}"
-                Text="Hide Deleted Movies"
+                Command="{Binding ShowActiveMoviesCommand}"
+                Text="Show Active Movies"
+                WidthRequest="180" />
+            <Button
+                Command="{Binding ShowAllMoviesCommand}"
+                Text="Show Active Movies"
                 WidthRequest="180" />
 
         </HorizontalStackLayout>

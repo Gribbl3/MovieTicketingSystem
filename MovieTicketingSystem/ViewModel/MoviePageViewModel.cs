@@ -39,26 +39,29 @@ public class MoviePageViewModel : BaseViewModel
     public MoviePageViewModel(MovieService movieService)
     {
         this.movieService = movieService;
-        PopulateMovies();
     }
 
 
     public ICommand AddMovieCommand => new Command(AddMovieAsync);
     public ICommand DeleteMovieCommand => new Command(DeleteMovie);
     public ICommand EditMovieCommand => new Command(EditMovie);
+    public ICommand ShowActiveMoviesCommand => new Command(ShowActiveMovies);
     public ICommand ShowDeletedMoviesCommand => new Command(ShowDeletedMovies);
-    public ICommand HideDeletedMoviesCommand => new Command(PopulateMovies);
+    public ICommand ShowAllMoviesCommand => new Command(ShowAllCinemas);
 
-    private async void ShowDeletedMovies()
+    private async void ShowAllCinemas()
     {
         MovieCollection = await movieService.GetMoviesAsync();
     }
 
-    private async void PopulateMovies()
+    private async void ShowActiveMovies()
     {
-        MovieCollection = await movieService.GetMoviesAsync();
-        //filter out deleted movies
-        MovieCollection = new ObservableCollection<Movie>(MovieCollection.Where(movie => !movie.IsDeleted));
+        MovieCollection = await movieService.GetActiveMoviesAsync();
+    }
+
+    private async void ShowDeletedMovies()
+    {
+        MovieCollection = await movieService.GetDeletedMoviesAsync();
     }
 
     private async void AddMovieAsync()
@@ -83,7 +86,6 @@ public class MoviePageViewModel : BaseViewModel
             if (movie.Id == id)
             {
                 movie.IsDeleted = !movie.IsDeleted;
-                await movieService.AddUpdateMovieAsync(MovieCollection);
                 MovieCollection.Remove(movie);
 
                 await Shell.Current.DisplayAlert("Success", "Movie deleted successfully", "OK");

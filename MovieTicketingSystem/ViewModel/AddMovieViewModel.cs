@@ -150,17 +150,11 @@ public class AddMovieViewModel : BaseViewModel
         GenerateId();
 
         MovieCollection.Add(Movie);
-        await SaveMovieToJson();
+        await movieService.SaveToJsonAsync(MovieCollection);
 
     }
 
-    private async Task SaveMovieToJson()
-    {
-        await movieService.AddUpdateMovieAsync(MovieCollection);
 
-        await Shell.Current.DisplayAlert("Add Movie", "Movie added successfully", "OK");
-        NavigateBack();
-    }
 
     private async void NavigateBack()
     {
