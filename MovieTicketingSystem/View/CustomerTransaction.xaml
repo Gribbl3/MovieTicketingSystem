@@ -1,12 +1,42 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="MovieTicketingSystem.View.CustomerTransaction"
-             Title="CustomerTransaction">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+<ContentPage
+    x:Class="MovieTicketingSystem.View.CustomerTransaction"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:MovieTicketingSystem.Model"
+    xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
+    Title="CustomerTransaction"
+    x:DataType="vm:CustomerTransactionViewModel">
+    <Grid>
+        <Image Aspect="AspectFill" Source="backgroundblur.png" />
+        <CollectionView Margin="20" ItemsSource="{Binding Transactions}">
+            <CollectionView.Header>
+                <Grid ColumnDefinitions="*,*,*,*">
+                    <Label Text="Id" />
+                    <Label Grid.Column="1" Text="Ticket ID" />
+                    <Label Grid.Column="2" Text="Paid" />
+                    <Label Grid.Column="3" Text="Date Paid" />
+                </Grid>
+            </CollectionView.Header>
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Transaction">
+                    <Grid ColumnDefinitions="*,*,*,*">
+                        <Label Text="{Binding Id}" />
+                        <Label Grid.Column="1" Text="{Binding TicketId}" />
+                        <Label Grid.Column="2" Text="{Binding IsPaid}" />
+                        <Label Grid.Column="3" Text="{Binding DatePaid, StringFormat='{0:MMMM d, yyyy'}">
+                            <Label.Triggers>
+                                <DataTrigger
+                                    Binding="{Binding IsPaid}"
+                                    TargetType="Label"
+                                    Value="false">
+                                    <Setter Property="Text" Value="Not Paid" />
+                                </DataTrigger>
+                            </Label.Triggers>
+                        </Label>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </Grid>
 </ContentPage>

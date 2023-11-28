@@ -77,6 +77,8 @@ public static class MauiProgram
         builder.Services.AddTransient<MallService>();
         builder.Services.AddTransient<CinemaService>();
         builder.Services.AddTransient<TicketService>();
+        builder.Services.AddTransient<TransactionService>();
+        builder.Services.AddSingleton<SharedDataService>();
 
         //converter
         builder.Services.AddSingleton<ByteArrayToImageSourceConverter>();

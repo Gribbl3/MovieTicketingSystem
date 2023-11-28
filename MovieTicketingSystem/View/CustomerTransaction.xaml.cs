@@ -4,7 +4,7 @@ namespace MovieTicketingSystem.View;
 
 public partial class CustomerTransaction : ContentPage
 {
-    public CustomerTransaction(CustomerViewModel viewModel)
+    public CustomerTransaction(CustomerTransactionViewModel viewModel)
     {
         InitializeComponent();
         BindingContext = viewModel;

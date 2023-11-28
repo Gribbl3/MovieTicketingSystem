@@ -119,7 +119,8 @@ public class TicketSummaryViewModel : BaseViewModel
             {nameof(Ticket), Ticket }
         };
 
-        await Shell.Current.GoToAsync($"{nameof(GeneratedTicket)}", navigationParameter);
+        //await Shell.Current.GoToAsync($"{nameof(GeneratedTicket)}", navigationParameter);
+        await Shell.Current.GoToAsync($"//{nameof(Login)}");
     }
 
     private void CloneSeatsToMovieCinema()

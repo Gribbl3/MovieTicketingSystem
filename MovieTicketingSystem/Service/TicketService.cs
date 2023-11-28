@@ -46,7 +46,7 @@ public class TicketService : BaseService<Ticket>
             Movie = null
         };
 
-        await new TransactionService(ticket.UserId).AddTransactionAsync(ticket);
+        await new TransactionService().AddTransactionAsync(ticket, user.Id);
         ticketCollection.Add(ticket);
         await SaveToJsonAsync(ticketCollection);
         return true;

@@ -1,7 +1,7 @@
 ﻿using MovieTicketingSystem.Model;
+using MovieTicketingSystem.Service;
 using MovieTicketingSystem.View;
 using System.Collections.ObjectModel;
-using System.Text.Json;
 using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
@@ -9,12 +9,14 @@ namespace MovieTicketingSystem.ViewModel;
 [QueryProperty(nameof(User), nameof(User))]
 public class CustomerViewModel : BaseViewModel
 {
-    private readonly string movieFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Movies.json");
+    private readonly MovieService movieService;
+    private readonly SharedDataService sharedDataService;
 
 
-    public DateTime DateNow { get; set; } = DateTime.Now;
+    //private readonly string movieFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Movies.json");
 
     private ObservableCollection<Movie> _movieCollection;
+    private User _user;
     public ObservableCollection<Movie> MovieCollection
     {
         get => _movieCollection;
@@ -25,24 +27,30 @@ public class CustomerViewModel : BaseViewModel
         }
     }
 
-    private User _user;
     public User User
     {
         get => _user;
         set
         {
             _user = value;
+            sharedDataService.UserId = User.Id;
             OnPropertyChanged();
         }
     }
 
 
-    public CustomerViewModel()
+    public CustomerViewModel(MovieService movieService, SharedDataService sharedDataService)
     {
-        MovieCollection = JsonSerializer.Deserialize<ObservableCollection<Movie>>(File.ReadAllText(movieFilePath));
+        this.movieService = movieService;
+        this.sharedDataService = sharedDataService;
     }
 
     public ICommand GoToTicketPageCommand => new Command<Movie>(GoToTicketPage);
+
+    private async void GetMoviesAsync()
+    {
+        MovieCollection = await movieService.GetActiveMoviesAsync();
+    }
 
     private async void GoToTicketPage(Movie Movie)
     {

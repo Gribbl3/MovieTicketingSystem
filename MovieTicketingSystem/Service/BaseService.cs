@@ -5,7 +5,7 @@ namespace MovieTicketingSystem.Service;
 
 public abstract class BaseService<T>
 {
-    private readonly string filePath;
+    private string filePath;
 
     public BaseService(string filePath)
     {
@@ -37,4 +37,8 @@ public abstract class BaseService<T>
         return itemCollection;
     }
 
+    protected void UpdateFilePath(string newFilePath)
+    {
+        filePath = Path.Combine(FileSystem.Current.AppDataDirectory, newFilePath);
+    }
 }

@@ -5,19 +5,20 @@ namespace MovieTicketingSystem.Service;
 
 public class TransactionService : BaseService<Model.Transaction>
 {
-    private int userId;
-    public TransactionService(int userId) : base($"Customer{userId}.json")
+    public TransactionService() : base($"Customer.json")
     {
-        this.userId = userId;
     }
 
-    public async Task<ObservableCollection<Model.Transaction>> GetTransactionsByUserIdAsync()
+    public async Task<ObservableCollection<Model.Transaction>> GetTransactionsByUserIdAsync(int userId)
     {
+        UpdateFilePath($"Customer{userId}.json");
         return await GetItemsAsync();
     }
 
-    public async Task<bool> AddTransactionAsync(Ticket ticket)
+    public async Task<bool> AddTransactionAsync(Ticket ticket, int userId)
     {
+        UpdateFilePath($"Customer{userId}.json");
+
         var transactionCollection = await GetItemsAsync();
         var transaction = new Model.Transaction
         {
