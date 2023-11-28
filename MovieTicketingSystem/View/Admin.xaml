@@ -24,23 +24,20 @@
     </ContentPage.Resources>
 
 
-    <Grid Margin="10" RowDefinitions="auto,*">
+    <Grid Margin="10" RowDefinitions="auto,*" RowSpacing="5">
         <Label FontSize="Large" Text="Customer List" />
-        <Label
-            Grid.Row="1"
-            Margin="0,50"
-            FontSize="Header"
-            HorizontalOptions="Center"
-            IsVisible="{Binding IsVisible}"
-            Text="No Customers Registered Yet" />
-        <CollectionView Grid.Row="1" ItemsSource="{Binding CustomerCollection}" IsVisible="{Binding IsVisibleCollection }">
+        <CollectionView Grid.Row="1" ItemsSource="{Binding CustomerCollection}">
+            <CollectionView.EmptyView>
+                <Label Text="No customers found" FontSize="Header" HorizontalOptions="Center" Margin="0,50" WidthRequest="500" HeightRequest="500"/>
+            </CollectionView.EmptyView>
             <CollectionView.Header>
-                <Grid ColumnDefinitions="*,*,*,*,*">
-                    <Label Grid.Column="0" Text="First Name" />
-                    <Label Grid.Column="1" Text="Last Name" />
-                    <Label Grid.Column="2" Text="Email Address" />
-                    <Label Grid.Column="3" Text="Birthdate" />
-                    <Label Grid.Column="4" Text="Gender" />
+                <Grid ColumnDefinitions="*,*,*,*,*,*">
+                    <Label Grid.Column="0" Text="Username" />
+                    <Label Grid.Column="1" Text="First Name" />
+                    <Label Grid.Column="2" Text="Last Name" />
+                    <Label Grid.Column="3" Text="Email Address" />
+                    <Label Grid.Column="4" Text="Birthdate" />
+                    <Label Grid.Column="5" Text="Gender" />
                 </Grid>
             </CollectionView.Header>
             <CollectionView.ItemTemplate>
@@ -50,12 +47,13 @@
                             Margin="0,-10,0,0"
                             BackgroundColor="Gray"
                             HeightRequest="1" />
-                        <Grid ColumnDefinitions="*,*,*,*,*">
-                            <Label Grid.Column="0" Text="{Binding FirstName}" />
-                            <Label Grid.Column="1" Text="{Binding LastName}" />
-                            <Label Grid.Column="2" Text="{Binding EmailAddress}" />
-                            <Label Grid.Column="3" Text="{Binding BirthDate, StringFormat='{0:MMMM'}" />
-                            <Label Grid.Column="4" Text="{Binding Gender}" />
+                        <Grid ColumnDefinitions="*,*,*,*,*,*">
+                            <Label Grid.Column="0" Text="{Binding Username}" />
+                            <Label Grid.Column="1" Text="{Binding FirstName}" />
+                            <Label Grid.Column="2" Text="{Binding LastName}" />
+                            <Label Grid.Column="3" Text="{Binding EmailAddress}" />
+                            <Label Grid.Column="4" Text="{Binding BirthDate, StringFormat='{0:MMMM d, yyyy}'}" />
+                            <Label Grid.Column="5" Text="{Binding Gender}" />
                         </Grid>
                     </StackLayout>
                 </DataTemplate>

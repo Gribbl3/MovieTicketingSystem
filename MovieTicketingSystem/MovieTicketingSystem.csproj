@@ -99,6 +99,9 @@
 	  <MauiXaml Update="View\Customer.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="View\CustomerTransaction.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="View\EditCinema.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

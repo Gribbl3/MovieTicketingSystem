@@ -32,8 +32,9 @@ public class MovieService : BaseService<Movie>
         return movieCollection.FirstOrDefault(m => m.Id == id);
     }
 
-    public async Task<(bool, ObservableCollection<Movie>)> AddMovieAsync(Movie newMovie, ObservableCollection<Movie> movieCollection)
+    public async Task<(bool, ObservableCollection<Movie>)> AddMovieAsync(Movie newMovie)
     {
+        var movieCollection = await GetMoviesAsync();
         if (newMovie == null || movieCollection == null)
         {
             return (false, movieCollection);
@@ -46,8 +47,9 @@ public class MovieService : BaseService<Movie>
         return (isSaved, movieCollection);
     }
 
-    public async Task<ObservableCollection<Movie>> DeleteMovieAsync(int id, ObservableCollection<Movie> movieCollection)
+    public async Task<ObservableCollection<Movie>> DeleteMovieAsync(int id)
     {
+        var movieCollection = await GetMoviesAsync();
         var movieToBeDeleted = movieCollection.FirstOrDefault(m => m.Id == id);
         if (movieToBeDeleted == null)
         {

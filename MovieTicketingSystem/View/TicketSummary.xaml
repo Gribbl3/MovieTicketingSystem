@@ -8,10 +8,83 @@
     xmlns:sys="clr-namespace:System;assembly=netstandard"
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
     Title="TicketSummary"
-    x:DataType="vm:TicketSummaryViewModel"
-    BackgroundImageSource="{Binding Movie.Image, Converter={converters:ByteArrayToImageSourceConverter}}">
-
-    <Grid Margin="10" RowDefinitions="0.50*,*,*,AUTO">
+    x:DataType="vm:TicketSummaryViewModel">
+    
+    
+    
+    <Grid
+        Margin="10"
+        MaximumHeightRequest="1020"
+        RowDefinitions="0.50*"
+        WidthRequest="600">
+        <Image Source="{Binding Movie.Image, Converter={converters:ByteArrayToImageSourceConverter}}" Aspect="AspectFit"/>
+        <Grid RowDefinitions="*,*,*,auto">
+            
+            <VerticalStackLayout Grid.Row="1" Spacing="15">
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Title"
+                    Text="MOVIE DETAILS:"
+                    TextColor="red" />
+                <Label
+                    FontSize="Medium"
+                    HorizontalOptions="Center"
+                    Text="{Binding MovieGenreDisplay}"
+                    TextColor="LightGray"
+                    TextTransform="Uppercase" />
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Header"
+                    HorizontalOptions="Center"
+                    Text="{Binding Movie.Name}"
+                    TextColor="white"
+                    TextTransform="Uppercase" />
+            </VerticalStackLayout>
+            <VerticalStackLayout
+                Grid.Row="2"
+                HorizontalOptions="Start"
+                Spacing="5">
+                <Label Text="CINEMA DETAILS" TextColor="red" />
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <!--<Span Text="{Binding Cinema.Mall.Name, StringFormat='{0} - '}" />-->
+                            <Span Text="{Binding Cinema.Name}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="SEAT: " />
+                            <Span Text="{Binding SelectedSeatsDisplay}" TextTransform="Uppercase" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label Text="{Binding Source={x:Static sys:DateTime.Today}, StringFormat='{0:MMMM d, yyyy}'}" />
+            </VerticalStackLayout>
+            <HorizontalStackLayout
+                Grid.Row="3"
+                HorizontalOptions="Center"
+                Spacing="20">
+                <Label VerticalTextAlignment="Center">
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding SelectedSeats.Count, StringFormat='{0} seat/s x '}" />
+                            <Span Text="{Binding Movie.Price, StringFormat=' ₱{0:F2}'}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Button
+                    Background="red"
+                    BorderColor="White"
+                    Command="{Binding BuyTicketCommand}"
+                    FontAttributes="Bold"
+                    HeightRequest="50"
+                    Text="BUY TICKET"
+                    TextColor="white"
+                    WidthRequest="150" />
+            </HorizontalStackLayout>
         <Label
             FontAttributes="Bold"
             FontSize="Header"
@@ -19,70 +92,6 @@
             Text="TICKET SUMMARY"
             TextColor="white"
             VerticalOptions="Start" />
-        <VerticalStackLayout Grid.Row="1" Spacing="15">
-            <Label
-                FontAttributes="Bold"
-                FontSize="Title"
-                Text="MOVIE DETAILS:"
-                TextColor="red" />
-            <Label
-                FontSize="Medium"
-                HorizontalOptions="Center"
-                Text="{Binding MovieGenreDisplay}"
-                TextColor="LightGray"
-                TextTransform="Uppercase" />
-            <Label
-                FontAttributes="Bold"
-                FontSize="Header"
-                HorizontalOptions="Center"
-                Text="{Binding Movie.Name}"
-                TextColor="white"
-                TextTransform="Uppercase" />
-        </VerticalStackLayout>
-        <VerticalStackLayout
-            Grid.Row="2"
-            HorizontalOptions="Start"
-            Spacing="5">
-            <Label Text="CINEMA DETAILS" TextColor="red" />
-            <Label>
-                <Label.FormattedText>
-                    <FormattedString>
-                        <!--<Span Text="{Binding Cinema.Mall.Name, StringFormat='{0} - '}" />-->
-                        <Span Text="{Binding Cinema.Name}" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
-            <Label>
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="SEAT: " />
-                        <Span Text="{Binding SelectedSeatsDisplay}" TextTransform="Uppercase" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
-            <Label Text="{Binding Source={x:Static sys:DateTime.Today}, StringFormat='{0:MMMM d, yyyy}'}" />
-        </VerticalStackLayout>
-        <HorizontalStackLayout
-            Grid.Row="3"
-            HorizontalOptions="Center"
-            Spacing="20">
-            <Label VerticalTextAlignment="Center">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="{Binding SelectedSeats.Count, StringFormat='{0} seat/s x '}" />
-                        <Span Text="{Binding Movie.Price, StringFormat=' ₱{0:F2}'}" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
-            <Button
-                Background="red"
-                BorderColor="White"
-                Command="{Binding BuyTicketCommand}"
-                FontAttributes="Bold"
-                HeightRequest="50"
-                Text="BUY TICKET"
-                TextColor="white"
-                WidthRequest="150" />
-        </HorizontalStackLayout>
+        </Grid>
     </Grid>
 </ContentPage>

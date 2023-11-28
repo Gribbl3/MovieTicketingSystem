@@ -23,6 +23,9 @@ public partial class AppShell : Shell
         Routing.RegisterRoute(nameof(SeatReservationPopup), typeof(SeatReservationPopup));
         Routing.RegisterRoute(nameof(TicketSummary), typeof(TicketSummary));
         Routing.RegisterRoute(nameof(Logout), typeof(Logout));
+        Routing.RegisterRoute(nameof(GeneratedTicket), typeof(GeneratedTicket));
+        Routing.RegisterRoute(nameof(CustomerTransaction), typeof(CustomerTransaction));
+
 
         InitializeComponent();
     }

@@ -37,4 +37,11 @@ public class UserService
         var userCollection = JsonSerializer.Deserialize<ObservableCollection<User>>(json);
         return userCollection;
     }
+
+    public async Task<User> GetUserByIdAsync(int id, bool isAdmin)
+    {
+        string filePath = isAdmin ? adminFilePath : customerFilePath;
+        var users = await GetUsersAsync(isAdmin);
+        return users.FirstOrDefault(user => user.Id == id);
+    }
 }

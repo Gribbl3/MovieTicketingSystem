@@ -10,8 +10,6 @@ public class AdminViewModel : BaseViewModel
 
 
     private ObservableCollection<User> _customerCollection = new();
-    private bool _isVisible = false;
-    private bool _isVisibleCollection = false;
 
     public ObservableCollection<User> CustomerCollection
     {
@@ -23,25 +21,6 @@ public class AdminViewModel : BaseViewModel
         }
     }
 
-    public bool IsVisible
-    {
-        get => _isVisible;
-        set
-        {
-            _isVisible = value;
-            OnPropertyChanged();
-        }
-    }
-
-    public bool IsVisibleCollection
-    {
-        get => _isVisibleCollection;
-        set
-        {
-            _isVisibleCollection = value;
-            OnPropertyChanged();
-        }
-    }
 
     public AdminViewModel(UserService userService)
     {
@@ -52,7 +31,5 @@ public class AdminViewModel : BaseViewModel
     private async void ShowAllUser()
     {
         CustomerCollection = await userService.GetUsersAsync(false);
-        IsVisible = CustomerCollection.Count <= 0;
-        IsVisibleCollection = !IsVisible;
     }
 }

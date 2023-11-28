@@ -32,6 +32,9 @@
         <Tab Title="Home" IsVisible="True">
             <ShellContent ContentTemplate="{DataTemplate local:Customer}" Route="Customer" />
         </Tab>
+        <Tab Title="Booking">
+            <ShellContent ContentTemplate="{DataTemplate local:CustomerTransaction}" Route="CustomerTransaction" />
+        </Tab>
         <Tab IsVisible="False">
             <ShellContent ContentTemplate="{DataTemplate local:TicketPage}" Route="TicketPage" />
         </Tab>

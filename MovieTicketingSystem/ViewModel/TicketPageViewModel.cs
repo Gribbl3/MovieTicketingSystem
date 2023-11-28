@@ -13,7 +13,6 @@ public class TicketPageViewModel : BaseViewModel
     //private readonly string mallFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Malls.json");
     //private readonly string cinemaFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Cinemas.json");
     private readonly MallService mallService;
-    private readonly CinemaService cinemaService;
     private readonly IPopupService popupService;
 
 
@@ -32,6 +31,7 @@ public class TicketPageViewModel : BaseViewModel
         set
         {
             _movie = value;
+            PopulateMalls();
             OnPropertyChanged();
         }
     }
@@ -91,38 +91,32 @@ public class TicketPageViewModel : BaseViewModel
     }
 
 
-    public TicketPageViewModel(IPopupService popupService, MallService mallService, CinemaService cinemaService)
+    public TicketPageViewModel(IPopupService popupService, MallService mallService)
     {
         this.mallService = mallService;
-        this.cinemaService = cinemaService;
         this.popupService = popupService;
-        PopulateMallCollection();
     }
 
-    public ICommand GetCinemaCommand => new Command<Mall>(GetCinemaCollectionFromJson);
+    public ICommand GetCinemaCommand => new Command<Mall>(GetCinemaCollection);
     public ICommand GetSeatCommand => new Command<Cinema>(GetSeatCollectionFromCinema);
     public ICommand DisplayPopupCommand => new Command(DisplayPopup);
 
-    private async void PopulateMallCollection()
+    private void PopulateMalls()
     {
-        MallCollection = await mallService.GetMallsAsync();
-        //filter deleted malls
-        MallCollection = new ObservableCollection<Mall>(MallCollection.Where(m => !m.IsDeleted));
+        MallCollection = new ObservableCollection<Mall>(
+        Movie.Cinemas
+            .Select(c => c.Mall)             // Select the Mall property from each Cinema
+            .GroupBy(mall => mall.Id)        // Group by Mall Id
+            .Select(group => group.First())  // Take the first mall in each group
+            .ToList()                         // Convert the result to a list
+        );
     }
-
-    private async void GetCinemaCollectionFromJson(Mall Mall)
+    private void GetCinemaCollection(Mall Mall)
     {
-        CinemaCollection = await cinemaService.GetCinemasAsync();
-        //filter cinema collection by mall
-        //CinemaCollection = new ObservableCollection<Cinema>(CinemaCollection.Where(c => c.Mall.Id == Mall.Id));
+        CinemaCollection = new ObservableCollection<Cinema>(Movie.Cinemas.Where(cinema => cinema.Mall.Id == Mall.Id));
 
-        List<int> movieCinemaIds = Movie.Cinemas.Select(c => c.Id).ToList();
-        CinemaCollection = new ObservableCollection<Cinema>(CinemaCollection.Where(c => movieCinemaIds.Contains(c.Id)));
-
-        //enable cinema selection
         IsCinemaSelectionEnabled = true;
 
-        //set cinema selected to false to hide seat selection button
         IsCinemaSelected = false;
     }
 

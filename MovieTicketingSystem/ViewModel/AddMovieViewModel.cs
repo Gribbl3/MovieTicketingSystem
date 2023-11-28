@@ -150,7 +150,11 @@ public class AddMovieViewModel : BaseViewModel
         GenerateId();
 
         MovieCollection.Add(Movie);
-        await movieService.SaveToJsonAsync(MovieCollection);
+        bool isSaved = await movieService.SaveToJsonAsync(MovieCollection);
+        if (isSaved)
+        {
+            NavigateBack();
+        }
 
     }
 

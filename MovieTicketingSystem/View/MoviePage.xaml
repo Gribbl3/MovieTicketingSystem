@@ -160,6 +160,10 @@
                 Command="{Binding ShowAllMoviesCommand}"
                 Text="Show Active Movies"
                 WidthRequest="180" />
+            <Button
+                Command="{Binding ShowAllMoviesCommand}"
+                Text="Restore Movie"
+                WidthRequest="180" />
 
         </HorizontalStackLayout>
     </Grid>

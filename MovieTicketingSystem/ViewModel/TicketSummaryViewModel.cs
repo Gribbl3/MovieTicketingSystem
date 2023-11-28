@@ -1,7 +1,7 @@
 ﻿using MovieTicketingSystem.Model;
+using MovieTicketingSystem.Service;
 using MovieTicketingSystem.View;
 using System.Collections.ObjectModel;
-using System.Text.Json;
 using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
@@ -11,7 +11,8 @@ namespace MovieTicketingSystem.ViewModel;
 [QueryProperty(nameof(Movie), nameof(Movie))]
 public class TicketSummaryViewModel : BaseViewModel
 {
-    private readonly string ticketFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Ticket.json");
+    private readonly TicketService ticketService;
+
 
     private ObservableCollection<Ticket> _ticket;
     public ObservableCollection<Ticket> Ticket
@@ -93,36 +94,24 @@ public class TicketSummaryViewModel : BaseViewModel
         }
     }
 
+    public TicketSummaryViewModel(TicketService ticketService)
+    {
+        this.ticketService = ticketService;
+    }
 
     public ICommand BuyTicketCommand => new Command(BuyTicket);
 
     private async void BuyTicket()
     {
+        await ticketService.AddTicketAsync(User, Movie);
         var navigationParameter = new Dictionary<string, object>
         {
             {nameof(Ticket), Ticket }
         };
 
-        SaveToJson();
         await Shell.Current.GoToAsync($"//{nameof(GeneratedTicket)}", navigationParameter);
     }
 
-    private async void SaveToJson()
-    {
-        foreach (var seat in SelectedSeats)
-        {
-            Ticket.Add(new Ticket
-            {
-                User = User,
-                Movie = Movie,
-                DateBooked = DateTime.Now,
-                IsCancelled = false
-            }); ;
-        }
-        var json = JsonSerializer.Serialize(Ticket);
-        await File.WriteAllTextAsync(ticketFilePath, json);
-        await Shell.Current.DisplayAlert("Ticket", "Ticket has been saved", "OK");
-    }
 
     private void GetSelectedSeats()
     {

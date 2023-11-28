@@ -64,6 +64,8 @@ public static class MauiProgram
         builder.Services.AddTransient<TicketPage>();
         builder.Services.AddTransient<TicketSummary>();
         builder.Services.AddTransient<GeneratedTicket>();
+        builder.Services.AddTransient<Logout>();
+        builder.Services.AddTransient<CustomerTransaction>();
 
 
         // Registering Services
@@ -71,6 +73,7 @@ public static class MauiProgram
         builder.Services.AddTransient<MovieService>();
         builder.Services.AddTransient<MallService>();
         builder.Services.AddTransient<CinemaService>();
+        builder.Services.AddTransient<TicketService>();
 
         //converter
         builder.Services.AddSingleton<ByteArrayToImageSourceConverter>();
