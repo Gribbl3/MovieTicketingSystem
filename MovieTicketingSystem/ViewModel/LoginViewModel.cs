@@ -61,9 +61,9 @@ public class LoginViewModel : BaseViewModel
         }
 
         var navigationParameter = new Dictionary<string, object>
-            {
-                { nameof(User), User }
-            };
+        {
+            { nameof(User), User }
+        };
 
         if (User.IsAdmin)
         {
@@ -74,6 +74,7 @@ public class LoginViewModel : BaseViewModel
             await Shell.Current.GoToAsync($"//{nameof(Customer)}", navigationParameter);
         }
 
+        //Reset fields
         User = new User();
     }
 

@@ -39,7 +39,7 @@
         </Style>
     </toolkit:Popup.Resources>
 
-    <Grid RowDefinitions="*,0.20*">
+    <Grid RowDefinitions="*,.20*">
         <CollectionView
             x:Name="collectionView"
             Margin="10"
@@ -52,7 +52,6 @@
                     Span="8"
                     VerticalItemSpacing="2" />
             </CollectionView.ItemsLayout>
-
             <CollectionView.Footer>
                 <Grid ColumnDefinitions="*,*,*,*,*,*,*,*">
                     <Label Style="{StaticResource labelFooterStyle}" Text="1" />
@@ -118,7 +117,6 @@
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
-
 
         <Grid
             Grid.Row="1"

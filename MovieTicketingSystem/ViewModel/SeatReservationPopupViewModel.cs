@@ -7,19 +7,11 @@ namespace MovieTicketingSystem.ViewModel;
 
 public class SeatReservationPopupViewModel : BaseViewModel
 {
-
-    private Cinema _cinema;
-    public Cinema Cinema
-    {
-        get => _cinema;
-        set
-        {
-            _cinema = value;
-            OnPropertyChanged();
-        }
-    }
-
     private User _user;
+    private Cinema _cinema;
+
+    public Movie Movie { get; set; }
+
     public User User
     {
         get => _user;
@@ -30,14 +22,21 @@ public class SeatReservationPopupViewModel : BaseViewModel
         }
     }
 
-    public Movie Movie { get; set; }
-
-
-    public void PerformUpdates(Cinema Cinema, User User, Movie Movie)
+    public Cinema Cinema
     {
-        this.Cinema = Cinema;
+        get => _cinema;
+        set
+        {
+            _cinema = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public void PerformUpdates(User User, Movie Movie, Cinema Cinema)
+    {
         this.User = User;
         this.Movie = Movie;
+        this.Cinema = Cinema;
     }
 
     public ICommand UpdateSeatAvailabilityCommand => new Command<Seat>(UpdateSeatAvailability);
@@ -60,11 +59,13 @@ public class SeatReservationPopupViewModel : BaseViewModel
 
     public async void GoToTicketSummary()
     {
+        //update selected movie cinema seats
+
         var navigationParameter = new Dictionary<string, object>
         {
-            { nameof(Cinema), Cinema },
             { nameof(User), User },
             { nameof(Movie), Movie },
+            { nameof(Cinema), Cinema }
         };
         await Shell.Current.GoToAsync($"{nameof(TicketSummary)}", navigationParameter);
     }

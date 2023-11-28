@@ -1,6 +1,5 @@
 ﻿using CommunityToolkit.Maui.Core;
 using MovieTicketingSystem.Model;
-using MovieTicketingSystem.Service;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -12,13 +11,12 @@ public class TicketPageViewModel : BaseViewModel
 {
     //private readonly string mallFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Malls.json");
     //private readonly string cinemaFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Cinemas.json");
-    private readonly MallService mallService;
     private readonly IPopupService popupService;
 
 
     private Movie _movie;
-    private Cinema _cinema;
     private User _user;
+    private Cinema _cinema;
     private ObservableCollection<Mall> _mallCollection = new();
     private ObservableCollection<Cinema> _cinemaCollection = new();
     private bool _isCinemaSelectionEnabled = false;
@@ -35,15 +33,7 @@ public class TicketPageViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
-    public Cinema Cinema
-    {
-        get => _cinema;
-        set
-        {
-            _cinema = value;
-            OnPropertyChanged();
-        }
-    }
+
     public User User
     {
         get => _user;
@@ -53,6 +43,17 @@ public class TicketPageViewModel : BaseViewModel
             OnPropertyChanged();
         }
     }
+
+    public Cinema Cinema
+    {
+        get => _cinema;
+        set
+        {
+            _cinema = value;
+            OnPropertyChanged();
+        }
+    }
+
     public ObservableCollection<Mall> MallCollection
     {
         get => _mallCollection;
@@ -91,9 +92,8 @@ public class TicketPageViewModel : BaseViewModel
     }
 
 
-    public TicketPageViewModel(IPopupService popupService, MallService mallService)
+    public TicketPageViewModel(IPopupService popupService)
     {
-        this.mallService = mallService;
         this.popupService = popupService;
     }
 
@@ -129,7 +129,7 @@ public class TicketPageViewModel : BaseViewModel
 
     private void DisplayPopup()
     {
-        this.popupService.ShowPopup<SeatReservationPopupViewModel>(onPresenting: viewModel => viewModel.PerformUpdates(Cinema, User, Movie));
+        this.popupService.ShowPopup<SeatReservationPopupViewModel>(onPresenting: viewModel => viewModel.PerformUpdates(User, Movie, Cinema));
     }
 }
 

@@ -19,33 +19,34 @@ public class TicketService : BaseService<Ticket>
             {
                 ticket.Movie = await new MovieService().GetMovieByIdAsync(ticket.MovieId);
                 ticket.User = await new UserService().GetUserByIdAsync(ticket.UserId, false);
+                ticket.Seat = ticket.Movie.Cinemas.SelectMany(c => c.Seats).FirstOrDefault(s => s.Id == ticket.SeatId);
             }
         }
-
         return tickets;
     }
 
-    private async Task<int> GetNextIdAsync()
-    {
-        var tickets = await GetAllTicketsAsync();
-        return tickets.Count + 1;
-    }
-
-    public async Task<bool> AddTicketAsync(User user, Movie movie)
+    public async Task<bool> AddTicketAsync(User user, Movie movie, Seat seat)
     {
         if (user == null || movie == null)
         {
             return false;
         }
 
-        var ticketCollection = await GetAllTicketsAsync();
+        var ticketCollection = await GetItemsAsync();
         var ticket = new Ticket
         {
             Id = ticketCollection.Count + 1,
             UserId = user.Id,
             MovieId = movie.Id,
+            SeatId = seat.Id,
             DateBooked = DateTime.Now,
+            IsCancelled = false,
+            User = null,
+            Seat = null,
+            Movie = null
         };
+
+        await new TransactionService(ticket.UserId).AddTransactionAsync(ticket);
         ticketCollection.Add(ticket);
         await SaveToJsonAsync(ticketCollection);
         return true;

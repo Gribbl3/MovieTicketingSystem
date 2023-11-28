@@ -9,7 +9,6 @@ public class Seat : BaseModel
     private bool _isAvailableSeat;
     private bool _isReserved;
 
-
     public char Row
     {
         get => _row;
@@ -47,6 +46,11 @@ public class Seat : BaseModel
             _isReserved = value;
             OnPropertyChanged();
         }
+    }
+
+    public string SeatNumber
+    {
+        get => $"{Row}-{Column}";
     }
 
 }

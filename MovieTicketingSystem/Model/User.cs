@@ -6,7 +6,6 @@ public class User : BaseModel
     //create private fields for id, firstname, middlename, lastname,email address, birthdate,home address,gender, username, password
     //create public properties for id, firstname, middlename, lastname,email address, birthdate,home address, username, password
 
-
     //Parent class for Customer and Admin
     private int _id;
     private string _firstName;

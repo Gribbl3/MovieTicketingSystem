@@ -46,6 +46,9 @@ public static class MauiProgram
         //viewmodel for ticket page
         builder.Services.AddTransient<TicketPageViewModel>();
         builder.Services.AddTransient<TicketSummaryViewModel>();
+        builder.Services.AddTransient<GeneratedTicketViewModel>();
+        builder.Services.AddTransient<CustomerTransactionViewModel>();
+
 
 
         // Registering View

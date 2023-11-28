@@ -24,6 +24,12 @@ public class CinemaService : BaseService<Cinema>
         return new ObservableCollection<Cinema>(cinemaCollection.Where(c => c.IsDeleted));
     }
 
+    public async Task<Cinema> GetCinemaByIdAsync(int id)
+    {
+        var cinemaCollection = await GetItemsAsync();
+        return cinemaCollection.FirstOrDefault(c => c.Id == id);
+    }
+
     public async Task<(bool, ObservableCollection<Cinema>)> AddCinemaAsync(Cinema newCinema)
     {
         var cinemaCollection = await GetCinemasAsync();

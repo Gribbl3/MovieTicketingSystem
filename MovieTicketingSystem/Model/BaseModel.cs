@@ -3,7 +3,6 @@ using System.Runtime.CompilerServices;
 
 namespace MovieTicketingSystem.Model
 {
-
     public class BaseModel : INotifyPropertyChanged
     {
         #region Implementation of INotifyPropertyChanged

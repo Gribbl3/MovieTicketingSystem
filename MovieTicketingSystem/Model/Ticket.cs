@@ -5,6 +5,7 @@ public class Ticket : BaseModel
     public int Id { get; set; }
     public int MovieId { get; set; }
     public int UserId { get; set; }
+    public int SeatId { get; set; }
     private bool _isCancelled;
     private DateTime _dateBooked;
 
@@ -46,6 +47,17 @@ public class Ticket : BaseModel
         set
         {
             _user = value;
+            OnPropertyChanged();
+        }
+    }
+
+    private Seat _seat;
+    public Seat Seat
+    {
+        get => _seat;
+        set
+        {
+            _seat = value;
             OnPropertyChanged();
         }
     }

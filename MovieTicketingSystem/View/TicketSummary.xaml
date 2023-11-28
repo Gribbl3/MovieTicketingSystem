@@ -9,17 +9,15 @@
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
     Title="TicketSummary"
     x:DataType="vm:TicketSummaryViewModel">
-    
-    
-    
+
+
+
     <Grid
         Margin="10"
         MaximumHeightRequest="1020"
-        RowDefinitions="0.50*"
         WidthRequest="600">
-        <Image Source="{Binding Movie.Image, Converter={converters:ByteArrayToImageSourceConverter}}" Aspect="AspectFit"/>
+        <Image Aspect="AspectFit" Source="{Binding Movie.Image, Converter={converters:ByteArrayToImageSourceConverter}}" />
         <Grid RowDefinitions="*,*,*,auto">
-            
             <VerticalStackLayout Grid.Row="1" Spacing="15">
                 <Label
                     FontAttributes="Bold"
@@ -85,13 +83,13 @@
                     TextColor="white"
                     WidthRequest="150" />
             </HorizontalStackLayout>
-        <Label
-            FontAttributes="Bold"
-            FontSize="Header"
-            HorizontalOptions="Center"
-            Text="TICKET SUMMARY"
-            TextColor="white"
-            VerticalOptions="Start" />
+            <Label
+                FontAttributes="Bold"
+                FontSize="Header"
+                HorizontalOptions="Center"
+                Text="TICKET SUMMARY"
+                TextColor="white"
+                VerticalOptions="Start" />
         </Grid>
     </Grid>
 </ContentPage>

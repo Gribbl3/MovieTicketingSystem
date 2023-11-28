@@ -4,6 +4,9 @@ public class Transaction : BaseModel
 {
     public int Id { get; set; }
     private int _ticketId;
+    private bool _isPaid;
+    private DateTime _datePaid;
+
     public int TicketId
     {
         get => _ticketId;
@@ -13,8 +16,6 @@ public class Transaction : BaseModel
             OnPropertyChanged();
         }
     }
-
-    private bool _isPaid;
     public bool IsPaid
     {
         get => _isPaid;
@@ -24,8 +25,6 @@ public class Transaction : BaseModel
             OnPropertyChanged();
         }
     }
-
-    private DateTime _datePaid;
     public DateTime DatePaid
     {
         get => _datePaid;

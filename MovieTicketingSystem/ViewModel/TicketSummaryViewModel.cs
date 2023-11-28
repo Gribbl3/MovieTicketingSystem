@@ -12,9 +12,17 @@ namespace MovieTicketingSystem.ViewModel;
 public class TicketSummaryViewModel : BaseViewModel
 {
     private readonly TicketService ticketService;
+    private readonly CinemaService cinemaService;
 
 
     private ObservableCollection<Ticket> _ticket;
+    private Cinema _cinema;
+    private User _user;
+    private Movie _movie;
+    private string selectedSeatsDisplay;
+    private string _movieGenreDisplay;
+    private ObservableCollection<Seat> selectedSeats = new();
+
     public ObservableCollection<Ticket> Ticket
     {
         get => _ticket;
@@ -25,7 +33,6 @@ public class TicketSummaryViewModel : BaseViewModel
         }
     }
 
-    private Cinema _cinema;
     public Cinema Cinema
     {
         get => _cinema;
@@ -38,7 +45,6 @@ public class TicketSummaryViewModel : BaseViewModel
         }
     }
 
-    private User _user;
     public User User
     {
         get => _user;
@@ -49,7 +55,6 @@ public class TicketSummaryViewModel : BaseViewModel
         }
     }
 
-    private Movie _movie;
     public Movie Movie
     {
         get => _movie;
@@ -61,7 +66,6 @@ public class TicketSummaryViewModel : BaseViewModel
         }
     }
 
-    private string _movieGenreDisplay;
     public string MovieGenreDisplay
     {
         get => _movieGenreDisplay;
@@ -72,7 +76,6 @@ public class TicketSummaryViewModel : BaseViewModel
         }
     }
 
-    private ObservableCollection<Seat> selectedSeats = new();
     public ObservableCollection<Seat> SelectedSeats
     {
         get => selectedSeats;
@@ -83,7 +86,6 @@ public class TicketSummaryViewModel : BaseViewModel
         }
     }
 
-    private string selectedSeatsDisplay;
     public string SelectedSeatsDisplay
     {
         get => selectedSeatsDisplay;
@@ -94,24 +96,50 @@ public class TicketSummaryViewModel : BaseViewModel
         }
     }
 
-    public TicketSummaryViewModel(TicketService ticketService)
+    public TicketSummaryViewModel(TicketService ticketService, CinemaService cinemaService)
     {
         this.ticketService = ticketService;
+        this.cinemaService = cinemaService;
     }
 
     public ICommand BuyTicketCommand => new Command(BuyTicket);
 
     private async void BuyTicket()
     {
-        await ticketService.AddTicketAsync(User, Movie);
+        UpdateSeatsToReserve();
+        CloneSeatsToMovieCinema();
+
+        foreach (var seat in selectedSeats)
+        {
+            await ticketService.AddTicketAsync(User, Movie, seat);
+        }
+
         var navigationParameter = new Dictionary<string, object>
         {
             {nameof(Ticket), Ticket }
         };
 
-        await Shell.Current.GoToAsync($"//{nameof(GeneratedTicket)}", navigationParameter);
+        await Shell.Current.GoToAsync($"{nameof(GeneratedTicket)}", navigationParameter);
     }
 
+    private void CloneSeatsToMovieCinema()
+    {
+        int index = GetCinemaIndex();
+        Movie.Cinemas[index] = Cinema;
+    }
+
+    private void UpdateSeatsToReserve()
+    {
+        foreach (var selectedSeat in selectedSeats)
+        {
+            Cinema.Seats.FirstOrDefault(s => s.Id == selectedSeat.Id).IsReserved = true;
+        }
+    }
+
+    private int GetCinemaIndex()
+    {
+        return Movie.Cinemas.ToList().FindIndex(c => c.Id == Cinema.Id);
+    }
 
     private void GetSelectedSeats()
     {
@@ -127,12 +155,12 @@ public class TicketSummaryViewModel : BaseViewModel
 
     private void SetSelectedSeatsDisplay()
     {
-        SelectedSeatsDisplay = string.Join(", ", SelectedSeats.Select(seat => $"{seat.Row}-{seat.Column}"));
+        SelectedSeatsDisplay = string.Join(", ", SelectedSeats.Select(seat => seat.SeatNumber));
     }
 
     private void SetMovieGenreDisplay()
     {
-        MovieGenreDisplay = string.Join("| ", Movie.SelectedGenre);
+        MovieGenreDisplay = string.Join(" | ", Movie.SelectedGenre);
     }
 
 
