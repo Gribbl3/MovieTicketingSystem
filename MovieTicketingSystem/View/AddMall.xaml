@@ -23,9 +23,9 @@
             </Style>
             <Style TargetType="Button">
                 <Setter Property="WidthRequest" Value="150" />
-                <Setter Property="Background" Value="#EC4D37" />
-                <Setter Property="TextColor" Value="white" />
-                <Setter Property="CornerRadius" Value="20" />
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="BorderColor" Value="Transparent"/>
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -221,22 +221,71 @@
             Margin="10"
             HorizontalOptions="Center"
             Spacing="10">
-            <Button
-                Command="{Binding ShowActiveMallsCommand}"
-                Text="Show ACTIVE MALLS"
-                WidthRequest="200" />
-            <Button
-                Command="{Binding ShowDeletedMallsCommand}"
-                Text="SHOW DELETED MALLS"
-                WidthRequest="200" />
-            <Button
-                Command="{Binding ShowAllMallsCommand}"
-                Text="SHOW ALL MALLS"
-                WidthRequest="200" />
-            <Button
+
+            <HorizontalStackLayout Spacing="-45">
+
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding ShowActiveMallsCommand}"
+                    Scale="0.8"
+                    Source="iconshowgreen.png"/>
+
+                <Button
+                    Command="{Binding ShowActiveMallsCommand}"
+                    Text="Show Active Malls"
+                    WidthRequest="200" 
+                    FontAttributes="Bold"
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    TextColor="#43A047"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="-30">
+
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding ShowDeletedMallsCommand}"
+                    Scale="0.9"
+                    Source="deleteicon.png"/>
+
+                <Button
+                    Command="{Binding ShowDeletedMallsCommand}"
+                    Text="Show Deleted Malls"
+                    WidthRequest="200" 
+                    TextColor="#EC4D37"/>
+            </HorizontalStackLayout>
+
+
+            <HorizontalStackLayout Spacing="-55">
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding ShowAllMallsCommand}"
+                    Scale="0.8"
+                    Source="iconshowgreen.png"/>
+                
+                <Button
+                    Command="{Binding ShowAllMallsCommand}"
+                    Text="Show All Malls"
+                    WidthRequest="200" 
+                    TextColor="#43A047"/>
+            </HorizontalStackLayout>
+
+
+            <HorizontalStackLayout Spacing="-60">
+                <ImageButton
+                BackgroundColor="Transparent"
                 Command="{Binding RestoreDeletedMallCommand}"
-                Text="RESTORE MALL"
-                WidthRequest="200" />
+                Scale="0.4"
+                Source="iconresetwhite.png"/>
+                
+                <Button
+                    Command="{Binding RestoreDeletedMallCommand}"
+                    Text="Restore Malls"
+                    WidthRequest="200" 
+                    TextColor="#E5E3E8"/>
+            </HorizontalStackLayout>
+            
+            
         </HorizontalStackLayout>
     </VerticalStackLayout>
 </ContentPage>

@@ -50,7 +50,7 @@
                     VerticalOptions="Start" />
                 <VerticalStackLayout>
                     <Frame
-                        Margin="150,0,0,0"
+                        Margin="0,0,0,0"
                         BackgroundColor="#101820"
                         BorderColor="#101820"
                         HeightRequest="200"
@@ -124,7 +124,7 @@
                         </HorizontalStackLayout>
                     </Frame>
                 </VerticalStackLayout>
-                <VerticalStackLayout Margin="150,10,0,0">
+                <VerticalStackLayout Margin="0,10,0,0">
                     <Frame
                         Grid.ColumnSpan="2"
                         BackgroundColor="#101820"
@@ -168,23 +168,22 @@
                                 </CollectionView.EmptyView>
                                 <CollectionView.ItemTemplate>
                                     <DataTemplate x:DataType="model:Showtime">
-                                        <VerticalStackLayout>
-
+                                        <VerticalStackLayout>   
                                             <Grid ColumnDefinitions="*,auto" RowDefinitions="*,*">
-                                                <Label Margin="-500,0,0,0" Text="Start time" />
+                                                <Label Margin="-100,0,0,0" Text="Start time" />
                                                 <TimePicker
                                                     Grid.Column="1"
-                                                    Margin="-500,0,0,0"
+                                                    Margin="-100,0,0,0"
                                                     Format="T"
                                                     Time="{Binding StartTime}" />
                                                 <Label
                                                     Grid.Row="1"
-                                                    Margin="-500,0,0,0"
+                                                    Margin="-100,0,0,0"
                                                     Text="End time" />
                                                 <TimePicker
                                                     Grid.Row="1"
                                                     Grid.Column="1"
-                                                    Margin="-500,0,0,0"
+                                                    Margin="-100,0,0,0"
                                                     Format="T"
                                                     Time="{Binding EndTime}" />
                                             </Grid>
@@ -231,21 +230,20 @@
                     </VerticalStackLayout>
 
                 </VerticalStackLayout>
-                <VerticalStackLayout>
+                <VerticalStackLayout Margin="0,10,0,0">
                     <Frame
-                        Margin="10,55,0,0"
                         BackgroundColor="#101820"
                         BorderColor="#101820"
                         HeightRequest="550"
-                        WidthRequest="600">
+                        WidthRequest="1000">
                         <VerticalStackLayout>
                             <HorizontalStackLayout HorizontalOptions="Center">
                                 <Label Margin="80,0,50,10" Text="Genre" />
                                 <Label Margin="50,0,0,0" Text="Subtitles" />
                             </HorizontalStackLayout>
-                            <HorizontalStackLayout Margin="70,10,0,0">
+                            <HorizontalStackLayout Margin="80,10,0,0" HorizontalOptions="Center" >
                                 <VerticalStackLayout>
-                                    <CollectionView HorizontalOptions="Center" ItemsSource="{Binding AvailableGenre}">
+                                    <CollectionView ItemsSource="{Binding AvailableGenre}">
                                         <CollectionView.ItemTemplate>
                                             <DataTemplate x:DataType="model:Genre">
                                                 <Grid ColumnDefinitions="*,*">
@@ -279,7 +277,7 @@
                             BackgroundColor="#101820"
                             BorderColor="#101820"
                             HeightRequest="550"
-                            WidthRequest="600">
+                            WidthRequest="1000">
                             <StackLayout>
                                 <!--  Change UI  -->
                                 <Image Aspect="AspectFit" Source="{Binding Image}" />

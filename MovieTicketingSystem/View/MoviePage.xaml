@@ -148,22 +148,73 @@
                     TextColor="#EC4D37" />
             </HorizontalStackLayout>
 
-            <Button
-                Command="{Binding ShowDeletedMoviesCommand}"
-                Text="Show Deleted Movies"
-                WidthRequest="180" />
-            <Button
-                Command="{Binding ShowActiveMoviesCommand}"
-                Text="Show Active Movies"
-                WidthRequest="180" />
-            <Button
-                Command="{Binding ShowAllMoviesCommand}"
-                Text="Show Active Movies"
-                WidthRequest="180" />
-            <Button
-                Command="{Binding ShowAllMoviesCommand}"
-                Text="Restore Movie"
-                WidthRequest="180" />
+            <HorizontalStackLayout Spacing="-28">
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding ShowDeletedMoviesCommand}"
+                    Scale="0.8"
+                    Source="iconshowred.png" />
+                <Button
+                     Command="{Binding ShowDeletedMoviesCommand}"
+                     Text="Show Deleted Movies"
+                     FontAttributes="Bold"
+                     WidthRequest="180" 
+                     BackgroundColor="Transparent"
+                     BorderColor="Transparent"
+                     TextColor="#EC4D37"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="-35">
+                <ImageButton
+                    BackgroundColor="Transparent"
+                     Command="{Binding ShowActiveMoviesCommand}"
+                    Scale="0.8"
+                    Source="iconshowgreen.png" />
+                
+                <Button
+                    Command="{Binding ShowActiveMoviesCommand}"
+                    Text="Show Active Movies"
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    TextColor="#43A047"
+                    WidthRequest="180" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="-26">
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding ShowAllMoviesCommand}"
+                    Scale="0.8"
+                    Source="iconshowgreen.png"/>
+                <Button
+                    Command="{Binding ShowAllMoviesCommand}"
+                    Text="Show All Active Movies"
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    TextColor="#43A047"
+                    WidthRequest="180" />
+            </HorizontalStackLayout>
+
+
+            <HorizontalStackLayout Spacing="-50">
+
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding ShowAllMoviesCommand}"
+                    Scale="0.4"
+                    Source="iconresetwhite.png"/>
+
+                <Button
+                    Command="{Binding ShowAllMoviesCommand}"
+                    Text="Restore Movie"
+                    WidthRequest="180" 
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    TextColor="#E5E3E8"/>
+
+            </HorizontalStackLayout>
+            
+           
 
         </HorizontalStackLayout>
     </Grid>
