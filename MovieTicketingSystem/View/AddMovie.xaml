@@ -137,14 +137,14 @@
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="10,10,10,10"/>
                                 </Border.StrokeShape>
-                                <DatePicker Date="{Binding Movie.StartTime}" />
+                                <TimePicker Time="{Binding Movie.StartTime}" />
                             </Border>
                             <Label Text="End Time" WidthRequest="100" Margin="100,0,0,0"/>
                             <Border MaximumHeightRequest="50">
                                 <Border.StrokeShape>
                                     <RoundRectangle CornerRadius="10,10,10,10" />
                                 </Border.StrokeShape>
-                                <DatePicker Date="{Binding Movie.EndTime}" />
+                                <TimePicker Time="{Binding Movie.EndTime}" />
                             </Border>
                         </HorizontalStackLayout>
                     </Frame>

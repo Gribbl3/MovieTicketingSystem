@@ -13,7 +13,6 @@ public class AddMovieViewModel : BaseViewModel
 
 
     private const string _defaultImage = "add_photo.png";
-    private int _numsOfDate;
     private Movie _movie = new();
     private ObservableCollection<Movie> _movieCollection = new();
     private ObservableCollection<Cinema> _cinemaCollection = new();
@@ -24,15 +23,7 @@ public class AddMovieViewModel : BaseViewModel
     public ObservableCollection<Subtitle> AvailableSubtitle { get; set; }
 
 
-    public int NumsOfDate
-    {
-        get => _numsOfDate;
-        set
-        {
-            _numsOfDate = value;
-            OnPropertyChanged();
-        }
-    }
+
 
     public Movie Movie
     {

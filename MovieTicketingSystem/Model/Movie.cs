@@ -13,8 +13,8 @@ public class Movie : BaseModel
     private decimal _price;
     private Byte[] _image;
     //showtime start and end date
-    private DateTime _yearReleased, _startDate, _endDate, _startTime, _endTime;
-    private TimeSpan _duration;
+    private DateTime _yearReleased, _startDate, _endDate;
+    private TimeSpan _startTime, _endTime;
     public ObservableCollection<string> SelectedGenre { get; set; } = new();
     public ObservableCollection<string> SelectedSubtitle { get; set; } = new();
     private ObservableCollection<Cinema> _cinemas = new();
@@ -85,7 +85,7 @@ public class Movie : BaseModel
         }
     }
 
-    public DateTime StartTime
+    public TimeSpan StartTime
     {
         get => _startTime;
         set
@@ -95,7 +95,7 @@ public class Movie : BaseModel
         }
     }
 
-    public DateTime EndTime
+    public TimeSpan EndTime
     {
         get => _endTime;
         set
@@ -148,12 +148,7 @@ public class Movie : BaseModel
 
     public TimeSpan Duration
     {
-        get => _duration;
-        set
-        {
-            _duration = value;
-            OnPropertyChanged();
-        }
+        get => EndTime - StartTime;
     }
 
     public ObservableCollection<Cinema> Cinemas

@@ -15,5 +15,7 @@ public partial class CustomerTransaction : ContentPage
     {
         base.OnAppearing();
         viewModel.GetUserTransactionAsync();
+        viewModel.IsVisible = !(viewModel.Transactions.Count == 0);
+        viewModel.IsTextVisible = !viewModel.IsVisible;
     }
 }

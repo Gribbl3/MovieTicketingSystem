@@ -111,4 +111,10 @@ public class MovieService : BaseService<Movie>
         var movieCollection = await GetActiveMoviesAsync();
         return new ObservableCollection<Movie>(movieCollection.Where(m => m.IsUpcoming));
     }
+
+    public async Task<ObservableCollection<Movie>> SearchMoviesAsync(string query)
+    {
+        var movieCollection = await GetActiveMoviesAsync();
+        return new ObservableCollection<Movie>(movieCollection.Where(m => m.Name.ToLower().Contains(query.ToLower())));
+    }
 }

@@ -14,6 +14,9 @@ public class CustomerTransactionViewModel : BaseViewModel
     private User _user;
     private ObservableCollection<Transaction> _transactions;
     private int userId;
+    private bool _isVisible;
+    private bool _isTextVisible;
+
 
     public User User
     {
@@ -35,6 +38,26 @@ public class CustomerTransactionViewModel : BaseViewModel
         }
     }
 
+    public bool IsVisible
+    {
+        get => _isVisible;
+        set
+        {
+            _isVisible = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsTextVisible
+    {
+        get => _isTextVisible;
+        set
+        {
+            _isTextVisible = value;
+            OnPropertyChanged();
+        }
+    }
+
     public CustomerTransactionViewModel(TransactionService transactionService, SharedDataService sharedDataService)
     {
         this.transactionService = transactionService;
@@ -46,7 +69,5 @@ public class CustomerTransactionViewModel : BaseViewModel
     {
         Transactions = await transactionService.GetTransactionsByUserIdAsync(userId);
     }
-
-
 
 }

@@ -8,35 +8,55 @@
     Title="CustomerTransaction"
     x:DataType="vm:CustomerTransactionViewModel">
     <Grid>
-        <Image Aspect="AspectFill" Source="backgroundblur.png" />
-        <CollectionView Margin="20" ItemsSource="{Binding Transactions}">
-            <CollectionView.Header>
-                <Grid ColumnDefinitions="*,*,*,*">
-                    <Label Text="Id" />
-                    <Label Grid.Column="1" Text="Ticket ID" />
-                    <Label Grid.Column="2" Text="Paid" />
-                    <Label Grid.Column="3" Text="Date Paid" />
-                </Grid>
-            </CollectionView.Header>
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="model:Transaction">
+        <Image
+            Aspect="AspectFill"
+            MaximumHeightRequest="700"
+            Source="backgroundblur.png" />
+        <Grid RowDefinitions="auto,*">
+            <Image
+                Grid.Row="0"
+                HorizontalOptions="Start"
+                Source="logowwblur.png"
+                WidthRequest="250" />
+            <Label
+                Grid.Row="1"
+                FontSize="Medium"
+                HorizontalOptions="Center"
+                IsVisible="{Binding IsTextVisible}"
+                Text="No transactions yet" />
+            <CollectionView
+                Grid.Row="1"
+                Margin="20"
+                IsVisible="{Binding IsVisible}"
+                ItemsSource="{Binding Transactions}">
+                <CollectionView.Header>
                     <Grid ColumnDefinitions="*,*,*,*">
-                        <Label Text="{Binding Id}" />
-                        <Label Grid.Column="1" Text="{Binding TicketId}" />
-                        <Label Grid.Column="2" Text="{Binding IsPaid}" />
-                        <Label Grid.Column="3" Text="{Binding DatePaid, StringFormat='{0:MMMM d, yyyy'}">
-                            <Label.Triggers>
-                                <DataTrigger
-                                    Binding="{Binding IsPaid}"
-                                    TargetType="Label"
-                                    Value="false">
-                                    <Setter Property="Text" Value="Not Paid" />
-                                </DataTrigger>
-                            </Label.Triggers>
-                        </Label>
+                        <Label Text="Id" />
+                        <Label Grid.Column="1" Text="Ticket ID" />
+                        <Label Grid.Column="2" Text="Paid" />
+                        <Label Grid.Column="3" Text="Date Paid" />
                     </Grid>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Transaction">
+                        <Grid ColumnDefinitions="*,*,*,*">
+                            <Label Text="{Binding Id}" />
+                            <Label Grid.Column="1" Text="{Binding TicketId}" />
+                            <Label Grid.Column="2" Text="{Binding IsPaid}" />
+                            <Label Grid.Column="3" Text="{Binding DatePaid, StringFormat='{0:MMMM d, yyyy'}">
+                                <Label.Triggers>
+                                    <DataTrigger
+                                        Binding="{Binding IsPaid}"
+                                        TargetType="Label"
+                                        Value="false">
+                                        <Setter Property="Text" Value="Not Paid" />
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
     </Grid>
 </ContentPage>

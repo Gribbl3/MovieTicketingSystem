@@ -17,6 +17,10 @@ public class CustomerViewModel : BaseViewModel
     private User _user;
     private ObservableCollection<Movie> _nowShowingMovieCollection = new();
     private ObservableCollection<Movie> _upcomingMovieCollection = new();
+    private ObservableCollection<Movie> _searchedMovieCollection = new();
+
+    private bool _isSearchBarFocused = false;
+
 
     public User User
     {
@@ -49,6 +53,27 @@ public class CustomerViewModel : BaseViewModel
         }
     }
 
+    public ObservableCollection<Movie> SearchedMovieCollection
+    {
+        get => _searchedMovieCollection;
+        set
+        {
+            _searchedMovieCollection = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public bool IsSearchBarFocused
+    {
+        get => _isSearchBarFocused;
+        set
+        {
+            _isSearchBarFocused = value;
+            OnPropertyChanged();
+        }
+    }
+
+
 
     public CustomerViewModel(MovieService movieService, SharedDataService sharedDataService)
     {
@@ -57,6 +82,7 @@ public class CustomerViewModel : BaseViewModel
     }
 
     public ICommand GoToTicketPageCommand => new Command<Movie>(GoToTicketPage);
+    public ICommand PerformSearchCommand => new Command<string>(PerformSearch);
 
     private async void GoToTicketPage(Movie Movie)
     {
@@ -66,6 +92,18 @@ public class CustomerViewModel : BaseViewModel
             { nameof(User), User }
         };
         await Shell.Current.GoToAsync($"{nameof(TicketPage)}", navigationParameter);
+    }
+
+    private async void PerformSearch(string query)
+    {
+        IsSearchBarFocused = true;
+        if (string.IsNullOrWhiteSpace(query))
+        {
+            SearchedMovieCollection.Clear();
+            return;
+        }
+
+        SearchedMovieCollection = await movieService.SearchMoviesAsync(query);
     }
 
     public async void PopulateNowShowingMovies()
