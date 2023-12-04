@@ -30,10 +30,10 @@ public class AddMovieViewModel : BaseViewModel
         set
         {
             _numsOfDate = value;
-            GenerateShowtime();
             OnPropertyChanged();
         }
     }
+
     public Movie Movie
     {
         get => _movie;
@@ -202,7 +202,13 @@ public class AddMovieViewModel : BaseViewModel
         }
 
         //check if start time is greater than end time
-        if (Movie.StartDate > Movie.EndDate)
+        if (Movie.StartDate >= Movie.EndDate)
+        {
+            Shell.Current.DisplayAlert("Add Movie Error", "Start time cannot be greater than end time", "OK");
+            return false;
+        }
+
+        if (Movie.StartTime >= Movie.EndTime)
         {
             Shell.Current.DisplayAlert("Add Movie Error", "Start time cannot be greater than end time", "OK");
             return false;
@@ -222,12 +228,6 @@ public class AddMovieViewModel : BaseViewModel
             return false;
         }
 
-        //check if start time is greater than end time
-        if (!ValidateShowtimes())
-        {
-            return false;
-        }
-
         //check if cinemas are selected
         if (!ValidateCinemas())
         {
@@ -237,18 +237,6 @@ public class AddMovieViewModel : BaseViewModel
         return true;
     }
 
-    private bool ValidateShowtimes()
-    {
-        foreach (var showtime in Movie.Showtimes)
-        {
-            if (showtime.StartTime >= showtime.EndTime)
-            {
-                Shell.Current.DisplayAlert("Add Movie Error", "Start time cannot be greater than or equal to end time for a showtime", "OK");
-                return false;
-            }
-        }
-        return true;
-    }
 
     private bool ValidateEntries(string fieldName, string fieldValue)
     {
@@ -351,15 +339,4 @@ public class AddMovieViewModel : BaseViewModel
         return hasSelectedGenre;
     }
 
-    private void GenerateShowtime()
-    {
-        //clear previous showtime
-        Movie.Showtimes.Clear();
-
-        int showtimeCount = NumsOfDate;
-        for (int index = 0; index < showtimeCount; index++)
-        {
-            Movie.Showtimes.Add(new Showtime());
-        }
-    }
 }

@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace MovieTicketingSystem.ViewModel;
-
 [QueryProperty(nameof(User), nameof(User))]
 public class CustomerViewModel : BaseViewModel
 {
@@ -15,17 +14,9 @@ public class CustomerViewModel : BaseViewModel
 
     //private readonly string movieFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Movies.json");
 
-    private ObservableCollection<Movie> _movieCollection;
     private User _user;
-    public ObservableCollection<Movie> MovieCollection
-    {
-        get => _movieCollection;
-        set
-        {
-            _movieCollection = value;
-            OnPropertyChanged();
-        }
-    }
+    private ObservableCollection<Movie> _nowShowingMovieCollection = new();
+    private ObservableCollection<Movie> _upcomingMovieCollection = new();
 
     public User User
     {
@@ -34,6 +25,26 @@ public class CustomerViewModel : BaseViewModel
         {
             _user = value;
             sharedDataService.UserId = User.Id;
+            OnPropertyChanged();
+        }
+    }
+
+    public ObservableCollection<Movie> NowShowingMovieCollection
+    {
+        get => _nowShowingMovieCollection;
+        set
+        {
+            _nowShowingMovieCollection = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ObservableCollection<Movie> UpcomingMovieCollection
+    {
+        get => _upcomingMovieCollection;
+        set
+        {
+            _upcomingMovieCollection = value;
             OnPropertyChanged();
         }
     }
@@ -47,11 +58,6 @@ public class CustomerViewModel : BaseViewModel
 
     public ICommand GoToTicketPageCommand => new Command<Movie>(GoToTicketPage);
 
-    private async void GetMoviesAsync()
-    {
-        MovieCollection = await movieService.GetActiveMoviesAsync();
-    }
-
     private async void GoToTicketPage(Movie Movie)
     {
         var navigationParameter = new Dictionary<string, object>
@@ -60,5 +66,15 @@ public class CustomerViewModel : BaseViewModel
             { nameof(User), User }
         };
         await Shell.Current.GoToAsync($"{nameof(TicketPage)}", navigationParameter);
+    }
+
+    public async void PopulateNowShowingMovies()
+    {
+        NowShowingMovieCollection = await movieService.GetNowShowingMoviesAsync();
+    }
+
+    public async void PopulateUpcomingMovies()
+    {
+        UpcomingMovieCollection = await movieService.GetUpcomingMoviesAsync();
     }
 }

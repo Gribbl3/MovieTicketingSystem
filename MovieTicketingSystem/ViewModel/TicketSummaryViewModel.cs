@@ -13,6 +13,7 @@ public class TicketSummaryViewModel : BaseViewModel
 {
     private readonly TicketService ticketService;
     private readonly CinemaService cinemaService;
+    private readonly MovieService movieService;
 
 
     private ObservableCollection<Ticket> _ticket;
@@ -96,10 +97,11 @@ public class TicketSummaryViewModel : BaseViewModel
         }
     }
 
-    public TicketSummaryViewModel(TicketService ticketService, CinemaService cinemaService)
+    public TicketSummaryViewModel(TicketService ticketService, CinemaService cinemaService, MovieService movieService)
     {
         this.ticketService = ticketService;
         this.cinemaService = cinemaService;
+        this.movieService = movieService;
     }
 
     public ICommand BuyTicketCommand => new Command(BuyTicket);
@@ -119,14 +121,18 @@ public class TicketSummaryViewModel : BaseViewModel
             {nameof(Ticket), Ticket }
         };
 
-        //await Shell.Current.GoToAsync($"{nameof(GeneratedTicket)}", navigationParameter);
+        await Shell.Current.DisplayAlert("Success", "Ticket(s) bought successfully", "OK");
         await Shell.Current.GoToAsync($"//{nameof(Login)}");
     }
 
-    private void CloneSeatsToMovieCinema()
+    private async void CloneSeatsToMovieCinema()
     {
         int index = GetCinemaIndex();
         Movie.Cinemas[index] = Cinema;
+
+        var movieCollection = await movieService.GetMoviesAsync();
+        await movieService.UpdateMovieAsync(Movie, movieCollection);
+
     }
 
     private void UpdateSeatsToReserve()
@@ -163,7 +169,4 @@ public class TicketSummaryViewModel : BaseViewModel
     {
         MovieGenreDisplay = string.Join(" | ", Movie.SelectedGenre);
     }
-
-
-
 }

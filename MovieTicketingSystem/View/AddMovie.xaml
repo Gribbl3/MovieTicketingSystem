@@ -41,16 +41,16 @@
 
     <!--  Main Layout  -->
     <!--  Make entries wrap with border for Movie Properties  -->
-    <Grid RowDefinitions="*,auto">
-        <ScrollView>
+    <Grid RowDefinitions="auto,*,auto">
+        <Image
+            HorizontalOptions="Start"
+            Source="logowwblur.png"
+            VerticalOptions="Start" />
+        <ScrollView Grid.Row="1">
             <VerticalStackLayout>
-                <Image
-                    HorizontalOptions="Start"
-                    Source="logowwblur.png"
-                    VerticalOptions="Start" />
                 <VerticalStackLayout>
                     <Frame
-                        Margin="150,0,0,0"
+                        Margin="0,0,0,0"
                         BackgroundColor="#101820"
                         BorderColor="#101820"
                         HeightRequest="200"
@@ -124,76 +124,29 @@
                         </HorizontalStackLayout>
                     </Frame>
                 </VerticalStackLayout>
-                <VerticalStackLayout Margin="150,10,0,0">
+                <VerticalStackLayout Margin="0,10,0,0">
                     <Frame
                         Grid.ColumnSpan="2"
                         BackgroundColor="#101820"
                         BorderColor="#101820"
-                        HeightRequest="500"
+                        HeightRequest="300"
                         WidthRequest="1000">
-                        <Grid
-                            ColumnDefinitions="*,auto"
-                            RowDefinitions="auto,*"
-                            RowSpacing="10">
-                            <Label
-                                Margin="50,10,0,50"
-                                HorizontalOptions="Start"
-                                Text="Number of showing" />
-                            <Border
-                                Grid.Column="1"
-                                Margin="-750,10,0,50"
-                                HorizontalOptions="Start">
+                        <HorizontalStackLayout HorizontalOptions="CenterAndExpand" Margin="20">
+                            <Label Text="Start Time" WidthRequest="100" Margin="100,0,0,0"/>
+                            <Border MaximumHeightRequest="50">
                                 <Border.StrokeShape>
-                                    <RoundRectangle CornerRadius="10" />
+                                    <RoundRectangle CornerRadius="10,10,10,10"/>
                                 </Border.StrokeShape>
-                                <Entry Text="{Binding NumsOfDate}" />
+                                <DatePicker Date="{Binding Movie.StartTime}" />
                             </Border>
-                            <BoxView
-                                Margin="0,56,0,0"
-                                BackgroundColor="DarkGray"
-                                HeightRequest="1" />
-                            <CollectionView
-                                Grid.Row="1"
-                                Grid.ColumnSpan="2"
-                                ItemsSource="{Binding Movie.Showtimes}">
-                                <CollectionView.ItemsLayout>
-                                    <GridItemsLayout
-                                        HorizontalItemSpacing="10"
-                                        Orientation="Vertical"
-                                        Span="2"
-                                        VerticalItemSpacing="10" />
-                                </CollectionView.ItemsLayout>
-                                <CollectionView.EmptyView>
-                                    <Label Text="No Showtimes" />
-                                </CollectionView.EmptyView>
-                                <CollectionView.ItemTemplate>
-                                    <DataTemplate x:DataType="model:Showtime">
-                                        <VerticalStackLayout>
-
-                                            <Grid ColumnDefinitions="*,auto" RowDefinitions="*,*">
-                                                <Label Margin="-500,0,0,0" Text="Start time" />
-                                                <TimePicker
-                                                    Grid.Column="1"
-                                                    Margin="-500,0,0,0"
-                                                    Format="T"
-                                                    Time="{Binding StartTime}" />
-                                                <Label
-                                                    Grid.Row="1"
-                                                    Margin="-500,0,0,0"
-                                                    Text="End time" />
-                                                <TimePicker
-                                                    Grid.Row="1"
-                                                    Grid.Column="1"
-                                                    Margin="-500,0,0,0"
-                                                    Format="T"
-                                                    Time="{Binding EndTime}" />
-                                            </Grid>
-                                            <BoxView BackgroundColor="DarkGray" HeightRequest="1" />
-                                        </VerticalStackLayout>
-                                    </DataTemplate>
-                                </CollectionView.ItemTemplate>
-                            </CollectionView>
-                        </Grid>
+                            <Label Text="End Time" WidthRequest="100" Margin="100,0,0,0"/>
+                            <Border MaximumHeightRequest="50">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,10,10" />
+                                </Border.StrokeShape>
+                                <DatePicker Date="{Binding Movie.EndTime}" />
+                            </Border>
+                        </HorizontalStackLayout>
                     </Frame>
                     <VerticalStackLayout>
                         <Frame
@@ -231,21 +184,20 @@
                     </VerticalStackLayout>
 
                 </VerticalStackLayout>
-                <VerticalStackLayout>
+                <VerticalStackLayout Margin="0,10,0,0">
                     <Frame
-                        Margin="10,55,0,0"
                         BackgroundColor="#101820"
                         BorderColor="#101820"
                         HeightRequest="550"
-                        WidthRequest="600">
+                        WidthRequest="1000">
                         <VerticalStackLayout>
                             <HorizontalStackLayout HorizontalOptions="Center">
                                 <Label Margin="80,0,50,10" Text="Genre" />
                                 <Label Margin="50,0,0,0" Text="Subtitles" />
                             </HorizontalStackLayout>
-                            <HorizontalStackLayout Margin="70,10,0,0">
+                            <HorizontalStackLayout Margin="80,10,0,0" HorizontalOptions="Center">
                                 <VerticalStackLayout>
-                                    <CollectionView HorizontalOptions="Center" ItemsSource="{Binding AvailableGenre}">
+                                    <CollectionView ItemsSource="{Binding AvailableGenre}">
                                         <CollectionView.ItemTemplate>
                                             <DataTemplate x:DataType="model:Genre">
                                                 <Grid ColumnDefinitions="*,*">
@@ -270,7 +222,7 @@
                                     </CollectionView>
                                 </VerticalStackLayout>
                             </HorizontalStackLayout>
-                            
+
                         </VerticalStackLayout>
                     </Frame>
 
@@ -279,7 +231,7 @@
                             BackgroundColor="#101820"
                             BorderColor="#101820"
                             HeightRequest="550"
-                            WidthRequest="600">
+                            WidthRequest="1000">
                             <StackLayout>
                                 <!--  Change UI  -->
                                 <Image Aspect="AspectFit" Source="{Binding Image}" />
@@ -310,7 +262,7 @@
             </VerticalStackLayout>
         </ScrollView>
         <HorizontalStackLayout
-            Grid.Row="1"
+            Grid.Row="2"
             HorizontalOptions="Center"
             Spacing="5">
             <HorizontalStackLayout Spacing="-58">

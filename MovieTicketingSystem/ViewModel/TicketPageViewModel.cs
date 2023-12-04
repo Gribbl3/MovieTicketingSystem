@@ -9,8 +9,6 @@ namespace MovieTicketingSystem.ViewModel;
 [QueryProperty(nameof(User), nameof(User))]
 public class TicketPageViewModel : BaseViewModel
 {
-    //private readonly string mallFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Malls.json");
-    //private readonly string cinemaFilePath = Path.Combine(FileSystem.Current.AppDataDirectory, "Cinemas.json");
     private readonly IPopupService popupService;
 
 

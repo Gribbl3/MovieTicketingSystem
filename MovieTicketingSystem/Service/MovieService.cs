@@ -73,19 +73,21 @@ public class MovieService : BaseService<Movie>
         return movieCollection;
     }
 
-    public async Task<(bool, ObservableCollection<Movie>)> EditMovieAsync(Movie movie, ObservableCollection<Movie> movieCollection)
+    public async Task<(bool, ObservableCollection<Movie>)> UpdateMovieAsync(Movie movie, ObservableCollection<Movie> movieCollection)
     {
         if (movie == null || movieCollection == null)
         {
             return (false, movieCollection);
         }
 
-        var movieToBeEdited = movieCollection.FirstOrDefault(m => m.Id == movie.Id);
-        if (movieToBeEdited == null)
+        int index = movieCollection.ToList().FindIndex(m => m.Id == movie.Id);
+        if (index == -1)
         {
             await Shell.Current.DisplayAlert("Error", "Movie not found", "OK");
             return (false, movieCollection);
         }
+
+        movieCollection[index] = movie;
 
         bool isSaved = await SaveToJsonAsync(movieCollection);
         if (!isSaved)
@@ -93,8 +95,20 @@ public class MovieService : BaseService<Movie>
             await Shell.Current.DisplayAlert("Error", "Failed to edit movie", "OK");
         }
 
+        await Shell.Current.DisplayAlert("Success", "Movie updated", "OK");
+
         return (isSaved, movieCollection);
     }
 
+    public async Task<ObservableCollection<Movie>> GetNowShowingMoviesAsync()
+    {
+        var movieCollection = await GetActiveMoviesAsync();
+        return new ObservableCollection<Movie>(movieCollection.Where(m => m.IsNowShowing));
+    }
 
+    public async Task<ObservableCollection<Movie>> GetUpcomingMoviesAsync()
+    {
+        var movieCollection = await GetActiveMoviesAsync();
+        return new ObservableCollection<Movie>(movieCollection.Where(m => m.IsUpcoming));
+    }
 }

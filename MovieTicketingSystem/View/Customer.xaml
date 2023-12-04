@@ -9,7 +9,7 @@
     xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
     Title="Customer"
     x:DataType="vm:CustomerViewModel"
-     BackgroundImageSource="backgroundblur.png">
+    BackgroundImageSource="backgroundblur.png">
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -17,173 +17,80 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ScrollView>
-        <Frame BackgroundColor="Transparent" BorderColor="Transparent">
-            <VerticalStackLayout>
-                <Frame BackgroundColor="Transparent" BorderColor="Transparent">
-                    <!--  Top Level date, ticket button and user button  -->
-                    <HorizontalStackLayout>
-                        <HorizontalStackLayout>
-                            <Image
-                                Margin="0,-10,0,0"
-                                HorizontalOptions="Start"
-                                Source="logowwblur.png"
-                                WidthRequest="250" />
-                            <Label
-                                Margin="0,0,0,0"
-                                FontSize="20"
-                                Text="|" />
-                            <Label Margin="0,0,0,0"  FontSize="20" Text="{Binding Source={x:Static sys:DateTime.Today}, StringFormat='{0:MMMM d, yyyy}'}" TextColor="LightGray" />
-                        </HorizontalStackLayout>
-                        <HorizontalStackLayout Spacing="20">
-                            <ImageButton
-                                Source="ticketa.png"
-                                WidthRequest="20" 
-                                BackgroundColor="Transparent"/>
-                            <ImageButton
-                                BackgroundColor="Transparent"
-                                Source="user.png"
-                                WidthRequest="20" />
-                        </HorizontalStackLayout>
-                    </HorizontalStackLayout>
-                </Frame>
-                <Frame
-                    BackgroundColor ="Transparent"
-                    BorderColor="Transparent"
-                    CornerRadius="24"
-                    HeightRequest="600">
-                    <!--  Featured Movie, title and subtitle, genres, year, part, company, buy ticket button  -->
-                    <VerticalStackLayout >
-                        <HorizontalStackLayout HorizontalOptions="Center" Spacing="5" Margin="-80,30,0,0">
-                            <Frame
-                                BorderColor="#101820"
-                                BackgroundColor="#101820"
-                                HeightRequest="500"
-                                WidthRequest="630"
-                                CornerRadius="16">
-                                <StackLayout HorizontalOptions="Center">
-                                    <HorizontalStackLayout HorizontalOptions="Center" Margin="0,60,0,0">
-                                        <!--  Collection View sa mga genres ari  -->
-                                        <Label Text="Genre1" TextColor="LightGray" FontSize="20"/>
-                                        <Label Text=" | " TextColor="LightGray" FontSize="20"/>
-                                        <Label Text="Genre2" TextColor="LightGray" FontSize="20"/>
-                                        <Label Text=" | " FontSize="20"/>
-                                        <Label Text="Genre2" TextColor="LightGray" FontSize="20"/>
-                                    </HorizontalStackLayout>
-                                    <Label
-                                        Margin="0,20,0,0"
-                                        FontAttributes="Bold"
-                                        FontSize="75"
-                                        HorizontalOptions="Center"
-                                        Text="MAIN TITLE" />
-                                    <Label
-                                        Margin="0,-10,0,0"
-                                        FontAttributes="Bold"
-                                        FontSize="Title"
-                                        HorizontalOptions="Center"
-                                        Text="subtitle" />
+    <Grid RowDefinitions="auto,*" Margin="10">
+        <HorizontalStackLayout>
+            <Image
+                Margin="0,-10,0,0"
+                HorizontalOptions="Start"
+                Source="logowwblur.png"
+                WidthRequest="250" />
+            <Label
+                Margin="0,0,0,0"
+                FontSize="20"
+                Text="|" />
+            <Label
+                Margin="0,0,0,0"
+                FontSize="20"
+                Text="{Binding Source={x:Static sys:DateTime.Today}, StringFormat='{0:MMMM d, yyyy}'}"
+                TextColor="LightGray" />
+        </HorizontalStackLayout>
+        <ScrollView Grid.Row="1">
+            
+        <VerticalStackLayout>
+            <!--  Top Level date, ticket button and user button  -->
+            <Label
+                Margin="0,10,0,0"
+                FontSize="Large"
+                Text="NOW SHOWING" />
+            <Frame
+                BackgroundColor="Transparent"
+                BorderColor="Transparent"
+                HeightRequest="300">
 
-                                    <HorizontalStackLayout Margin="0,55,0,0" HorizontalOptions="Center">
-                                        <!--  Binding ari, wala lang nako ge butang kay ma bug ig run  -->
-                                        <Label Text="2023 (Year)" TextColor="LightGray" />
-                                        <Label Text=" | " TextColor="LightGray" />
-                                        <Label Text="Sequel (part)" TextColor="LightGray" />
-                                        <Label Text=" | " />
-                                        <Label Text="Company" TextColor="LightGray" />
-                                    </HorizontalStackLayout>
+                <CarouselView EmptyView="Now Showing Movies not Available!" ItemsSource="{Binding NowShowingMovieCollection}">
+                    <CarouselView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="10" Orientation="Horizontal" />
+                    </CarouselView.ItemsLayout>
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Movie">
+                                <Image Source="{Binding Image,Converter={StaticResource ImageConverter}}">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CustomerViewModel}}, Path=GoToTicketPageCommand}" CommandParameter="{Binding .}" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+            </Frame>
 
-                                    <Button
-                                        Margin="0,30,0,0"
-                                        BackgroundColor="#EC4D37"
-                                        CornerRadius="18"
-                                        Text="Buy Ticket"
-                                        TextColor="White"
-                                        WidthRequest="105" />
-
-                                </StackLayout>
-                            </Frame>
-                            <Frame
-                                BackgroundColor="Transparent"
-                                BorderColor="Transparent"
-                                HeightRequest="500"
-                                Margin="0,-20,0,0">
-                                <StackLayout>
-                                    <Border StrokeShape="RoundRectangle 16" Stroke="Transparent">
-                                        <Image Aspect="AspectFit" Source="poster1.jpg"/>
-                                    </Border>
-                                </StackLayout>
-                            </Frame>
-                        </HorizontalStackLayout>
-                    </VerticalStackLayout>
-                </Frame>
-
-                <!--  carouselview sa mga movies  -->
-
-                <Label
-                    Margin="0,10,0,0"
-                    FontSize="Large"
-                    Text="NOW SHOWING" />
-                <Frame BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="300">
-
-                    <CarouselView EmptyView="Now Showing Movies not Available!" ItemsSource="{Binding MovieCollection}">
-                        <CarouselView.ItemsLayout>
-                            <LinearItemsLayout ItemSpacing="10" Orientation="Horizontal" />
-                        </CarouselView.ItemsLayout>
-                        <CarouselView.ItemTemplate>
-                            <DataTemplate x:DataType="model:Movie">
-                                <Image>
-                                    <!--  only show image when isnowshowing value is true  -->
-                                    <Image.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding IsNowShowing}"
-                                            TargetType="Image"
-                                            Value="True">
-                                            <Setter Property="Source" Value="{Binding Image, Converter={StaticResource ImageConverter}}" />
-                                        </DataTrigger>
-                                    </Image.Triggers>
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CustomerViewModel}}, Path=GoToTicketPageCommand}" CommandParameter="{Binding .}" />
-                                    </Image.GestureRecognizers>
-                                </Image>
-                            </DataTemplate>
-                        </CarouselView.ItemTemplate>
-                    </CarouselView>
-                </Frame>
-
-                <!--  Carouselview for coming soon mvoies  -->
-
-                <Label
-                    Margin="0,10,0,0"
-                    FontSize="Large"
-                    Text="COMING SOON" />
-                <Frame BackgroundColor="Transparent" BorderColor="Transparent" HeightRequest="300">
-                    <CarouselView EmptyView="Up Coming Movies not Available!" 
-                                  RemainingItemsThreshold="2"
-                                  ItemsSource="{Binding MovieCollection}">
-                        <CarouselView.ItemsLayout>
-                            <LinearItemsLayout ItemSpacing="10" Orientation="Horizontal" />
-                        </CarouselView.ItemsLayout>
-                        <CarouselView.ItemTemplate>
-                            <DataTemplate x:DataType="model:Movie">
-                                <Image>
-                                    <!--  only show image when isnowshowing value is true  -->
-                                    <Image.Triggers>
-                                        <DataTrigger
-                                            Binding="{Binding IsUpcoming}"
-                                            TargetType="Image"
-                                            Value="True">
-                                            <Setter Property="Source" Value="{Binding Image, Converter={StaticResource ImageConverter}}" />
-                                        </DataTrigger>
-                                    </Image.Triggers>
-                                    <Image.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CustomerViewModel}}, Path=GoToTicketPageCommand}" CommandParameter="{Binding .}" />
-                                    </Image.GestureRecognizers>
-                                </Image>
-                            </DataTemplate>
-                        </CarouselView.ItemTemplate>
-                    </CarouselView>
-                </Frame>
-            </VerticalStackLayout>
-        </Frame>
-    </ScrollView>
+            <Label
+                Margin="0,10,0,0"
+                FontSize="Large"
+                Text="COMING SOON" />
+            <Frame
+                BackgroundColor="Transparent"
+                BorderColor="Transparent"
+                HeightRequest="300">
+                <CarouselView
+                    EmptyView="Up Coming Movies not Available!"
+                    ItemsSource="{Binding UpcomingMovieCollection}"
+                    RemainingItemsThreshold="2">
+                    <CarouselView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="10" Orientation="Horizontal" />
+                    </CarouselView.ItemsLayout>
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Movie">
+                            <Image Source="{Binding Image,Converter={StaticResource ImageConverter}}">
+                                <!--  only show image when isnowshowing value is true  -->
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={RelativeSource AncestorType={x:Type vm:CustomerViewModel}}, Path=GoToTicketPageCommand}" CommandParameter="{Binding .}" />
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+            </Frame>
+        </VerticalStackLayout>
+        </ScrollView>
+    </Grid>
 </ContentPage>

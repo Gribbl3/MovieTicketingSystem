@@ -62,6 +62,10 @@
 	  <None Remove="Resources\Images\delete.png" />
 	  <None Remove="Resources\Images\edit.png" />
 	  <None Remove="Resources\Images\female.png" />
+	  <None Remove="Resources\Images\iconresetwhite.png" />
+	  <None Remove="Resources\Images\iconshowgreen.png" />
+	  <None Remove="Resources\Images\iconshowred.png" />
+	  <None Remove="Resources\Images\iconshowwhite.png" />
 	  <None Remove="Resources\Images\jurassicpark.png" />
 	  <None Remove="Resources\Images\logoww.png" />
 	  <None Remove="Resources\Images\logowwblur.png" />

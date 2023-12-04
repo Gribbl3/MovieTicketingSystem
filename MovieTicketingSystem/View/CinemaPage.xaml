@@ -122,10 +122,65 @@
                     TextColor="#EC4D37" />
             </HorizontalStackLayout>
             <HorizontalStackLayout Spacing="10">
-                <Button Text="Show All" Command="{Binding ShowAllCinemasCommand}"/>
-                <Button Text="Show Active" Command="{Binding ShowActiveCinemasCommand}"/>
-                <Button Text="Show Deleted" Command="{Binding ShowDeletedCinemasCommand}"/>
-                <Button Text="Restore Mall" Command="{Binding RestoreDeletedCinemaCommand}"/>
+
+                <HorizontalStackLayout Spacing="-50">
+                    <ImageButton
+                        BackgroundColor="Transparent"
+                        Command="{Binding ShowAllCinemasCommand}"
+                        Scale="0.8"
+                        Source="iconshowgreen.png"/>
+
+                    <Button Text="Show All" Command="{Binding ShowAllCinemasCommand}"
+                            TextColor="#43A047"
+                            FontAttributes="Bold"
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="-40">
+                    <ImageButton
+                        BackgroundColor="Transparent"
+                        Command="{Binding ShowActiveCinemasCommand}"
+                        Scale="0.8"
+                        Source="iconshowgreen.png"/>
+
+                    <Button Text="Show Active" Command="{Binding ShowActiveCinemasCommand}"
+                            TextColor="#43A047"
+                            FontAttributes="Bold"
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"/>
+                </HorizontalStackLayout>
+
+
+                <HorizontalStackLayout Spacing="-32">
+                    <ImageButton
+                            BackgroundColor="Transparent"
+                            Command="{Binding ShowDeletedCinemasCommand}"
+                            Scale="0.8"
+                            Source="iconshowred.png"/>
+
+                    <Button Text="Show Deleted" Command="{Binding ShowDeletedCinemasCommand}"
+                            TextColor="#EC4D37"
+                            FontAttributes="Bold"
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="-40">
+                    <ImageButton
+                           BackgroundColor="Transparent"
+                           Command="{Binding RestoreDeletedCinemaCommand}"
+                           Scale="0.4"
+                           Source="iconresetwhite.png"/>
+                        
+                    <Button Text="Restore Mall" Command="{Binding RestoreDeletedCinemaCommand}"
+                            TextColor="#E5E3E8"
+                            FontAttributes="Bold"
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"/>
+                </HorizontalStackLayout>
+                
+                
             </HorizontalStackLayout>
         </HorizontalStackLayout>
     </Grid>

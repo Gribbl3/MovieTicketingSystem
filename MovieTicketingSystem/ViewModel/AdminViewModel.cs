@@ -25,10 +25,9 @@ public class AdminViewModel : BaseViewModel
     public AdminViewModel(UserService userService)
     {
         this.userService = userService;
-        ShowAllUser();
     }
 
-    private async void ShowAllUser()
+    public async void GetAllUserAsync()
     {
         CustomerCollection = await userService.GetUsersAsync(false);
     }

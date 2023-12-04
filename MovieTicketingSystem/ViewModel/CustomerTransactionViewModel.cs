@@ -40,10 +40,9 @@ public class CustomerTransactionViewModel : BaseViewModel
         this.transactionService = transactionService;
         this.sharedDataService = sharedDataService;
         userId = sharedDataService.UserId;
-        GetUserTransactionAsync();
     }
 
-    private async void GetUserTransactionAsync()
+    public async void GetUserTransactionAsync()
     {
         Transactions = await transactionService.GetTransactionsByUserIdAsync(userId);
     }
