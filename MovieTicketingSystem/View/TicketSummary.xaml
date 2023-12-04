@@ -28,7 +28,7 @@
                     FontSize="Large"
                     HorizontalOptions="Center"
                     Text="MOVIE DETAILS"
-                    TextColor="red" />
+                    TextColor="<!--<!--red-->-->" />
                 <Label
                     FontSize="Medium"
                     HorizontalOptions="Center"
