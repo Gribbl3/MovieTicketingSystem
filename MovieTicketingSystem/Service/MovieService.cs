@@ -117,4 +117,30 @@ public class MovieService : BaseService<Movie>
         var movieCollection = await GetActiveMoviesAsync();
         return new ObservableCollection<Movie>(movieCollection.Where(m => m.Name.ToLower().Contains(query.ToLower())));
     }
+
+    public async Task<ObservableCollection<Movie>> RestoreDeletedMovieAsync(int id)
+    {
+        var movieCollection = await GetMoviesAsync();
+        var movieToBeRestored = movieCollection.FirstOrDefault(m => m.Id == id);
+        if (movieToBeRestored == null)
+        {
+            await Shell.Current.DisplayAlert("Error", "Movie not found", "OK");
+            return movieCollection;
+        }
+
+        if (!movieToBeRestored.IsDeleted)
+        {
+            await Shell.Current.DisplayAlert("Error", "Movie already restored", "OK");
+            return movieCollection;
+        }
+
+        movieToBeRestored.IsDeleted = false;
+        bool isSaved = await SaveToJsonAsync(movieCollection);
+        if (!isSaved)
+        {
+            await Shell.Current.DisplayAlert("Error", "Failed to restore movie", "OK");
+        }
+
+        return movieCollection;
+    }
 }

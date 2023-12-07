@@ -18,6 +18,10 @@ public class EditMovieViewModel : BaseViewModel
 
 
     private string _image;
+    private ObservableCollection<Movie> _movieCollection = new();
+    private Movie _movie = new();
+    private ObservableCollection<Cinema> _cinemaCollection = new();
+
     public string Image
     {
         get => _image;
@@ -28,7 +32,6 @@ public class EditMovieViewModel : BaseViewModel
         }
     }
 
-    private Movie _movie = new();
     public Movie Movie
     {
         get => _movie;
@@ -38,16 +41,26 @@ public class EditMovieViewModel : BaseViewModel
             OnPropertyChanged();
             CloneSelectedGenre();
             CloneSelectedSubtitle();
+            CloneSelectedCinemas();
         }
     }
 
-    private ObservableCollection<Movie> _movieCollection = new();
     public ObservableCollection<Movie> MovieCollection
     {
         get => _movieCollection;
         set
         {
             _movieCollection = value;
+            OnPropertyChanged();
+        }
+    }
+
+    public ObservableCollection<Cinema> CinemaCollection
+    {
+        get => _cinemaCollection;
+        set
+        {
+            _cinemaCollection = value;
             OnPropertyChanged();
         }
     }
@@ -64,11 +77,6 @@ public class EditMovieViewModel : BaseViewModel
     public ICommand SaveCommand => new Command(async () => await Save());
     public ICommand ResetCommand => new Command(Reset);
 
-
-    private void EditMovie(object obj)
-    {
-        throw new NotImplementedException();
-    }
 
     private async Task Save()
     {
@@ -322,5 +330,10 @@ public class EditMovieViewModel : BaseViewModel
                 subtitle.IsSelected = true;
             }
         }
+    }
+
+    private void CloneSelectedCinemas()
+    {
+        CinemaCollection = Movie.Cinemas;
     }
 }

@@ -48,13 +48,15 @@ public class MoviePageViewModel : BaseViewModel
     public ICommand ShowActiveMoviesCommand => new Command(ShowActiveMovies);
     public ICommand ShowDeletedMoviesCommand => new Command(ShowDeletedMovies);
     public ICommand ShowAllMoviesCommand => new Command(ShowAllCinemas);
+    public ICommand RestoreMoviesCommand => new Command(RestoreMoviesAsync);
+
 
     private async void ShowAllCinemas()
     {
         MovieCollection = await movieService.GetMoviesAsync();
     }
 
-    private async void ShowActiveMovies()
+    public async void ShowActiveMovies()
     {
         MovieCollection = await movieService.GetActiveMoviesAsync();
     }
@@ -81,21 +83,10 @@ public class MoviePageViewModel : BaseViewModel
             return;
         }
 
-        foreach (Movie movie in MovieCollection)
-        {
-            if (movie.Id == id)
-            {
-                movie.IsDeleted = !movie.IsDeleted;
-                MovieCollection.Remove(movie);
-
-                await Shell.Current.DisplayAlert("Success", "Movie deleted successfully", "OK");
-                return;
-            }
-        }
+        MovieCollection = await movieService.DeleteMovieAsync(id);
 
         await Shell.Current.DisplayAlert("Error", "Movie not found", "OK");
     }
-
 
     private async void EditMovie()
     {
@@ -118,6 +109,17 @@ public class MoviePageViewModel : BaseViewModel
                 return;
             }
         }
+    }
+
+    private async void RestoreMoviesAsync()
+    {
+        string result = await Shell.Current.DisplayPromptAsync("Restore Movie", "Enter movie id to restore", placeholder: "Enter movie id");
+        if (string.IsNullOrEmpty(result) || !int.TryParse(result, out int id))
+        {
+            return;
+        }
+
+        MovieCollection = await movieService.RestoreDeletedMovieAsync(id);
     }
 
 }

@@ -18,9 +18,4 @@ public partial class Customer : ContentPage
         viewModel.PopulateUpcomingMovies();
         viewModel.PopulateNowShowingMovies();
     }
-
-    private async void ImageTapped(object sender, EventArgs e)
-    {
-        await DisplayAlert("Image Tapped", "Image CLicked", "OK");
-    }
 }

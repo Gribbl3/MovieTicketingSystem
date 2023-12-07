@@ -15,5 +15,6 @@ public partial class MoviePage : ContentPage
     {
         base.OnAppearing();
         _viewModel.IsVisible = !(_viewModel.MovieCollection.Count == 0);
+        _viewModel.ShowActiveMovies();
     }
 }

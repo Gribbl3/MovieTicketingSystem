@@ -200,12 +200,12 @@
 
                 <ImageButton
                     BackgroundColor="Transparent"
-                    Command="{Binding ShowAllMoviesCommand}"
+                    Command="{Binding RestoreMoviesCommand}"
                     Scale="0.4"
                     Source="iconresetwhite.png"/>
 
                 <Button
-                    Command="{Binding ShowAllMoviesCommand}"
+                    Command="{Binding RestoreMoviesCommand}"
                     Text="Restore Movie"
                     WidthRequest="180" 
                     BackgroundColor="Transparent"

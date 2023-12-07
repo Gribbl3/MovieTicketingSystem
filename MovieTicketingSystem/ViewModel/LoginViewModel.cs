@@ -57,6 +57,7 @@ public class LoginViewModel : BaseViewModel
         bool isValidUser = ValidateUser();
         if (!isValidUser)
         {
+            Shell.Current.DisplayAlert("Sign In", "Invalid username or password", "OK");
             return;
         }
 
