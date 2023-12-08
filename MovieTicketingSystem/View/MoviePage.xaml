@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MovieTicketingSystem.View.MoviePage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:MovieTicketingSystem.Model"
+    xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
+    Title="MoviePage"
+    x:DataType="vm:MoviePageViewModel"
+    BackgroundImageSource="backgroundblur.png">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="WidthRequest" Value="100" />
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="Margin" Value="5" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid
+        Margin="10"
+        RowDefinitions="*,auto"
+        RowSpacing="10">
+        <VerticalStackLayout Spacing="5">
+            <Image
+                HorizontalOptions="Start"
+                Source="logowwblur.png"
+                WidthRequest="350" />
+            <Label FontSize="20" Text="BOOKINGS" />
+            <Frame
+                BackgroundColor="#101820"
+                BorderColor="#101820"
+                HeightRequest="450">
+                <CollectionView ItemsSource="{Binding MovieCollection}">
+                    <CollectionView.EmptyView>
+                        <ContentView HeightRequest="500">
+                            <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="18"
+                                    HorizontalTextAlignment="Center"
+                                    Text="No movies added yet" />
+                                <Label HorizontalTextAlignment="Center" Text="Try adding by pressing the Add Movie button below" />
+                            </VerticalStackLayout>
+                        </ContentView>
+                    </CollectionView.EmptyView>
+                    <CollectionView.Header>
+                        <ContentView IsVisible="{Binding IsVisible}">
+                            <VerticalStackLayout Spacing="3">
+                                <Grid ColumnDefinitions="*,*,*,*,*,*,*">
+                                    <Label Grid.Column="0" Text="ID" />
+                                    <Label Grid.Column="1" Text="MOVIE" />
+                                    <Label Grid.Column="2" Text="TICKET PRICE" />
+                                    <Label Grid.Column="3" Text="SHOW TIME" />
+                                    <Label Grid.Column="4" Text="DURATION" />
+                                    <Label Grid.Column="5" Text="STATUS" />
+                                    <Label Grid.Column="6" Text="DELETED" />
+                                </Grid>
+                                <BoxView Background="gray" HeightRequest="2" />
+                            </VerticalStackLayout>
+                        </ContentView>
+                    </CollectionView.Header>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Movie">
+                            <Grid ColumnDefinitions="*,*,*,*,*,*,*">
+                                <Label Grid.Column="0" Text="{Binding Id}" />
+                                <Label Grid.Column="1" Text="{Binding Name}" />
+                                <Label Grid.Column="2" Text="{Binding Price, StringFormat='₱{0:F2}'}" />
+                                <Label Grid.Column="3">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding StartDate, StringFormat='{0:d}'}" />
+                                            <Span Text=" to " />
+                                            <Span Text="{Binding EndDate, StringFormat='{0:d}'}" />
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Grid.Column="4" Text="{Binding Duration, StringFormat='{0:hh}hr/s and {0:mm}min/s'}" />
+                                <Label Grid.Column="5" FontAttributes="Bold">
+                                    <Label.Triggers>
+                                        <DataTrigger
+                                            Binding="{Binding IsNowShowing}"
+                                            TargetType="Label"
+                                            Value="True">
+                                            <Setter Property="Text" Value="NOW SHOWING" />
+                                            <Setter Property="TextColor" Value="green" />
+                                        </DataTrigger>
+                                        <DataTrigger
+                                            Binding="{Binding IsNowShowing}"
+                                            TargetType="Label"
+                                            Value="False">
+                                            <Setter Property="Text" Value="UPCOMING" />
+                                            <Setter Property="TextColor" Value="#EC4D37" />
+                                        </DataTrigger>
+                                    </Label.Triggers>
+                                </Label>
+                                <Label Grid.Column="6" Text="{Binding IsDeleted}" />
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </Frame>
+        </VerticalStackLayout>
+        <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Center">
+            <HorizontalStackLayout Spacing="-50">
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding AddMovieCommand}"
+                    Scale="0.5"
+                    Source="addicon.png" />
+                <Button
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    Command="{Binding AddMovieCommand}"
+                    FontAttributes="Bold"
+                    Text="Add"
+                    TextColor="#43A047" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Spacing="-50">
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding EditMovieCommand}"
+                    Scale="0.7"
+                    Source="editicon.png" />
+                <Button
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    Command="{Binding EditMovieCommand}"
+                    FontAttributes="Bold"
+                    Text="Edit"
+                    TextColor="White" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="-40">
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding DeleteMovieCommand}"
+                    Scale="0.8"
+                    Source="deleteicon.png" />
+                <Button
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    Command="{Binding DeleteMovieCommand}"
+                    FontAttributes="Bold"
+                    Text="Delete"
+                    TextColor="#EC4D37" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="-28">
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding ShowDeletedMoviesCommand}"
+                    Scale="0.8"
+                    Source="iconshowred.png" />
+                <Button
+                     Command="{Binding ShowDeletedMoviesCommand}"
+                     Text="Show Deleted Movies"
+                     FontAttributes="Bold"
+                     WidthRequest="180" 
+                     BackgroundColor="Transparent"
+                     BorderColor="Transparent"
+                     TextColor="#EC4D37"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="-35">
+                <ImageButton
+                    BackgroundColor="Transparent"
+                     Command="{Binding ShowActiveMoviesCommand}"
+                    Scale="0.8"
+                    Source="iconshowgreen.png" />
+                
+                <Button
+                    Command="{Binding ShowActiveMoviesCommand}"
+                    Text="Show Active Movies"
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    TextColor="#43A047"
+                    WidthRequest="180" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="-26">
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding ShowAllMoviesCommand}"
+                    Scale="0.8"
+                    Source="iconshowgreen.png"/>
+                <Button
+                    Command="{Binding ShowAllMoviesCommand}"
+                    Text="Show All Active Movies"
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    TextColor="#43A047"
+                    WidthRequest="180" />
+            </HorizontalStackLayout>
+
+
+            <HorizontalStackLayout Spacing="-50">
+
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding RestoreMoviesCommand}"
+                    Scale="0.4"
+                    Source="iconresetwhite.png"/>
+
+                <Button
+                    Command="{Binding RestoreMoviesCommand}"
+                    Text="Restore Movie"
+                    WidthRequest="180" 
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    TextColor="#E5E3E8"/>
+
+            </HorizontalStackLayout>
+            
+           
+
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

@@ -1,7 +1,7 @@
-﻿using Microsoft.UI.Xaml;
-
-// To learn more about WinUI, the WinUI project structure,
+﻿// To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
+
+using Microsoft.Maui.Controls.Handlers.Items;
 
 namespace MovieTicketingSystem.WinUI
 {
@@ -17,8 +17,14 @@ namespace MovieTicketingSystem.WinUI
         public App()
         {
             this.InitializeComponent();
+            CollectionViewHandler.Mapper.AppendToMapping("HeaderAndFooterFix", (_, collectionView) =>
+            {
+                collectionView.AddLogicalChild(collectionView.Header as Element);
+                collectionView.AddLogicalChild(collectionView.Footer as Element);
+            });
         }
-
-        protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+        protected override MauiApp CreateMauiApp() => (MauiApp)MauiProgram.CreateMauiApp();
     }
+
+
 }

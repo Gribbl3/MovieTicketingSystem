@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MovieTicketingSystem.View.EditCinema"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MovieTicketingSystem.View"
+    xmlns:model="clr-namespace:MovieTicketingSystem.Model"
+    xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
+    Title="EditCinema"
+    x:DataType="vm:EditCinemaViewModel"
+    BackgroundImageSource="backgroundblur.png">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+                <Setter Property="WidthRequest" Value="220" />
+            </Style>
+            <Style TargetType="Entry">
+                <Setter Property="WidthRequest" Value="200" />
+            </Style>
+
+            <Style TargetType="Button">
+                <Setter Property="WidthRequest" Value="200" />
+
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+            <Style TargetType="Picker">
+                <Setter Property="WidthRequest" Value="200" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView>
+        <VerticalStackLayout Margin="10">
+            <Image
+                HorizontalOptions="Start"
+                Source="logowwblur.png"
+                WidthRequest="350" />
+            <Frame
+                Margin="0,10,0,0"
+                BackgroundColor="#101820"
+                BorderColor="#101820"
+                MaximumHeightRequest="250"
+                WidthRequest="900">
+                <VerticalStackLayout Spacing="10">
+                    <HorizontalStackLayout Margin="40,0,0,0" Spacing="30">
+                        <HorizontalStackLayout HorizontalOptions="Center">
+                            <Label Text="Select Mall/Branch" />
+                            <Border Margin="-70,0,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,10,10" />
+                                </Border.StrokeShape>
+                                <Picker
+                                    ItemDisplayBinding="{Binding Name}"
+                                    ItemsSource="{Binding MallCollection}"
+                                    SelectedItem="{Binding SelectedMallItem}" />
+                            </Border>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout>
+                            <Label Text="Selected Mall Name" />
+                            <Border Margin="-70,0,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,10,10" />
+                                </Border.StrokeShape>
+                                <Entry IsReadOnly="True" Text="{Binding SelectedMallItem.Name}" />
+                            </Border>
+                        </HorizontalStackLayout>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Margin="40,0,0,0" Spacing="30">
+                        <HorizontalStackLayout>
+                            <Label Text="Selected Mall Address" />
+                            <Border Margin="-70,0,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,10,10" />
+                                </Border.StrokeShape>
+                                <Entry IsReadOnly="True" Text="{Binding SelectedMallItem.Address}" />
+                            </Border>
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout>
+                            <Label Text="Capacity" />
+                            <Border Margin="-70,0,0,0">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="10,10,10,10" />
+                                </Border.StrokeShape>
+                                <Entry
+                                    Keyboard="Numeric"
+                                    Placeholder="Enter Cinema Seat Capacity"
+                                    Text="{Binding SeatCapacity}" />
+                            </Border>
+                        </HorizontalStackLayout>
+                    </HorizontalStackLayout>
+                    <HorizontalStackLayout Margin="0,20,0,0" HorizontalOptions="Center">
+                        <HorizontalStackLayout Spacing="10">
+                            <HorizontalStackLayout HorizontalOptions="End" Spacing="5">
+                                <HorizontalStackLayout Spacing="-25">
+                                    <ImageButton
+                                        BackgroundColor="Transparent"
+                                        Command="{Binding SaveEditCommand}"
+                                        Scale="0.4"
+                                        Source="check.png" />
+                                    <Button
+                                        BackgroundColor="Transparent"
+                                        BorderColor="Transparent"
+                                        Command="{Binding SaveEditCommand}"
+                                        CornerRadius="20"
+                                        FontSize="12"
+                                        Text="Save Details"
+                                        TextColor="#43A047"
+                                        WidthRequest="100" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout Spacing="-45">
+                                    <ImageButton
+                                        BackgroundColor="Transparent"
+                                        Command="{Binding ResetCommand}"
+                                        Scale="0.3"
+                                        Source="reseticon.png" />
+                                    <Button
+                                        BackgroundColor="Transparent"
+                                        BorderColor="Transparent"
+                                        Command="{Binding ResetCommand}"
+                                        CornerRadius="20"
+                                        FontSize="12"
+                                        Text="Reset"
+                                        TextColor="#EC4D37"
+                                        WidthRequest="100" />
+                                </HorizontalStackLayout>
+                            </HorizontalStackLayout>
+                        </HorizontalStackLayout>
+                    </HorizontalStackLayout>
+                </VerticalStackLayout>
+            </Frame>
+
+            <StackLayout>
+                <CollectionView
+                    Margin="10"
+                    EmptyView="No Cinema Seat Capacity"
+                    Header="Cinema Seat Representation"
+                    HorizontalOptions="Center"
+                    ItemsSource="{Binding Cinema.Seats}"
+                    WidthRequest="800">
+                    <CollectionView.ItemsLayout>
+                        <GridItemsLayout
+                            HorizontalItemSpacing="2"
+                            Orientation="Vertical"
+                            Span="8"
+                            VerticalItemSpacing="2" />
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="model:Seat">
+                            <Grid>
+                                <StackLayout>
+                                    <Frame BackgroundColor="Transparent" BorderColor="Transparent">
+                                        <VerticalStackLayout>
+                                            <Image
+                                                Margin="0,0,0,5"
+                                                Aspect="AspectFill"
+                                                BackgroundColor="Transparent"
+                                                HeightRequest="40"
+                                                Source="available_seat.png"
+                                                WidthRequest="55">
+                                                <Image.Triggers>
+                                                    <DataTrigger
+                                                        Binding="{Binding IsAvailableSeat}"
+                                                        TargetType="Image"
+                                                        Value="False">
+                                                        <Setter Property="Source" Value="unavailable_seat.png" />
+                                                    </DataTrigger>
+                                                </Image.Triggers>
+                                            </Image>
+                                            <Label>
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <Span Text="{Binding Row, StringFormat='{0}-'}" />
+                                                        <Span Text="{Binding Column}" />
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+                                        </VerticalStackLayout>
+                                    </Frame>
+                                </StackLayout>
+                            </Grid>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </StackLayout>
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+
+</ContentPage>

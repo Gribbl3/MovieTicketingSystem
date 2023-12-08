@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MovieTicketingSystem.View.CinemaPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MovieTicketingSystem.View"
+    xmlns:model="clr-namespace:MovieTicketingSystem.Model"
+    xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
+    Title="CinemaPage"
+    x:DataType="vm:CinemaPageViewModel"
+    BackgroundImageSource="backgroundblur.png">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Button">
+                <Setter Property="WidthRequest" Value="150" />
+                <Setter Property="CornerRadius" Value="20" />
+
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid
+        Margin="10"
+        ColumnDefinitions="*"
+        RowDefinitions="*,Auto">
+        <ScrollView Grid.ColumnSpan="2">
+            <!--  only use datatemplate when binding data  -->
+            <CollectionView ItemsSource="{Binding CinemaCollection}">
+                <CollectionView.EmptyView>
+                    <VerticalStackLayout>
+                        <Label
+                            Margin="0,200,0,0"
+                            FontAttributes="Bold"
+                            HorizontalTextAlignment="Center"
+                            Text="No Cinemas yet"
+                            VerticalTextAlignment="Center" />
+                        <Label
+                            HorizontalTextAlignment="Center"
+                            Text="Add Cinemas by pressing the [Add Cinema] button below"
+                            VerticalTextAlignment="Center" />
+                    </VerticalStackLayout>
+                </CollectionView.EmptyView>
+                <CollectionView.Header>
+                    <Frame BackgroundColor="#101820">
+                        <Grid ColumnDefinitions="*,*,*,*,*,*">
+                            <Label Text="ID" />
+                            <Label Grid.Column="1" Text="NAME" />
+                            <Label Grid.Column="2" Text="Mall Name" />
+                            <Label Grid.Column="3" Text="Address" />
+                            <Label Grid.Column="4" Text="Seat Capacity" />
+                            <Label Grid.Column="5" Text="Deleted" />
+                        </Grid>
+                    </Frame>
+                </CollectionView.Header>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="model:Cinema">
+                        <Frame
+                            BackgroundColor="#101820"
+                            BorderColor="#101820"
+                            CornerRadius="5">
+                            <VerticalStackLayout>
+                                <Grid ColumnDefinitions="*,*,*,*,*,*">
+                                    <Label Text="{Binding Id}" />
+                                    <Label Grid.Column="1" Text="{Binding Name}" />
+                                    <Label Grid.Column="2" Text="{Binding Mall.Name}" />
+                                    <Label Grid.Column="3" Text="{Binding Mall.Address}" />
+                                    <Label Grid.Column="4" Text="{Binding SeatCapacity}" />
+                                    <Label Grid.Column="5" Text="{Binding IsDeleted}" />
+                                </Grid>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </ScrollView>
+        <HorizontalStackLayout
+            Grid.Row="1"
+            Margin="0,20,0,10"
+            HorizontalOptions="Center"
+            Spacing="5">
+
+            <HorizontalStackLayout Spacing="-40">
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding AddCinemaCommand}"
+                    Scale="0.5"
+                    Source="addicon.png" />
+                <Button
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    Command="{Binding AddCinemaCommand}"
+                    FontAttributes="Bold"
+                    Text="Add Cinema"
+                    TextColor="#43A047" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Spacing="-70">
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding EditCinemaCommand}"
+                    Scale="0.7"
+                    Source="editicon.png" />
+                <Button
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    Command="{Binding EditCinemaCommand}"
+                    FontAttributes="Bold"
+                    Text="Edit"
+                    TextColor="White" />
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="-60">
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    Command="{Binding DeleteCinemaCommand}"
+                    Scale="0.8"
+                    Source="deleteicon.png" />
+                <Button
+                    BackgroundColor="Transparent"
+                    BorderColor="Transparent"
+                    Command="{Binding DeleteCinemaCommand}"
+                    FontAttributes="Bold"
+                    Text="Delete"
+                    TextColor="#EC4D37" />
+            </HorizontalStackLayout>
+            <HorizontalStackLayout Spacing="10">
+
+                <HorizontalStackLayout Spacing="-50">
+                    <ImageButton
+                        BackgroundColor="Transparent"
+                        Command="{Binding ShowAllCinemasCommand}"
+                        Scale="0.8"
+                        Source="iconshowgreen.png"/>
+
+                    <Button Text="Show All" Command="{Binding ShowAllCinemasCommand}"
+                            TextColor="#43A047"
+                            FontAttributes="Bold"
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="-40">
+                    <ImageButton
+                        BackgroundColor="Transparent"
+                        Command="{Binding ShowActiveCinemasCommand}"
+                        Scale="0.8"
+                        Source="iconshowgreen.png"/>
+
+                    <Button Text="Show Active" Command="{Binding ShowActiveCinemasCommand}"
+                            TextColor="#43A047"
+                            FontAttributes="Bold"
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"/>
+                </HorizontalStackLayout>
+
+
+                <HorizontalStackLayout Spacing="-32">
+                    <ImageButton
+                            BackgroundColor="Transparent"
+                            Command="{Binding ShowDeletedCinemasCommand}"
+                            Scale="0.8"
+                            Source="iconshowred.png"/>
+
+                    <Button Text="Show Deleted" Command="{Binding ShowDeletedCinemasCommand}"
+                            TextColor="#EC4D37"
+                            FontAttributes="Bold"
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"/>
+                </HorizontalStackLayout>
+
+                <HorizontalStackLayout Spacing="-40">
+                    <ImageButton
+                           BackgroundColor="Transparent"
+                           Command="{Binding RestoreDeletedCinemaCommand}"
+                           Scale="0.4"
+                           Source="iconresetwhite.png"/>
+                        
+                    <Button Text="Restore Mall" Command="{Binding RestoreDeletedCinemaCommand}"
+                            TextColor="#E5E3E8"
+                            FontAttributes="Bold"
+                            BackgroundColor="Transparent"
+                            BorderColor="Transparent"/>
+                </HorizontalStackLayout>
+                
+                
+            </HorizontalStackLayout>
+        </HorizontalStackLayout>
+    </Grid>
+</ContentPage>

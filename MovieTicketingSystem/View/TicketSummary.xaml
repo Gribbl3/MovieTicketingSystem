@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MovieTicketingSystem.View.TicketSummary"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:converters="clr-namespace:MovieTicketingSystem.Converters"
+    xmlns:model="clr-namespace:MovieTicketingSystem.Model"
+    xmlns:sys="clr-namespace:System;assembly=netstandard"
+    xmlns:vm="clr-namespace:MovieTicketingSystem.ViewModel"
+    Title="TicketSummary"
+    x:DataType="vm:TicketSummaryViewModel">
+
+
+
+    <Grid>
+        <Image Aspect="AspectFill" Source="backgroundblur.png" />
+
+        <Grid>
+            <Image
+                Aspect="AspectFit"
+                HeightRequest="500"
+                Opacity="0.4"
+                Source="{Binding Movie.Image, Converter={converters:ByteArrayToImageSourceConverter}}" />
+            <VerticalStackLayout Margin="100" HorizontalOptions="Center">
+
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Large"
+                    HorizontalOptions="Center"
+                    Text="MOVIE DETAILS"
+                    TextColor="red" />
+                <Label
+                    FontSize="Medium"
+                    HorizontalOptions="Center"
+                    Text="{Binding MovieGenreDisplay}"
+                    TextColor="LightGray"
+                    TextTransform="Uppercase" />
+                <Label
+                    FontAttributes="Bold"
+                    FontSize="Header"
+                    HorizontalOptions="Center"
+                    Text="{Binding Movie.Name}"
+                    TextColor="white"
+                    TextTransform="Uppercase" />
+
+                <Label
+                    Margin="0,20,0,0"
+                    FontAttributes="Bold"
+                    FontSize="Large"
+                    HorizontalOptions="Center"
+                    Text="CINEMA DETAILS"
+                    TextColor="red" />
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="{Binding Cinema.Name}" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label>
+                    <Label.FormattedText>
+                        <FormattedString>
+                            <Span Text="SEAT: " />
+                            <Span Text="{Binding SelectedSeatsDisplay}" TextTransform="Uppercase" />
+                        </FormattedString>
+                    </Label.FormattedText>
+                </Label>
+                <Label Text="{Binding Source={x:Static sys:DateTime.Today}, StringFormat='{0:MMMM d, yyyy}'}" />
+                <HorizontalStackLayout Margin="0,20,0,0" Spacing="10">
+
+                    <Label VerticalTextAlignment="Center">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="{Binding SelectedSeats.Count, StringFormat='{0} seat/s x '}" />
+                                <Span Text="{Binding Movie.Price, StringFormat=' ₱{0:F2}'}" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                    <Button
+                        Background="red"
+                        BorderColor="White"
+                        Command="{Binding BuyTicketCommand}"
+                        FontAttributes="Bold"
+                        HeightRequest="50"
+                        Text="BUY TICKET"
+                        TextColor="white"
+                        WidthRequest="150" />
+                </HorizontalStackLayout>
+            </VerticalStackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>
